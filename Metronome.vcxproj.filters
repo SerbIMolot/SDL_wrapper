@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="SDL engine">
+      <UniqueIdentifier>{0aacdbb4-cf53-4c0c-abe2-5bd7fd97f528}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\AddLibs">
+      <UniqueIdentifier>{e0e7914e-7896-41ea-bd8d-c1116ec64635}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\AddLibs\stb">
+      <UniqueIdentifier>{6bb607df-eeca-4766-9ac3-af8f5939dfa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="SDL engine\MainFiles">
+      <UniqueIdentifier>{6195dda8-9801-4fac-80af-2d9795dfda4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\Managers">
+      <UniqueIdentifier>{0a9cc57f-f5ea-4a9a-9bda-624c24512f1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\Managers\header">
+      <UniqueIdentifier>{323e7aa8-a250-4bb4-94bc-01f899e3b0d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\Managers\Manager">
+      <UniqueIdentifier>{860f6d08-7648-4829-b4b0-7e65f5b62da2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\Helpers">
+      <UniqueIdentifier>{4030afb3-c133-431b-a9d4-1c6b277e0689}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\Helpers\headers">
+      <UniqueIdentifier>{5d4401dc-c210-4e46-bffb-e4dac525f6da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\Math">
+      <UniqueIdentifier>{34f5e5df-a523-4066-9c15-710a38dc9098}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\Math\src">
+      <UniqueIdentifier>{c78f21fb-96ab-4634-9bf3-7b3c05fa6e15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\Math\src\headers">
+      <UniqueIdentifier>{a0427594-f70c-46f5-84c8-7c9e3bc128ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\Math\Headers">
+      <UniqueIdentifier>{ed695d80-0b55-4998-ae6d-da3d3bd66fa1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\Sound">
+      <UniqueIdentifier>{08ebd9bc-effb-4c19-aae6-a8ea9cdaa0a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\Sound\Headers">
+      <UniqueIdentifier>{8fac71ca-123d-49d0-99a5-665c9b668207}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\rendering">
+      <UniqueIdentifier>{007e1ae3-95e6-47ef-a113-314da5c37942}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\rendering\Headers">
+      <UniqueIdentifier>{475793c4-6225-4e48-bfba-0bee374e18dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\Objects">
+      <UniqueIdentifier>{ec5cfb7f-6f26-4e04-b773-99482a9c364a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\Objects\src">
+      <UniqueIdentifier>{108a190b-c580-45f5-9012-2eca21e42f36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\Objects\src\headers">
+      <UniqueIdentifier>{dabee4cd-fdc2-4af8-8ddb-3e67e76f0e22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\Objects\Headers">
+      <UniqueIdentifier>{17f5c6b5-07f8-4b66-9375-a63258d734fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\MainFiles\Headers">
+      <UniqueIdentifier>{d98f4c94-b568-40a4-931a-a847af8f89ab}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonManager.h">
+      <Filter>SDL engine\Managers\header</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandle.h">
+      <Filter>SDL engine\Managers\header</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>SDL engine\Managers\header</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>SDL engine\Managers\header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Git clones\sdl-gpu\src\externals\stb_image\stb_image.h">
+      <Filter>SDL engine\AddLibs\stb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Git clones\sdl-gpu\src\externals\stb_image_write\stb_image_write.h">
+      <Filter>SDL engine\AddLibs\stb</Filter>
+    </ClInclude>
+    <ClInclude Include="sdl\include\SDL_FontCache.h">
+      <Filter>SDL engine\AddLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="sdl\include\NFont.h">
+      <Filter>SDL engine\AddLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="sdl\include\NFont_gpu.h">
+      <Filter>SDL engine\AddLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>SDL engine\Helpers\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>SDL engine\Helpers\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>SDL engine\Helpers\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerIns.h">
+      <Filter>SDL engine\Helpers\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Trigger.h">
+      <Filter>SDL engine\Helpers\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="TriggersManager.h">
+      <Filter>SDL engine\Helpers\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>SDL engine\Math\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionShape.h">
+      <Filter>SDL engine\Math\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionStat.h">
+      <Filter>SDL engine\Math\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>SDL engine\Math\src\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>SDL engine\Math\src\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle.h">
+      <Filter>SDL engine\Math\src\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Shape.h">
+      <Filter>SDL engine\Math\src\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2d.h">
+      <Filter>SDL engine\Math\src\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundEfx.h">
+      <Filter>SDL engine\Sound\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>SDL engine\rendering\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>SDL engine\rendering\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Board.h">
+      <Filter>SDL engine\Objects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>SDL engine\Objects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>SDL engine\Objects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall.h">
+      <Filter>SDL engine\Objects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>SDL engine\Objects\src\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL_wrapper.h">
+      <Filter>SDL engine\MainFiles\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>SDL engine\MainFiles\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GPU_setup.h">
+      <Filter>SDL engine\MainFiles\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Metronome.h">
+      <Filter>SDL engine\MainFiles\Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonManager.cpp">
+      <Filter>SDL engine\Managers\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>SDL engine\Managers\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>SDL engine\Managers\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="TriggersManager.cpp">
+      <Filter>SDL engine\Managers\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Git clones\sdl-gpu\src\externals\stb_image\stb_image.c">
+      <Filter>SDL engine\AddLibs\stb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Git clones\sdl-gpu\src\externals\stb_image_write\stb_image_write.c">
+      <Filter>SDL engine\AddLibs\stb</Filter>
+    </ClCompile>
+    <ClCompile Include="sdl\include\NFont.cpp">
+      <Filter>SDL engine\AddLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="sdl\include\SDL_FontCache.c">
+      <Filter>SDL engine\AddLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL_wrapper.cpp">
+      <Filter>SDL engine\MainFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Metronome.cpp">
+      <Filter>SDL engine\MainFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>SDL engine\Objects\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>SDL engine\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>SDL engine\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Board.cpp">
+      <Filter>SDL engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>SDL engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall.cpp">
+      <Filter>SDL engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Circle.cpp">
+      <Filter>SDL engine\Math\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>SDL engine\Math\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Rectangle.cpp">
+      <Filter>SDL engine\Math\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape.cpp">
+      <Filter>SDL engine\Math\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2d.cpp">
+      <Filter>SDL engine\Math\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>SDL engine\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionShape.cpp">
+      <Filter>SDL engine\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionStat.cpp">
+      <Filter>SDL engine\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Trigger.cpp">
+      <Filter>SDL engine\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="TimerIns.cpp">
+      <Filter>SDL engine\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>SDL engine\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="State.cpp">
+      <Filter>SDL engine\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>SDL engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="EventHandle.cpp">
+      <Filter>SDL engine\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundEfx.cpp">
+      <Filter>SDL engine\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="GPU_setup.cpp">
+      <Filter>SDL engine\MainFiles</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
