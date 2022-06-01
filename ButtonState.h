@@ -1,19 +1,14 @@
 #pragma once
 #include <string>
 #include <memory>
-
-#include "NFont.h"
-
-#include "TextureManager.h"
 #include "State.h"
-#include "EventHandle.h"
+#include "NFont.h"
 
 class PressedState;
 class ReleasedState;
 
 class Body;
 class Button;
-class NFont;
 
 
 class ButtonState
@@ -29,6 +24,7 @@ public:
 	virtual void atStart( std::shared_ptr< Body > body ) = 0;
 	virtual void update( std::shared_ptr< Body > body ) = 0;
 	virtual bool handleInput( std::shared_ptr< Body > body, std::shared_ptr< Event > event ) = 0;
+	virtual bool handleInput( std::shared_ptr< Body > body, std::shared_ptr< GameEvent > event ) = 0;
 
 	void setText(std::string text)
 	{
@@ -37,6 +33,7 @@ public:
 
 	friend class PressedState;
 	friend class ReleasedState;
+	friend class HoverState;
 };
 
 

@@ -1,20 +1,35 @@
 #pragma once
-#include "stdafx.h"
-#include "EventHandle.h"
 
+#include <ctime>
+#include <atomic>
+#include <string>
+#include <thread>
+#include <inttypes.h>
+#include "SDL_wrapper.h"
+#include "SceneManager.h"
+#define USE_REAL_BOOL
 
 static auto presentTime = std::chrono::system_clock::now();
 static auto prevTime = std::chrono::system_clock::now();
 
-class Metronome {
+union SDL_Event;
+class Button;
+class SoundEfx;
+class Animation;
+struct Event;
+
+class Metronome 
+	: public SDL_wrapper, public std::enable_shared_from_this< Metronome >
+{
+
 
 public:
 	static bool accents[4];
 	static int beat;
-	static std::vector< std::shared_ptr< Object > > GameObjects;
-	static std::shared_ptr< EventHandle > eventHandler;
+	
+
 	static std::unique_ptr<SDL_wrapper> Game;
-	static std::shared_ptr<Metronome> hInstance;
+	//static std::shared_ptr<Metronome> hInstance;
 
 	static std::shared_ptr< SoundEfx > strongBeat;
 	static std::shared_ptr< SoundEfx > weakBeat;
@@ -25,11 +40,12 @@ public:
 
 	static int bpm;
 
-	std::shared_ptr< Collision > Collisions;
-	Animation boom;
-	std::shared_ptr< Mouse > cursor;
-	std::shared_ptr< Board > board;
+	//std::shared_ptr< Collision > Collisions;
+	std::shared_ptr< Animation > boom;
+	
+	
 	std::shared_ptr< Button > button;
+	//std::shared_ptr< Button > ball;
 
 	bool mouseHold;
 
@@ -37,10 +53,9 @@ public:
 	int currentTick;
 
 
-
 	Metronome();
 	~Metronome();
-	SDL_Event e;
+	SDL_Event* e;
 
 	static void playTick();
 	static void playStrongTick();
@@ -48,20 +63,28 @@ public:
 	
 	int getBPM();
 
-	static std::shared_ptr<Metronome> Instance();
+	//static std::shared_ptr<Metronome> Instance();
 
-	void GameDraw();
 
-	bool GameInit();
+	static bool GameInit( std::string windowName = "Demo" );
+	/*void GamePreTick() override;
+	void GameTick() override;
+	void GamePostTick() override;
+	void GameDraw() override;*/
+	void PreDraw();
+	void PostDraw();
+	//void GameClose() override;
 
 	static void MetronomeTick();
 
-	void GameTick();
 
 	void GameReset();
 
 	void onMouseButtonEvent(int x, int y, bool isReleased, int button);
 	void UpdateInterval();
+
+	void onKeyPress( std::shared_ptr< Event > event ) ;
+	void onKeyRelease( std::shared_ptr< Event > event );
 };
 
 class UpdateManager

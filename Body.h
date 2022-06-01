@@ -1,13 +1,12 @@
 #pragma once
 #include <memory>
 #include <string>
-#include "Box2D.h"
-#include "SDL_gpu.h"
-#include "EventData.h"
-#include "Constants.h"
+#include "sdl\include\SDL_render.h"
+#include "Box2D\Common\b2Settings.h"
+#include "sdl\include\SDL_log.h"
 
 
-
+//typedef Uint32 SDL_RendererFlip;
 struct Event;
 
 enum BodyType
@@ -25,6 +24,14 @@ enum BodyType
 };
 
 class Texture;
+struct b2BodyDef;
+struct b2FixtureDef;
+class b2Body;
+class b2PolygonShape;
+class b2RevoluteJoint;
+struct b2Vec2;
+class b2Shape;
+struct GameEvent;
 
 class Body
 	: public std::enable_shared_from_this < Body >
@@ -32,21 +39,21 @@ class Body
 	std::string nameID;
 	bool debug;
 
-	GPU_FlipEnum textureFlip;
+	SDL_RendererFlip textureFlip;
 
-	//b2Vec2 pos;
 	BodyType btype;
 
-	b2BodyDef groundBodyDef;
-	b2FixtureDef currentFixture;
+	b2BodyDef* groundBodyDef;
+	std::shared_ptr < b2Shape > shape;
+	std::shared_ptr< b2FixtureDef > currentFixture;
 
 	b2Body* groundBody;
 
-	b2PolygonShape groundBox;
+	std::shared_ptr<b2PolygonShape> groundBox;
 
 	std::shared_ptr< Body > parent;
 	b2RevoluteJoint* jointWithParent;
-	b2Vec2 relativePosition;
+	std::shared_ptr< b2Vec2 > relativePosition;
 	float relativeAngle;
 
 	bool colisionWithParent;
@@ -61,12 +68,12 @@ public:
 
 	virtual void Init() {}
 	b2Vec2 getPos();
-	b2Vec2* getRelativePos();
+	std::shared_ptr< b2Vec2 > getRelativePos();
 
-	GPU_FlipEnum getTextureFlip();
+	SDL_RendererFlip getTextureFlip();
 
 	
-	void setTextureFlip( GPU_FlipEnum flip );
+	void setTextureFlip( SDL_RendererFlip flip );
 
 	void setPos( b2Vec2 pos );
 	void setPos(float posX, float posY);
@@ -100,11 +107,12 @@ public:
 	void rotateTo( float angle );
 
 	void setID( std::string ID );
-	std::string getID() const ;
-
-	//virtual void handleInput( SDL_Scancode key );
+	std::string getID() const;
 	
 	virtual void handleInput( std::shared_ptr< Event > newEvent );
+	virtual void handleInput( std::shared_ptr< GameEvent > newEvent ) {};
+
+	virtual bool ShouldCollide(Body* collidingBody) { return true; };
 
 	bool operator==( const Body& rhs );
 

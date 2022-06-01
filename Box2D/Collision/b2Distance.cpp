@@ -23,7 +23,9 @@
 #include "Box2D/Collision/Shapes/b2PolygonShape.h"
 
 // GJK using Voronoi regions (Christer Ericson) and Barycentric coordinates.
+#if b2_enableGlobalStats
 int32 b2_gjkCalls, b2_gjkIters, b2_gjkMaxIters;
+#endif
 
 void b2DistanceProxy::Set(const b2Shape* shape, int32 index)
 {
@@ -106,7 +108,7 @@ struct b2Simplex
 					const b2DistanceProxy* proxyB, const b2Transform& transformB)
 	{
 		b2Assert(cache->count <= 3);
-		
+
 		// Copy data from cache.
 		m_count = cache->count;
 		b2SimplexVertex* vertices = &m_v1;
@@ -373,7 +375,7 @@ void b2Simplex::Solve3()
 	float32 w3e23 = b2Dot(w3, e23);
 	float32 d23_1 = w3e23;
 	float32 d23_2 = -w2e23;
-	
+
 	// Triangle123
 	float32 n123 = b2Cross(e12, e13);
 
@@ -451,7 +453,9 @@ void b2Distance(b2DistanceOutput* output,
 				b2SimplexCache* cache,
 				const b2DistanceInput* input)
 {
+#if b2_enableGlobalStats
 	++b2_gjkCalls;
+#endif
 
 	const b2DistanceProxy* proxyA = &input->proxyA;
 	const b2DistanceProxy* proxyB = &input->proxyB;
@@ -533,7 +537,9 @@ void b2Distance(b2DistanceOutput* output,
 
 		// Iteration count is equated to the number of support point calls.
 		++iter;
+#if b2_enableGlobalStats
 		++b2_gjkIters;
+#endif
 
 		// Check for duplicate support points. This is the main termination criteria.
 		bool duplicate = false;
@@ -556,7 +562,9 @@ void b2Distance(b2DistanceOutput* output,
 		++simplex.m_count;
 	}
 
+#if b2_enableGlobalStats
 	b2_gjkMaxIters = b2Max(b2_gjkMaxIters, iter);
+#endif
 
 	// Prepare output.
 	simplex.GetWitnessPoints(&output->pointA, &output->pointB);
@@ -704,7 +712,7 @@ bool b2ShapeCast(b2ShapeCastOutput * output, const b2ShapeCastInput * input)
 		default:
 			b2Assert(false);
 		}
-		
+
 		// If we have 3 points, then the origin is in the corresponding triangle.
 		if (simplex.m_count == 3)
 		{

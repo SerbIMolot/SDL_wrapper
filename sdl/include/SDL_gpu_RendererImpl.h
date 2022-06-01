@@ -25,6 +25,9 @@ typedef struct GPU_RendererImpl
      * The extra parameter is used internally to reuse/reinit a target. */
 	GPU_Target* (SDLCALL *CreateTargetFromWindow)(GPU_Renderer* renderer, Uint32 windowID, GPU_Target* target);
     
+    /*! \see GPU_SetActiveTarget() */
+    GPU_bool (SDLCALL *SetActiveTarget)(GPU_Renderer* renderer, GPU_Target* target);
+    
     /*! \see GPU_CreateAliasTarget() */
 	GPU_Target* (SDLCALL *CreateAliasTarget)(GPU_Renderer* renderer, GPU_Target* target);
 
@@ -37,8 +40,11 @@ typedef struct GPU_RendererImpl
 	/*! \see GPU_ResetRendererState() */
 	void (SDLCALL *ResetRendererState)(GPU_Renderer* renderer);
 	
+	/*! \see GPU_AddDepthBuffer() */
+	GPU_bool (SDLCALL *AddDepthBuffer)(GPU_Renderer* renderer, GPU_Target* target);
+	
 	/*! \see GPU_SetWindowResolution() */
-	Uint8 (SDLCALL *SetWindowResolution)(GPU_Renderer* renderer, Uint16 w, Uint16 h);
+	GPU_bool (SDLCALL *SetWindowResolution)(GPU_Renderer* renderer, Uint16 w, Uint16 h);
 	
 	/*! \see GPU_SetVirtualResolution() */
 	void (SDLCALL *SetVirtualResolution)(GPU_Renderer* renderer, GPU_Target* target, Uint16 w, Uint16 h);
@@ -50,7 +56,7 @@ typedef struct GPU_RendererImpl
 	void (SDLCALL *Quit)(GPU_Renderer* renderer);
 	
 	/*! \see GPU_SetFullscreen() */
-	Uint8 (SDLCALL *SetFullscreen)(GPU_Renderer* renderer, Uint8 enable_fullscreen, Uint8 use_desktop_resolution);
+	GPU_bool (SDLCALL *SetFullscreen)(GPU_Renderer* renderer, GPU_bool enable_fullscreen, GPU_bool use_desktop_resolution);
 
 	/*! \see GPU_SetCamera() */
 	GPU_Camera (SDLCALL *SetCamera)(GPU_Renderer* renderer, GPU_Target* target, GPU_Camera* cam);
@@ -59,13 +65,13 @@ typedef struct GPU_RendererImpl
 	GPU_Image* (SDLCALL *CreateImage)(GPU_Renderer* renderer, Uint16 w, Uint16 h, GPU_FormatEnum format);
 	
     /*! \see GPU_CreateImageUsingTexture() */
-	GPU_Image* (SDLCALL *CreateImageUsingTexture)(GPU_Renderer* renderer, Uint32 handle, Uint8 take_ownership);
+	GPU_Image* (SDLCALL *CreateImageUsingTexture)(GPU_Renderer* renderer, GPU_TextureHandle handle, GPU_bool take_ownership);
 	
     /*! \see GPU_CreateAliasImage() */
 	GPU_Image* (SDLCALL *CreateAliasImage)(GPU_Renderer* renderer, GPU_Image* image);
 	
 	/*! \see GPU_SaveImage() */
-	Uint8 (SDLCALL *SaveImage)(GPU_Renderer* renderer, GPU_Image* image, const char* filename, GPU_FileFormatEnum format);
+	GPU_bool (SDLCALL *SaveImage)(GPU_Renderer* renderer, GPU_Image* image, const char* filename, GPU_FileFormatEnum format);
 	
 	/*! \see GPU_CopyImage() */
 	GPU_Image* (SDLCALL *CopyImage)(GPU_Renderer* renderer, GPU_Image* image);
@@ -77,10 +83,10 @@ typedef struct GPU_RendererImpl
 	void (SDLCALL *UpdateImageBytes)(GPU_Renderer* renderer, GPU_Image* image, const GPU_Rect* image_rect, const unsigned char* bytes, int bytes_per_row);
 	
 	/*! \see GPU_ReplaceImage */
-	Uint8 (SDLCALL *ReplaceImage)(GPU_Renderer* renderer, GPU_Image* image, SDL_Surface* surface, const GPU_Rect* surface_rect);
+	GPU_bool (SDLCALL *ReplaceImage)(GPU_Renderer* renderer, GPU_Image* image, SDL_Surface* surface, const GPU_Rect* surface_rect);
 	
 	/*! \see GPU_CopyImageFromSurface() */
-	GPU_Image* (SDLCALL *CopyImageFromSurface)(GPU_Renderer* renderer, SDL_Surface* surface);
+	GPU_Image* (SDLCALL *CopyImageFromSurface)(GPU_Renderer* renderer, SDL_Surface* surface, GPU_Rect *surface_rect);
 	
 	/*! \see GPU_CopyImageFromTarget() */
 	GPU_Image* (SDLCALL *CopyImageFromTarget)(GPU_Renderer* renderer, GPU_Target* target);
@@ -94,8 +100,8 @@ typedef struct GPU_RendererImpl
 	/*! \see GPU_FreeImage() */
 	void (SDLCALL *FreeImage)(GPU_Renderer* renderer, GPU_Image* image);
 	
-	/*! \see GPU_LoadTarget() */
-	GPU_Target* (SDLCALL *LoadTarget)(GPU_Renderer* renderer, GPU_Image* image);
+	/*! \see GPU_GetTarget() */
+	GPU_Target* (SDLCALL *GetTarget)(GPU_Renderer* renderer, GPU_Image* image);
 	
 	/*! \see GPU_FreeTarget() */
 	void (SDLCALL *FreeTarget)(GPU_Renderer* renderer, GPU_Target* target);
@@ -115,8 +121,8 @@ typedef struct GPU_RendererImpl
 	/*! \see GPU_BlitTransformX() */
 	void (SDLCALL *BlitTransformX)(GPU_Renderer* renderer, GPU_Image* image, GPU_Rect* src_rect, GPU_Target* target, float x, float y, float pivot_x, float pivot_y, float degrees, float scaleX, float scaleY);
 	
-	/*! \see GPU_TriangleBatch() */
-	void (SDLCALL *TriangleBatch)(GPU_Renderer* renderer, GPU_Image* image, GPU_Target* target, unsigned short num_vertices, float* values, unsigned int num_indices, unsigned short* indices, GPU_BatchFlagEnum flags);
+	/*! \see GPU_PrimitiveBatchV() */
+	void (SDLCALL *PrimitiveBatchV)(GPU_Renderer* renderer, GPU_Image* image, GPU_Target* target, GPU_PrimitiveEnum primitive_type, unsigned short num_vertices, void* values, unsigned int num_indices, unsigned short* indices, GPU_BatchFlagEnum flags);
 	
 	/*! \see GPU_GenerateMipmaps() */
 	void (SDLCALL *GenerateMipmaps)(GPU_Renderer* renderer, GPU_Image* image);
@@ -135,7 +141,10 @@ typedef struct GPU_RendererImpl
 	
 	/*! \see GPU_SetWrapMode() */
 	void (SDLCALL *SetWrapMode)(GPU_Renderer* renderer, GPU_Image* image, GPU_WrapEnum wrap_mode_x, GPU_WrapEnum wrap_mode_y);
-
+    
+    /*! \see GPU_GetTextureHandle() */
+    GPU_TextureHandle (SDLCALL *GetTextureHandle)(GPU_Renderer* renderer, GPU_Image* image);
+    
 	/*! \see GPU_ClearRGBA() */
 	void (SDLCALL *ClearRGBA)(GPU_Renderer* renderer, GPU_Target* target, Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 	/*! \see GPU_FlushBlitBuffer() */
@@ -151,7 +160,7 @@ typedef struct GPU_RendererImpl
 	void (SDLCALL *FreeShaderProgram)(GPU_Renderer* renderer, Uint32 program_object);
 	
     /*! \see GPU_CompileShader_RW() */
-	Uint32 (SDLCALL *CompileShader_RW)(GPU_Renderer* renderer, GPU_ShaderEnum shader_type, SDL_RWops* shader_source, Uint8 free_rwops);
+	Uint32 (SDLCALL *CompileShader_RW)(GPU_Renderer* renderer, GPU_ShaderEnum shader_type, SDL_RWops* shader_source, GPU_bool free_rwops);
 	
     /*! \see GPU_CompileShader() */
 	Uint32 (SDLCALL *CompileShader)(GPU_Renderer* renderer, GPU_ShaderEnum shader_type, const char* shader_source);
@@ -166,7 +175,7 @@ typedef struct GPU_RendererImpl
 	void (SDLCALL *DetachShader)(GPU_Renderer* renderer, Uint32 program_object, Uint32 shader_object);
 
     /*! \see GPU_LinkShaderProgram() */
-	Uint8 (SDLCALL *LinkShaderProgram)(GPU_Renderer* renderer, Uint32 program_object);
+	GPU_bool (SDLCALL *LinkShaderProgram)(GPU_Renderer* renderer, Uint32 program_object);
 
     /*! \see GPU_ActivateShaderProgram() */
 	void (SDLCALL *ActivateShaderProgram)(GPU_Renderer* renderer, Uint32 program_object, GPU_ShaderBlock* block);
@@ -220,7 +229,7 @@ typedef struct GPU_RendererImpl
 	void (SDLCALL *SetUniformfv)(GPU_Renderer* renderer, int location, int num_elements_per_value, int num_values, float* values);
 
     /*! \see GPU_SetUniformMatrixfv() */
-	void (SDLCALL *SetUniformMatrixfv)(GPU_Renderer* renderer, int location, int num_matrices, int num_rows, int num_columns, Uint8 transpose, float* values);
+	void (SDLCALL *SetUniformMatrixfv)(GPU_Renderer* renderer, int location, int num_matrices, int num_rows, int num_columns, GPU_bool transpose, float* values);
     
     /*! \see GPU_SetAttributef() */
 	void (SDLCALL *SetAttributef)(GPU_Renderer* renderer, int location, float value);
@@ -303,6 +312,9 @@ typedef struct GPU_RendererImpl
     /*! \see GPU_Polygon() */
 	void (SDLCALL *Polygon)(GPU_Renderer* renderer, GPU_Target* target, unsigned int num_vertices, float* vertices, SDL_Color color);
 
+	/*! \see GPU_Polyline() */
+	void (SDLCALL *Polyline)(GPU_Renderer* renderer, GPU_Target* target, unsigned int num_vertices, float* vertices, SDL_Color color, GPU_bool close_loop);
+	
     /*! \see GPU_PolygonFilled() */
 	void (SDLCALL *PolygonFilled)(GPU_Renderer* renderer, GPU_Target* target, unsigned int num_vertices, float* vertices, SDL_Color color);
 	

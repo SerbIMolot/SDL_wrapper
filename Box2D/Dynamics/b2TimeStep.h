@@ -27,11 +27,16 @@ struct b2Profile
 	float32 step;
 	float32 collide;
 	float32 solve;
+	float32 solveTraversal;
 	float32 solveInit;
 	float32 solveVelocity;
 	float32 solvePosition;
-	float32 broadphase;
 	float32 solveTOI;
+	float32 solveTOIFindMinContact;
+	float32 broadphase;
+	float32 broadphaseSyncFixtures;
+	float32 broadphaseFindContacts;
+	float32 locking;
 };
 
 /// This is an internal structure.
@@ -65,6 +70,24 @@ struct b2SolverData
 	b2TimeStep step;
 	b2Position* positions;
 	b2Velocity* velocities;
+	int32 threadId;
 };
+
+inline void b2AddProfile(b2Profile& dest, const b2Profile& src, float32 scale)
+{
+    dest.step += scale * src.step;
+    dest.collide += scale * src.collide;
+    dest.solve += scale * src.solve;
+    dest.solveTraversal += scale * src.solveTraversal;
+    dest.solveInit += scale * src.solveInit;
+    dest.solveVelocity += scale * src.solveVelocity;
+    dest.solvePosition += scale * src.solvePosition;
+    dest.solveTOI += scale * src.solveTOI;
+    dest.solveTOIFindMinContact += scale * src.solveTOIFindMinContact;
+    dest.broadphase += scale * src.broadphase;
+    dest.broadphaseSyncFixtures += scale * src.broadphaseSyncFixtures;
+    dest.broadphaseFindContacts += scale * src.broadphaseFindContacts;
+    dest.locking += scale * src.locking;
+}
 
 #endif

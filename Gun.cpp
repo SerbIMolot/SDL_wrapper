@@ -1,9 +1,15 @@
 
+#include <cmath>
+
 #include "Gun.h"
+#include "TextureManager.h"
+#include "EventHandle.h"
+#include "Box2D\Common\b2Math.h"
+#include "Constants.h"
 
 
 Gun::Gun()
-	: dynBody( btGun, BodyManager::Instance()->getPlayer()->getPos(), TextureManager::getTexture( "gun.png" ), 0.01f, 0.0f )
+	: dynBody( btGun, 0.0f, 0.0f , TextureManager::getTexture( "gun.png" ), 0.01f, 0.0f )
 {
 	b2Fixture* fix = groundBody->GetFixtureList();
 
@@ -26,12 +32,12 @@ void Gun::Init()
 
 void Gun::setOffset(b2Vec2 offs)
 {
-	offset = offs;
+	*offset = offs;
 }
 
 b2Vec2 Gun::getOffset()
 {
-	return offset;
+	return *offset;
 }
 
 void Gun::Update()
@@ -89,9 +95,6 @@ void Gun::Update()
 			
 	
 		}
-		
-		
-
 		
 	}
 	SDL_Log( "Angle of gun: %f", groundBody->GetAngle() );

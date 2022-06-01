@@ -23,7 +23,7 @@ using std::list;
 #ifdef NFONT_USE_SDL_GPU
 #define NFont_Target GPU_Target
 #define NFont_Image GPU_Image
-#define NFont_Log GPU_LogError
+#define NFont_Log //GPU_LogError
 #else
 #define NFont_Target SDL_Renderer
 #define NFont_Image SDL_Texture
@@ -383,7 +383,7 @@ NFont::Rectf::Rectf(const SDL_Rect& rect)
 {}
 
 #ifdef NFONT_USE_SDL_GPU
-NFont::Rectf::Rectf(const GPU_Rect& rect)
+NFont::Rectf::Rectf(const SDL_Rect& rect)
     : x(rect.x), y(rect.y), w(rect.w), h(rect.h)
 {}
 #endif
@@ -395,7 +395,7 @@ SDL_Rect NFont::Rectf::to_SDL_Rect() const
 }
 
 #ifdef NFONT_USE_SDL_GPU
-GPU_Rect NFont::Rectf::to_GPU_Rect() const
+SDL_Rect NFont::Rectf::to_SDL_Rect() const
 {
     return GPU_MakeRect(x, y, w, h);
 }
@@ -662,7 +662,7 @@ NFont::Rectf NFont::drawBox(NFont_Target* dest, const Rectf& box, const char* fo
     va_end(lst);
 
     #ifdef NFONT_USE_SDL_GPU
-    return FC_DrawBox(font, dest, box.to_GPU_Rect(), "%s", buffer);
+    return FC_DrawBox(font, dest, box.to_SDL_Rect(), "%s", buffer);
     #else
     return FC_DrawBox(font, dest, box.to_SDL_Rect(), "%s", buffer);
     #endif
@@ -694,7 +694,7 @@ NFont::Rectf NFont::drawBox(NFont_Target* dest, const Rectf& box, AlignEnum alig
     va_end(lst);
 
     #ifdef NFONT_USE_SDL_GPU
-    return FC_DrawBoxAlign(font, dest, box.to_GPU_Rect(), translate_enum_NFont_to_FC(align), "%s", buffer);
+    return FC_DrawBoxAlign(font, dest, box.to_SDL_Rect(), translate_enum_NFont_to_FC(align), "%s", buffer);
     #else
     return FC_DrawBoxAlign(font, dest, box.to_SDL_Rect(), translate_enum_NFont_to_FC(align), "%s", buffer);
     #endif
@@ -711,7 +711,7 @@ NFont::Rectf NFont::drawBox(NFont_Target* dest, const Rectf& box, const Scale& s
     va_end(lst);
 
     #ifdef NFONT_USE_SDL_GPU
-    return FC_DrawBoxScale(font, dest, box.to_GPU_Rect(), FC_MakeScale(scale.x, scale.y), "%s", buffer);
+    return FC_DrawBoxScale(font, dest, box.to_SDL_Rect(), FC_MakeScale(scale.x, scale.y), "%s", buffer);
     #else
     return FC_DrawBoxScale(font, dest, box.to_SDL_Rect(), FC_MakeScale(scale.x, scale.y), "%s", buffer);
     #endif
@@ -728,7 +728,7 @@ NFont::Rectf NFont::drawBox(NFont_Target* dest, const Rectf& box, const Color& c
     va_end(lst);
 
     #ifdef NFONT_USE_SDL_GPU
-    return FC_DrawBoxColor(font, dest, box.to_GPU_Rect(), color.to_SDL_Color(), "%s", buffer);
+    return FC_DrawBoxColor(font, dest, box.to_SDL_Rect(), color.to_SDL_Color(), "%s", buffer);
     #else
     return FC_DrawBoxColor(font, dest, box.to_SDL_Rect(), color.to_SDL_Color(), "%s", buffer);
     #endif
@@ -745,7 +745,7 @@ NFont::Rectf NFont::drawBox(NFont_Target* dest, const Rectf& box, const Effect& 
     va_end(lst);
 
     #ifdef NFONT_USE_SDL_GPU
-    return FC_DrawBoxEffect(font, dest, box.to_GPU_Rect(), FC_MakeEffect(translate_enum_NFont_to_FC(effect.alignment), FC_MakeScale(effect.scale.x, effect.scale.y), effect.color.to_SDL_Color()), "%s", buffer);
+    return FC_DrawBoxEffect(font, dest, box.to_SDL_Rect(), FC_MakeEffect(translate_enum_NFont_to_FC(effect.alignment), FC_MakeScale(effect.scale.x, effect.scale.y), effect.color.to_SDL_Color()), "%s", buffer);
     #else
     return FC_DrawBoxEffect(font, dest, box.to_SDL_Rect(), FC_MakeEffect(translate_enum_NFont_to_FC(effect.alignment), FC_MakeScale(effect.scale.x, effect.scale.y), effect.color.to_SDL_Color()), "%s", buffer);
     #endif

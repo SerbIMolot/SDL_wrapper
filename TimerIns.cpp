@@ -1,5 +1,6 @@
-#include "stdafx.h"
+#include "TimerIns.h"
 
+#include "SDL.h"
 
 std::shared_ptr< TimerIns > TimerIns::tInstance = nullptr;
 

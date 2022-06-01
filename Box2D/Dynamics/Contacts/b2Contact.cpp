@@ -1,5 +1,6 @@
 /*
 * Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
+* Copyright (c) 2015 Justin Hoffman https://github.com/jhoffman0x/Box2D-MT
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -31,6 +32,7 @@
 #include "Box2D/Collision/Shapes/b2Shape.h"
 #include "Box2D/Common/b2BlockAllocator.h"
 #include "Box2D/Dynamics/b2Body.h"
+#include "Box2D/Dynamics/b2ContactManager.h"
 #include "Box2D/Dynamics/b2Fixture.h"
 #include "Box2D/Dynamics/b2World.h"
 
@@ -46,6 +48,7 @@ void b2Contact::InitializeRegisters()
 	AddType(b2EdgeAndPolygonContact::Create, b2EdgeAndPolygonContact::Destroy, b2Shape::e_edge, b2Shape::e_polygon);
 	AddType(b2ChainAndCircleContact::Create, b2ChainAndCircleContact::Destroy, b2Shape::e_chain, b2Shape::e_circle);
 	AddType(b2ChainAndPolygonContact::Create, b2ChainAndPolygonContact::Destroy, b2Shape::e_chain, b2Shape::e_polygon);
+	s_initialized = true;
 }
 
 void b2Contact::AddType(b2ContactCreateFcn* createFcn, b2ContactDestroyFcn* destoryFcn,
@@ -53,7 +56,7 @@ void b2Contact::AddType(b2ContactCreateFcn* createFcn, b2ContactDestroyFcn* dest
 {
 	b2Assert(0 <= type1 && type1 < b2Shape::e_typeCount);
 	b2Assert(0 <= type2 && type2 < b2Shape::e_typeCount);
-	
+
 	s_registers[type1][type2].createFcn = createFcn;
 	s_registers[type1][type2].destroyFcn = destoryFcn;
 	s_registers[type1][type2].primary = true;
@@ -68,18 +71,14 @@ void b2Contact::AddType(b2ContactCreateFcn* createFcn, b2ContactDestroyFcn* dest
 
 b2Contact* b2Contact::Create(b2Fixture* fixtureA, int32 indexA, b2Fixture* fixtureB, int32 indexB, b2BlockAllocator* allocator)
 {
-	if (s_initialized == false)
-	{
-		InitializeRegisters();
-		s_initialized = true;
-	}
+	b2Assert(s_initialized == true);
 
 	b2Shape::Type type1 = fixtureA->GetType();
 	b2Shape::Type type2 = fixtureB->GetType();
 
 	b2Assert(0 <= type1 && type1 < b2Shape::e_typeCount);
 	b2Assert(0 <= type2 && type2 < b2Shape::e_typeCount);
-	
+
 	b2ContactCreateFcn* createFcn = s_registers[type1][type2].createFcn;
 	if (createFcn)
 	{
@@ -127,6 +126,8 @@ b2Contact::b2Contact(b2Fixture* fA, int32 indexA, b2Fixture* fB, int32 indexB)
 {
 	m_flags = e_enabledFlag;
 
+	m_managerIndex = -1;
+
 	m_fixtureA = fA;
 	m_fixtureB = fB;
 
@@ -149,6 +150,7 @@ b2Contact::b2Contact(b2Fixture* fA, int32 indexA, b2Fixture* fB, int32 indexB)
 	m_nodeB.other = nullptr;
 
 	m_toiCount = 0;
+	m_toi = 1.0f;
 
 	m_friction = b2MixFriction(m_fixtureA->m_friction, m_fixtureB->m_friction);
 	m_restitution = b2MixRestitution(m_fixtureA->m_restitution, m_fixtureB->m_restitution);
@@ -156,9 +158,20 @@ b2Contact::b2Contact(b2Fixture* fA, int32 indexA, b2Fixture* fB, int32 indexB)
 	m_tangentSpeed = 0.0f;
 }
 
+void b2Contact::Update(b2ContactListener* listener)
+{
+	UpdateImpl<true>(nullptr, listener, 0);
+}
+
+void b2Contact::Update(b2ContactManagerPerThreadData& td, b2ContactListener* listener, uint32 threadId)
+{
+	UpdateImpl<false>(&td, listener, threadId);
+}
+
 // Update the contact manifold and touching status.
 // Note: do not assume the fixture AABBs are overlapping or are valid.
-void b2Contact::Update(b2ContactListener* listener)
+template<bool isSingleThread>
+void b2Contact::UpdateImpl(b2ContactManagerPerThreadData* td, b2ContactListener* listener, uint32 threadId)
 {
 	b2Manifold oldManifold = m_manifold;
 
@@ -216,8 +229,15 @@ void b2Contact::Update(b2ContactListener* listener)
 
 		if (touching != wasTouching)
 		{
-			bodyA->SetAwake(true);
-			bodyB->SetAwake(true);
+			if (isSingleThread)
+			{
+				bodyA->SetAwake(true);
+				bodyB->SetAwake(true);
+			}
+			else
+			{
+				td->m_awakes.push_back(this);
+			}
 		}
 	}
 
@@ -232,16 +252,83 @@ void b2Contact::Update(b2ContactListener* listener)
 
 	if (wasTouching == false && touching == true && listener)
 	{
-		listener->BeginContact(this);
+		if (listener->BeginContactImmediate(this, threadId))
+		{
+			if (isSingleThread)
+			{
+				listener->BeginContact(this);
+			}
+			else
+			{
+				td->m_beginContacts.push_back(this);
+			}
+		}
 	}
 
 	if (wasTouching == true && touching == false && listener)
 	{
-		listener->EndContact(this);
+		if (listener->EndContactImmediate(this, threadId))
+		{
+			if (isSingleThread)
+			{
+				listener->EndContact(this);
+			}
+			else
+			{
+				td->m_endContacts.push_back(this);
+			}
+		}
 	}
 
 	if (sensor == false && touching && listener)
 	{
-		listener->PreSolve(this, &oldManifold);
+		if (listener->PreSolveImmediate(this, &oldManifold, threadId))
+		{
+			if (isSingleThread)
+			{
+				listener->PreSolve(this, &oldManifold);
+			}
+			else
+			{
+				b2DeferredPreSolve presolve = { this, oldManifold };
+				td->m_preSolves.push_back(presolve);
+			}
+		}
 	}
+}
+
+bool b2Contact::IsToiCandidate(b2Fixture* fA, b2Fixture* fB)
+{
+	if (fA->IsSensor() == false && fB->IsSensor() == false)
+	{
+		b2Body* bA = fA->GetBody();
+		b2Body* bB = fB->GetBody();
+
+		if (bA->IsBullet() || bB->IsBullet())
+		{
+			return true;
+		}
+		else
+		{
+			bool includesNonDynamic = bA->GetType() != b2_dynamicBody || bB->GetType() != b2_dynamicBody;
+			bool neitherIsThickShape = fA->IsThickShape() == false && fB->IsThickShape() == false;
+
+			if (includesNonDynamic && neitherIsThickShape)
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+bool b2Contact::ToiLessThan(float32 alpha0, const b2Contact* contact0, float32 alpha1, const b2Contact* contact1)
+{
+	if (alpha0 == alpha1)
+	{
+		return b2ContactPointerLessThan(contact0, contact1);
+	}
+
+	return alpha0 < alpha1;
 }

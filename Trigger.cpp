@@ -1,29 +1,23 @@
-#include "stdafx.h"
 #include "Trigger.h"
+#include "Box2d.h"
 
 
-Trigger::Trigger(std::shared_ptr<Vector2d> vec, int w, int h)
+Trigger::Trigger(std::shared_ptr< b2Vec2 > vec, int w, int h)
+	:	Body( btTrigger, *vec )
 {
-
-	this->pos = std::move( vec );
-	rect = std::make_shared< engRectangle >( pos, w, h );
-
+	setLowerBound( b2Vec2( w, h ) );
 }
 
-Trigger::Trigger(std::shared_ptr<Vector2d> vec, std::shared_ptr<engRectangle> rect)
+Trigger::Trigger(std::shared_ptr< b2Vec2 > vec, std::shared_ptr<engRectangle> rect)
+	:	Body( btTrigger, *vec )
 {
-
-	this->pos = std::move( vec );
-	rect = std::move( rect );
-
+	setLowerBound( b2Vec2( rect->w, rect->h ) );
 }
 
 Trigger::Trigger(int x, int y, int w, int h)
+	:	Body( btTrigger, x, y )
 {
-
-	this->pos = std::make_shared< Vector2d >( x, y );
-	rect = std::make_shared< engRectangle >( pos, w, h );
-
+	setLowerBound( b2Vec2( w, h ) );
 }
 
 void Trigger::setName(std::string str)
@@ -45,7 +39,7 @@ Trigger::~Trigger()
 {
 }
 
-bool Trigger::isTrigered()
+bool Trigger::Trigered()
 {
 	return triggered;
 }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+#include <map>
 #include "Body.h"
 #include "Nfont.h"
 #include "Box2D.h"
@@ -23,14 +25,13 @@ enum BodyType;
 class Player;
 class dynBody;
 class Gun;
+class Button;
 
 class BodyManager
 {
 	bool debug;
 
 	static std::shared_ptr< BodyManager > objInstance;
-
-	static std::unique_ptr< Player > player;
 
 	static std::vector< std::shared_ptr< Body > > bodys;
 
@@ -54,6 +55,8 @@ public:
 
 	void createBody( b2Vec2 pos, std::shared_ptr< Texture > textr, std::string name = "body", BodyType btype = btUnknown );
 	void createBody( float x, float y, std::shared_ptr< Texture > textr, std::string name = "body", BodyType btype = btUnknown );
+
+	void createBody(float x, float y, float32 angle, std::shared_ptr<Texture> textr, std::string name, BodyType btype);
 	
 	void createBody( b2Vec2 pos, std::shared_ptr< Texture > textr, float dencity, float friction, std::string name = "body", BodyType btype = btUnknown );
 	void createJoint(JointType jType, std::string a, std::string b);

@@ -20,8 +20,9 @@
 #include <limits.h>
 #include <string.h>
 #include <stddef.h>
+#include <mutex>
 
-int32 b2BlockAllocator::s_blockSizes[b2_blockSizes] = 
+int32 b2BlockAllocator::s_blockSizes[b2_blockSizes] =
 {
 	16,		// 0
 	32,		// 1
@@ -37,9 +38,10 @@ int32 b2BlockAllocator::s_blockSizes[b2_blockSizes] =
 	448,	// 11
 	512,	// 12
 	640,	// 13
+	896,	// 14
+	1152,	// 15
 };
 uint8 b2BlockAllocator::s_blockSizeLookup[b2_maxBlockSize + 1];
-bool b2BlockAllocator::s_blockSizeLookupInitialized;
 
 struct b2Chunk
 {
@@ -52,36 +54,39 @@ struct b2Block
 	b2Block* next;
 };
 
+bool b2BlockAllocator::InitializeBlockSizeLookup()
+{
+	int32 j = 0;
+	for (int32 i = 1; i <= b2_maxBlockSize; ++i)
+	{
+		b2Assert(j < b2_blockSizes);
+		if (i <= s_blockSizes[j])
+		{
+			s_blockSizeLookup[i] = (uint8)j;
+		}
+		else
+		{
+			++j;
+			s_blockSizeLookup[i] = (uint8)j;
+		}
+	}
+
+	return true;
+}
+
 b2BlockAllocator::b2BlockAllocator()
 {
+	static std::once_flag s_blockSizeLookupInitFlag;
+	std::call_once(s_blockSizeLookupInitFlag, b2BlockAllocator::InitializeBlockSizeLookup);
+
 	b2Assert(b2_blockSizes < UCHAR_MAX);
 
 	m_chunkSpace = b2_chunkArrayIncrement;
 	m_chunkCount = 0;
 	m_chunks = (b2Chunk*)b2Alloc(m_chunkSpace * sizeof(b2Chunk));
-	
+
 	memset(m_chunks, 0, m_chunkSpace * sizeof(b2Chunk));
 	memset(m_freeLists, 0, sizeof(m_freeLists));
-
-	if (s_blockSizeLookupInitialized == false)
-	{
-		int32 j = 0;
-		for (int32 i = 1; i <= b2_maxBlockSize; ++i)
-		{
-			b2Assert(j < b2_blockSizes);
-			if (i <= s_blockSizes[j])
-			{
-				s_blockSizeLookup[i] = (uint8)j;
-			}
-			else
-			{
-				++j;
-				s_blockSizeLookup[i] = (uint8)j;
-			}
-		}
-
-		s_blockSizeLookupInitialized = true;
-	}
 }
 
 b2BlockAllocator::~b2BlockAllocator()

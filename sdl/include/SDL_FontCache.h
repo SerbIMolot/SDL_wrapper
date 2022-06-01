@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "SDL_ttf.h"
 
 #ifdef FC_USE_SDL_GPU
-    #include "SDL_gpu.h"
+    
 #endif
 
 
@@ -55,10 +55,10 @@ extern "C" {
 
 // Differences between SDL_Renderer and SDL_gpu
 #ifdef FC_USE_SDL_GPU
-#define FC_Rect GPU_Rect
+#define FC_Rect SDL_Rect
 #define FC_Target GPU_Target
 #define FC_Image GPU_Image
-#define FC_Log GPU_LogError
+#define FC_Log //GPU_LogError
 #else
 #define FC_Rect SDL_Rect
 #define FC_Target SDL_Renderer

@@ -17,7 +17,8 @@ public:
 	void update( std::shared_ptr< Body > body ) override;
 
 	void handleInput( Body* body, SDL_Scancode key);
-	bool handleInput( std::shared_ptr< Body > body, std::shared_ptr< Event > newEvent ) override;
+	bool handleInput( std::shared_ptr< Body > body, std::shared_ptr< Event > newEvent );
+	bool handleInput( std::shared_ptr< Body > body, std::shared_ptr< GameEvent > newEvent );
 
 };
 

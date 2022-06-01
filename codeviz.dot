@@ -1,0 +1,203 @@
+digraph codeviz {
+    splines=true
+    sep="+15,15"
+    overlap=scalexy
+
+    node [shape=Mrecord, fontsize=12]
+
+    node [fillcolor="#ff9999", style=filled] "Animation.cpp"      [label = "Animation.cpp"]
+    node [fillcolor="#ccccff", style=filled] "Animation.h"        [label = "Animation.h"]
+    node [fillcolor="#ff9999", style=filled] "Body.cpp"           [label = "Body.cpp"]
+    node [fillcolor="#ccccff", style=filled] "Body.h"             [label = "Body.h"]
+    node [fillcolor="#ff9999", style=filled] "BodyManager.cpp"    [label = "BodyManager.cpp"]
+    node [fillcolor="#ccccff", style=filled] "BodyManager.h"      [label = "BodyManager.h"]
+    node [fillcolor="#ff9999", style=filled] "Button.cpp"         [label = "Button.cpp"]
+    node [fillcolor="#ccccff", style=filled] "Button.h"           [label = "Button.h"]
+    node [fillcolor="#ff9999", style=filled] "ButtonManager.cpp"  [label = "ButtonManager.cpp"]
+    node [fillcolor="#ccccff", style=filled] "ButtonManager.h"    [label = "ButtonManager.h"]
+    node [fillcolor="#ff9999", style=filled] "ButtonState.cpp"    [label = "ButtonState.cpp"]
+    node [fillcolor="#ccccff", style=filled] "ButtonState.h"      [label = "ButtonState.h"]
+    node [fillcolor="#ff9999", style=filled] "ButtonStateMachine.cpp" [label = "ButtonStateMachine.cpp"]
+    node [fillcolor="#ccccff", style=filled] "ButtonStateMachine.h" [label = "ButtonStateMachine.h"]
+    node [fillcolor="#ff9999", style=filled] "Camera.cpp"         [label = "Camera.cpp"]
+    node [fillcolor="#ccccff", style=filled] "Camera.h"           [label = "Camera.h"]
+    node [fillcolor="#ff9999", style=filled] "Circle.cpp"         [label = "Circle.cpp"]
+    node [fillcolor="#ccccff", style=filled] "Circle.h"           [label = "Circle.h"]
+    node [fillcolor="#ff9999", style=filled] "Constants.cpp"      [label = "Constants.cpp"]
+    node [fillcolor="#ccccff", style=filled] "Constants.h"        [label = "Constants.h"]
+    node [fillcolor="#ff9999", style=filled] "ContactListener.cpp" [label = "ContactListener.cpp"]
+    node [fillcolor="#ccccff", style=filled] "ContactListener.h"  [label = "ContactListener.h"]
+    node [fillcolor="#ff9999", style=filled] "Entity.cpp"         [label = "Entity.cpp"]
+    node [fillcolor="#ccccff", style=filled] "Entity.h"           [label = "Entity.h"]
+    node [fillcolor="#ccccff", style=filled] "EventData.h"        [label = "EventData.h"]
+    node [fillcolor="#ff9999", style=filled] "EventHandle.cpp"    [label = "EventHandle.cpp"]
+    node [fillcolor="#ccccff", style=filled] "EventHandle.h"      [label = "EventHandle.h"]
+    node [fillcolor="#ff9999", style=filled] "EventManager.cpp"   [label = "EventManager.cpp"]
+    node [fillcolor="#ccccff", style=filled] "EventManager.h"     [label = "EventManager.h"]
+    node [fillcolor="#ff9999", style=filled] "Gun.cpp"            [label = "Gun.cpp"]
+    node [fillcolor="#ccccff", style=filled] "Gun.h"              [label = "Gun.h"]
+    node [fillcolor="#ff9999", style=filled] "Log.cpp"            [label = "Log.cpp"]
+    node [fillcolor="#ccccff", style=filled] "Log.h"              [label = "Log.h"]
+    node [fillcolor="#ff9999", style=filled] "Metronome.cpp"      [label = "Metronome.cpp"]
+    node [fillcolor="#ccccff", style=filled] "Metronome.h"        [label = "Metronome.h"]
+    node [fillcolor="#ff9999", style=filled] "Mouse.cpp"          [label = "Mouse.cpp"]
+    node [fillcolor="#ccccff", style=filled] "Mouse.h"            [label = "Mouse.h"]
+    node [fillcolor="#ff9999", style=filled] "Player.cpp"         [label = "Player.cpp"]
+    node [fillcolor="#ccccff", style=filled] "Player.h"           [label = "Player.h"]
+    node [fillcolor="#ff9999", style=filled] "PressedState.cpp"   [label = "PressedState.cpp"]
+    node [fillcolor="#ccccff", style=filled] "PressedState.h"     [label = "PressedState.h"]
+    node [fillcolor="#ff9999", style=filled] "Rectangle.cpp"      [label = "Rectangle.cpp"]
+    node [fillcolor="#ccccff", style=filled] "Rectangle.h"        [label = "Rectangle.h"]
+    node [fillcolor="#ff9999", style=filled] "ReleasedState.cpp"  [label = "ReleasedState.cpp"]
+    node [fillcolor="#ccccff", style=filled] "ReleasedState.h"    [label = "ReleasedState.h"]
+    node [fillcolor="#ff9999", style=filled] "SDL_wrapper.cpp"    [label = "SDL_wrapper.cpp"]
+    node [fillcolor="#ccccff", style=filled] "SDL_wrapper.h"      [label = "SDL_wrapper.h"]
+    node [fillcolor="#ff9999", style=filled] "Shape.cpp"          [label = "Shape.cpp"]
+    node [fillcolor="#ccccff", style=filled] "Shape.h"            [label = "Shape.h"]
+    node [fillcolor="#ff9999", style=filled] "SoundEfx.cpp"       [label = "SoundEfx.cpp"]
+    node [fillcolor="#ccccff", style=filled] "SoundEfx.h"         [label = "SoundEfx.h"]
+    node [fillcolor="#ff9999", style=filled] "SoundManager.cpp"   [label = "SoundManager.cpp"]
+    node [fillcolor="#ccccff", style=filled] "SoundManager.h"     [label = "SoundManager.h"]
+    node [fillcolor="#ff9999", style=filled] "State.cpp"          [label = "State.cpp"]
+    node [fillcolor="#ccccff", style=filled] "State.h"            [label = "State.h"]
+    node [fillcolor="#ff9999", style=filled] "StateMachine.cpp"   [label = "StateMachine.cpp"]
+    node [fillcolor="#ccccff", style=filled] "StateMachine.h"     [label = "StateMachine.h"]
+    node [fillcolor="#ff9999", style=filled] "Texture.cpp"        [label = "Texture.cpp"]
+    node [fillcolor="#ccccff", style=filled] "Texture.h"          [label = "Texture.h"]
+    node [fillcolor="#ff9999", style=filled] "TextureManager.cpp" [label = "TextureManager.cpp"]
+    node [fillcolor="#ccccff", style=filled] "TextureManager.h"   [label = "TextureManager.h"]
+    node [fillcolor="#ff9999", style=filled] "Timer.cpp"          [label = "Timer.cpp"]
+    node [fillcolor="#ccccff", style=filled] "Timer.h"            [label = "Timer.h"]
+    node [fillcolor="#ff9999", style=filled] "TimerIns.cpp"       [label = "TimerIns.cpp"]
+    node [fillcolor="#ccccff", style=filled] "TimerIns.h"         [label = "TimerIns.h"]
+    node [fillcolor="#ff9999", style=filled] "TimingBall.cpp"     [label = "TimingBall.cpp"]
+    node [fillcolor="#ccccff", style=filled] "TimingBall.h"       [label = "TimingBall.h"]
+    node [fillcolor="#ff9999", style=filled] "Trigger.cpp"        [label = "Trigger.cpp"]
+    node [fillcolor="#ccccff", style=filled] "Trigger.h"          [label = "Trigger.h"]
+    node [fillcolor="#ff9999", style=filled] "TriggersManager.cpp" [label = "TriggersManager.cpp"]
+    node [fillcolor="#ccccff", style=filled] "TriggersManager.h"  [label = "TriggersManager.h"]
+    node [fillcolor="#ff9999", style=filled] "Vector2d.cpp"       [label = "Vector2d.cpp"]
+    node [fillcolor="#ccccff", style=filled] "Vector2d.h"         [label = "Vector2d.h"]
+    node [fillcolor="#ff9999", style=filled] "dynBody.cpp"        [label = "dynBody.cpp"]
+    node [fillcolor="#ccccff", style=filled] "dynBody.h"          [label = "dynBody.h"]
+    node [fillcolor="#ff9999", style=filled] "pch.cpp"            [label = "pch.cpp"]
+
+    "Animation.cpp"      ->        "Animation.h"
+    "Animation.h"        ->         "Vector2d.h"
+    "Animation.h"        ->          "Texture.h"
+    "Body.cpp"           ->             "Body.h"
+    "Body.cpp"           ->          "Texture.h"
+    "Body.cpp"           ->        "Constants.h"
+    "Body.cpp"           ->        "EventData.h"
+    "BodyManager.cpp"    ->      "BodyManager.h"
+    "BodyManager.cpp"    ->           "Player.h"
+    "BodyManager.cpp"    ->              "Gun.h"
+    "BodyManager.cpp"    ->           "Button.h"
+    "BodyManager.h"      ->             "Body.h"
+    "Button.cpp"         ->           "Button.h"
+    "Button.h"           ->         "Vector2d.h"
+    "Button.h"           -> "ButtonStateMachine.h"
+    "Button.h"           ->        "Rectangle.h"
+    "Button.h"           ->             "Body.h"
+    "ButtonManager.cpp"  ->    "ButtonManager.h"
+    "ButtonManager.h"    ->           "Button.h"
+    "ButtonState.h"      ->   "TextureManager.h"
+    "ButtonState.h"      ->            "State.h"
+    "ButtonState.h"      ->      "EventHandle.h"
+    "ButtonStateMachine.cpp" -> "ButtonStateMachine.h"
+    "ButtonStateMachine.h" ->     "StateMachine.h"
+    "ButtonStateMachine.h" ->     "PressedState.h"
+    "ButtonStateMachine.h" ->    "ReleasedState.h"
+    "Camera.cpp"         ->           "Camera.h"
+    "Camera.cpp"         ->        "Constants.h"
+    "Camera.h"           ->          "dynBody.h"
+    "Circle.cpp"         ->           "Circle.h"
+    "Circle.h"           ->            "Shape.h"
+    "Circle.h"           ->          "Texture.h"
+    "Constants.cpp"      ->        "Constants.h"
+    "Constants.cpp"      ->      "SDL_wrapper.h"
+    "Constants.cpp"      ->   "TextureManager.h"
+    "ContactListener.cpp" ->  "ContactListener.h"
+    "ContactListener.cpp" ->          "Trigger.h"
+    "Entity.cpp"         ->           "Entity.h"
+    "Entity.h"           ->          "dynBody.h"
+    "EventHandle.cpp"    ->      "EventHandle.h"
+    "EventHandle.cpp"    ->        "Constants.h"
+    "EventHandle.h"      ->        "EventData.h"
+    "EventHandle.h"      ->     "EventManager.h"
+    "EventManager.cpp"   ->     "EventManager.h"
+    "EventManager.h"     ->        "EventData.h"
+    "EventManager.h"     ->             "Body.h"
+    "Gun.cpp"            ->              "Gun.h"
+    "Gun.cpp"            ->   "TextureManager.h"
+    "Gun.cpp"            ->      "EventHandle.h"
+    "Gun.cpp"            ->        "Constants.h"
+    "Gun.h"              ->          "dynBody.h"
+    "Log.cpp"            ->              "Log.h"
+    "Log.h"              ->   "TextureManager.h"
+    "Log.h"              ->            "Timer.h"
+    "Metronome.cpp"      ->        "Metronome.h"
+    "Metronome.cpp"      ->      "EventHandle.h"
+    "Metronome.cpp"      ->        "Constants.h"
+    "Metronome.cpp"      ->     "SoundManager.h"
+    "Metronome.cpp"      ->   "TextureManager.h"
+    "Metronome.cpp"      ->      "BodyManager.h"
+    "Metronome.cpp"      ->        "Animation.h"
+    "Metronome.cpp"      ->         "TimerIns.h"
+    "Metronome.cpp"      ->        "Rectangle.h"
+    "Metronome.cpp"      ->           "Button.h"
+    "Metronome.cpp"      ->            "Mouse.h"
+    "Metronome.h"        ->      "SDL_wrapper.h"
+    "Mouse.cpp"          ->            "Mouse.h"
+    "Mouse.h"            ->             "Body.h"
+    "Mouse.h"            ->   "TextureManager.h"
+    "Player.cpp"         ->           "Player.h"
+    "Player.cpp"         ->   "TextureManager.h"
+    "Player.cpp"         ->        "Constants.h"
+    "Player.h"           ->           "Entity.h"
+    "PressedState.cpp"   ->     "PressedState.h"
+    "PressedState.cpp"   ->           "Button.h"
+    "PressedState.h"     ->      "ButtonState.h"
+    "Rectangle.cpp"      ->        "Rectangle.h"
+    "Rectangle.h"        ->          "Texture.h"
+    "Rectangle.h"        ->            "Shape.h"
+    "ReleasedState.cpp"  ->    "ReleasedState.h"
+    "ReleasedState.cpp"  ->           "Button.h"
+    "ReleasedState.h"    ->      "ButtonState.h"
+    "SDL_wrapper.cpp"    ->      "SDL_wrapper.h"
+    "SDL_wrapper.cpp"    ->        "Constants.h"
+    "SDL_wrapper.cpp"    ->   "TextureManager.h"
+    "SDL_wrapper.cpp"    ->     "SoundManager.h"
+    "SDL_wrapper.cpp"    ->  "TriggersManager.h"
+    "SDL_wrapper.cpp"    ->         "TimerIns.h"
+    "SDL_wrapper.cpp"    ->  "ContactListener.h"
+    "Shape.cpp"          ->            "Shape.h"
+    "Shape.h"            ->         "Vector2d.h"
+    "SoundEfx.cpp"       ->         "SoundEfx.h"
+    "SoundManager.cpp"   ->     "SoundManager.h"
+    "SoundManager.h"     ->         "SoundEfx.h"
+    "State.h"            ->        "EventData.h"
+    "StateMachine.cpp"   ->     "StateMachine.h"
+    "StateMachine.h"     ->            "State.h"
+    "StateMachine.h"     ->             "Body.h"
+    "Texture.cpp"        ->          "Texture.h"
+    "Texture.h"          ->         "Vector2d.h"
+    "TextureManager.cpp" ->   "TextureManager.h"
+    "TextureManager.h"   ->          "Texture.h"
+    "Timer.cpp"          ->            "Timer.h"
+    "TimerIns.cpp"       ->         "TimerIns.h"
+    "TimingBall.cpp"     ->       "TimingBall.h"
+    "TimingBall.h"       ->             "Body.h"
+    "TimingBall.h"       ->   "TextureManager.h"
+    "Trigger.cpp"        ->          "Trigger.h"
+    "Trigger.h"          ->             "Body.h"
+    "Trigger.h"          ->        "Rectangle.h"
+    "TriggersManager.cpp" ->  "TriggersManager.h"
+    "TriggersManager.h"  ->          "Trigger.h"
+    "TriggersManager.h"  ->             "Body.h"
+    "Vector2d.cpp"       ->         "Vector2d.h"
+    "dynBody.cpp"        ->          "dynBody.h"
+    "dynBody.cpp"        ->   "TextureManager.h"
+    "dynBody.cpp"        ->        "Constants.h"
+    "dynBody.h"          ->             "Body.h"
+}

@@ -1,8 +1,14 @@
 #pragma once
+#include <vector>
+#include <memory>
 
+#include "Vector2d.h"
+#include "Texture.h"
+
+class Texture;
 class Animation
 {
-	std::vector< GPU_Rect > spriteClips;
+	std::vector< SDL_Rect > spriteClips;
 
 	int frames;
 

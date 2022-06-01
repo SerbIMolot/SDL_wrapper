@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Rectangle.h"
 
 engRectangle::engRectangle()
@@ -79,10 +78,16 @@ float engRectangle::RightSide()
 	return x + w;
 }
 
-GPU_Rect engRectangle::convertToGPURect()
+SDL_Rect engRectangle::convertToGPURect()
 {
-	GPU_Rect buf = { x, y, w, h };
+	SDL_Rect buf = { x, y, w, h };
 	return buf;
+
+}
+SDL_Rect* engRectangle::convertToSDLRect()
+{
+	SDL_Rect buf = { x, y, w, h };
+	return &buf;
 
 }
 

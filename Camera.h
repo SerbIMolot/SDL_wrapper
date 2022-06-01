@@ -1,4 +1,9 @@
 #pragma once
+
+#include "dynBody.h"
+
+struct b2AABB;
+
 class Camera : public dynBody
 {
 	static Camera* cInstance;

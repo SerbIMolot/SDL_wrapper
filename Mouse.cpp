@@ -1,18 +1,14 @@
-#include "stdafx.h"
 #include "Mouse.h"
 
 
 Mouse::Mouse()
-	: Object()
+	: Body( btMouse, -10.0f, -10.0f, TextureManager::getTexture("Scope.png") )
 {
+	//getColShape()->addShape( -10, -10 );
 
-	setSkin(TextureManager::getTexture("Scope.png"), tMouse );
-	
-	getColShape()->addShape( -10, -10 );
-
-	setMass( 0 );
 	grabbedObj = nullptr;
 	LMBHold = false;
+	isSensor( true );
 	
 }
 
@@ -21,7 +17,11 @@ Mouse::~Mouse()
 {
 }
 
-void Mouse::grabObj(std::shared_ptr<Object> obj)
+void Mouse::Init()
+{
+}
+
+void Mouse::grabObj( std::shared_ptr< Body > obj )
 {
 	grabbedObj = std::move( obj );
 }
@@ -34,7 +34,7 @@ void Mouse::releaseObj()
 
 void Mouse::UpdateStats( int x, int y, bool isReleased, int button )
 {
-	updatePosition( static_cast< float >( x ) , static_cast< float >( y ) );
+	setPos( static_cast< float >( x ) , static_cast< float >( y ) );
 
 	if ( isReleased == false && button == SDL_BUTTON_LEFT )
 	{
@@ -56,34 +56,36 @@ void Mouse::UpdateStats( int x, int y, bool isReleased, int button )
 		RMBHold = false;
 	}
 
-	getColShape()->Update( Pos() );
+	//getColShape()->Update( Pos() );
 	
 }
 
 void Mouse::Update()
 {
 
-	if (grabbedObj != nullptr && LMBHold == true)
-	{
-		grabbedObj->updatePosition( Pos()->getX(), Pos()->getY() );
-	}
+	//if (grabbedObj != nullptr && LMBHold == true)
+	//{
+	//	grabbedObj->setPos( getPos().x, getPos().y );
+	//}
 
 
-	getColShape()->Update( Pos() );
+	//getColShape()->Update( Pos() );
 
 
 }
 
 void Mouse::Draw()
 {
-		getSkin()->render( Pos() );
+	Body::Draw();
+
+
 
 }
 
-void Mouse::collisionDetected( std::shared_ptr < Object > obj )
+void Mouse::collisionDetected( std::shared_ptr < Body > obj )
 {
 
-	if( obj->getType() == tButton && LMBHold == true )
+	if( obj->getType() == btButton && LMBHold == true )
 	{
 		
 	}

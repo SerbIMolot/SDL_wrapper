@@ -1,20 +1,23 @@
-#include "stdafx.h"
 #include "BodyManager.h"
+#include "Player.h"
+#include "Gun.h"
+#include "Button.h"
+#include "TextureManager.h"
 
 std::shared_ptr< BodyManager > BodyManager::objInstance = nullptr;
-std::unique_ptr< Player > BodyManager::player = nullptr;
+//std::unique_ptr< Player > BodyManager::player = nullptr;
 std::vector< std::shared_ptr< Body > > BodyManager::bodys = std::vector< std::shared_ptr< Body > >();
 
 BodyManager::BodyManager()
 {
 	debug = false;
-	debugFont = new NFont( "Data/FreeSans.ttf", 20, NFont::Color( 0, 0, 255, 255 ) );
+	debugFont = new NFont(TextureManager::sRenderer, "Data/FreeSans.ttf", 20, NFont::Color( 0, 0, 255, 255 ) );
 	
 }
 
 BodyManager::~BodyManager()
 {
-	debugFont->free();
+	//debugFont->free();
 	delete debugFont;
 }
 
@@ -52,15 +55,15 @@ void BodyManager::addBody(std::string name, std::shared_ptr< Body > body, BodyTy
 
 void BodyManager::createBody( std::string name, BodyType btype )
 {
-	if ( btype == btPlayer )
-	{
-		player = std::make_unique< Player >();
-	}
+	//if ( btype == btPlayer )
+	//{
+	//	player = std::make_unique< Player >();
+	//}
 }
 
 
 
-void BodyManager::createBody( b2Vec2 pos, std::shared_ptr< Texture > textr, std::string name , BodyType btype )
+void BodyManager::createBody( b2Vec2 pos , std::shared_ptr< Texture > textr, std::string name , BodyType btype )
 {
 	int nameRepeats = checkName( name );
 	if ( nameRepeats > 0 )
@@ -76,21 +79,24 @@ void BodyManager::createBody( b2Vec2 pos, std::shared_ptr< Texture > textr, std:
 	if ( btype == btBox )
 	{
 		std::shared_ptr< dynBody > temp = std::make_shared< dynBody >(btype, pos, textr, 0.65f, 0.35f );
-		bodys.push_back( temp );
+		bodys.push_back( std::static_pointer_cast< Body > ( temp ) );
 		mBodies[ name ] = temp;
 	}
 	if ( btype == btPlayer )
 	{
-		player = std::make_unique< Player >( pos );
+		//std::shared_ptr< dynBody > temp = std::make_unique< Player >( pos );
+		std::shared_ptr< Body > temp = std::make_shared< Player >(pos);
+		bodys.push_back(temp);
+		mBodies[name] = temp;
 	}
 	if ( btype == btGun )
 	{
 		std::shared_ptr< Gun > temp = std::make_shared< Gun >();
 
-		bodys.push_back( temp );
+		bodys.push_back( std::static_pointer_cast< dynBody > ( temp ) );
 		mBodies[name] = temp;
 	}
-	GPU_Log("Body: %s\n", name.c_str());
+	//GPU_Log("Body: %s\n", name.c_str());
 }
 
 void BodyManager::createBody( float x, float y, std::shared_ptr< Texture > textr, std::string name, BodyType btype )
@@ -98,25 +104,31 @@ void BodyManager::createBody( float x, float y, std::shared_ptr< Texture > textr
 	if ( btype == btWall )
 	{
 		std::shared_ptr< Body > temp = std::make_shared< Body >( btype, x, y, textr );
+
+		//temp->getBody();
+		//temp->rotateTo();//	setRotation(b2body.getAngle() * 180.f / PI);
 		bodys.push_back( temp );
 		mBodies[ name ] = temp;
 	}
 	if ( btype == btBox )
 	{
 		std::shared_ptr< dynBody > temp = std::make_shared< dynBody >(btype, x, y, textr, 0.65f, 0.35f );
-		bodys.push_back( temp );
+		bodys.push_back( std::static_pointer_cast< Body > ( temp ) );
 		mBodies[ name ] = temp;
 	}
 	if ( btype == btPlayer )
 	{
-		player = std::make_unique< Player >( x, y );
+		std::shared_ptr< dynBody > temp = std::make_shared< Player >(x, y);
+		bodys.push_back(std::static_pointer_cast<Body> (temp));
+		mBodies[name] = temp;
+		//player = std::make_unique< Player >( x, y );
 		//createBody( player->getPos(), TextureManager::getTexture("Scope.png"), "gun", btGun);
 
 	}
 	if ( btype == btButton )
 	{
-		std::shared_ptr< Body > temp = std::make_shared< Button >( x, y, 10.0f, 10.0f, "textr" );
-		bodys.push_back( temp );
+		std::shared_ptr< Button > temp = std::make_shared< Button >( x, y, 10.0f, 10.0f, "textr" );
+		bodys.push_back( std::dynamic_pointer_cast< Body > ( temp ) );
 		mBodies[ name ] = temp;
 		//createBody( player->getPos(), TextureManager::getTexture("Scope.png"), "gun", btGun);
 
@@ -128,7 +140,59 @@ void BodyManager::createBody( float x, float y, std::shared_ptr< Texture > textr
 		//bodys.push_back( temp );
 		mBodies[ name ] = temp;
 	}
-	GPU_Log("Body: %s\n", name.c_str());
+	//GPU_Log("Body: %s\n", name.c_str());
+}
+void BodyManager::createBody( float x, float y, float32 angle, std::shared_ptr< Texture > textr, std::string name, BodyType btype )
+{
+	b2Vec2 pos = b2Vec2(x, y);
+	if ( btype == btWall )
+	{
+		std::shared_ptr< Body > temp = std::make_shared< Body >( btype, x, y, textr );
+
+		//temp->getBody();
+		//temp->rotateTo();//	setRotation(b2body.getAngle() * 180.f / PI);
+		temp->getBody()->SetTransform(pos, angle * DEG_TO_RAD);
+		bodys.push_back( temp );
+		mBodies[ name ] = temp;
+	}
+	if ( btype == btBox )
+	{
+		std::shared_ptr< dynBody > temp = std::make_shared< dynBody >(btype, x, y, textr, 0.65f, 0.35f );
+		temp->getBody()->SetTransform(pos, angle * DEG_TO_RAD);
+		bodys.push_back( std::static_pointer_cast< Body > ( temp ) );
+		mBodies[ name ] = temp;
+	}
+	if ( btype == btPlayer )
+	{
+		std::shared_ptr< Body > temp = std::make_shared< Player >(x, y);
+		temp->getBody()->SetTransform(pos, angle * DEG_TO_RAD);
+		bodys.push_back(std::dynamic_pointer_cast<Body> (temp));
+		mBodies[name] = temp;
+		//std::shared_ptr< dynBody > temp = std::make_shared< Player >(x, y);
+		//bodys.push_back(std::static_pointer_cast<Body> (temp));
+		//mBodies[name] = temp;
+		//player = std::make_unique< Player >( x, y );
+		//createBody( player->getPos(), TextureManager::getTexture("Scope.png"), "gun", btGun);
+
+	}
+	if ( btype == btButton )
+	{
+		std::shared_ptr< Button > temp = std::make_shared< Button >( x, y, 10.0f, 10.0f, "textr" );
+		temp->getBody()->SetTransform(pos, angle * DEG_TO_RAD);
+		bodys.push_back( std::dynamic_pointer_cast< Body > ( temp ) );
+		mBodies[ name ] = temp;
+		//createBody( player->getPos(), TextureManager::getTexture("Scope.png"), "gun", btGun);
+
+	}
+	if ( btype == btGun )
+	{
+		std::shared_ptr< Gun > temp = std::make_shared< Gun >( );
+		temp->getBody()->SetTransform(pos, angle * DEG_TO_RAD);
+		
+		//bodys.push_back( temp );
+		mBodies[ name ] = temp;
+	}
+	//GPU_Log("Body: %s\n", name.c_str());
 }
 
 void BodyManager::createBody(b2Vec2 pos, std::shared_ptr<Texture> textr, float dencity, float friction, std::string name, BodyType btype)
@@ -203,7 +267,7 @@ std::vector< std::shared_ptr< dynBody > > BodyManager::getBoxes( std::string nam
 
 		box = std::static_pointer_cast< dynBody > ( body.second );
 
-		if ( box != nullptr && box->getType() == btBox )
+		if ( box != nullptr && body.second->getType() == btBox )
 		{
 			boxes.push_back( box );
 		}
@@ -301,9 +365,9 @@ void BodyManager::Draw()
 
 	for ( auto body : mBodies )
 	{
-
 		body.second->Draw();
-
+	}
+		/*
 		if ( body.second->getType() == btGun )
 		{
 			std::static_pointer_cast< Gun > ( body.second )->Update();
@@ -323,6 +387,7 @@ void BodyManager::Draw()
 	{
 		player->Draw();
 	}
+	*/
 }
 
 void BodyManager::Update()

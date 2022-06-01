@@ -1,22 +1,28 @@
 #include "StateMachine.h"
 
-StateMachine::StateMachine()
+StateMachine::StateMachine(std::shared_ptr< Body > body)
 {
 	stateQuery = std::make_unique< std::list< std::string > >();
 
-	stateHolder = nullptr;
+	stateHolder = body;
+}
+
+StateMachine::StateMachine()
+{
+	stateQuery = std::make_unique< std::list< std::string > >();
 }
 
 StateMachine::~StateMachine()
 {
 }
 
+
 /*
 void StateMachine::createState(std::string name, std::string neighbors)
 {
 	states[ name ] = std::make_unique< State >( name, neighbors );
 }
-*/
+
 bool StateMachine::isNeighnors(std::string state, std::string secondState)
 {
 	std::vector< std::string > tempNeighbors = states.at(state)->getNeighbors();
@@ -31,20 +37,24 @@ bool StateMachine::isNeighnors(std::string state, std::string secondState)
 	}
 	catch (std::out_of_range & e)
 	{
-		GPU_Log("Machiche has no such state. %s", e.what());
+		//GPU_Log("Machiche has no such state. %s", e.what());
 		return false;
 	}
 
 	return false;
 }
-
+*/
 bool StateMachine::changeState(std::string name)
 {
-	if (isNeighnors(getCurrentState()->getName(), name))
+	if (getCurrentState()->isNeighbors( name ) )
 	{
-		Push(name);
-		getCurrentState()->atStart( stateHolder );
-		return true;
+		if ( states[name]->checkPreCondition() )
+		{
+			Push(name);
+			getCurrentState()->atStart( stateHolder );
+
+			return true;
+		}
 	}
 	return false;
 }
@@ -57,7 +67,7 @@ State* StateMachine::getCurrentState()
 	}
 	catch (std::exception & e)
 	{
-		GPU_Log( "There is no current state: ERROR %s", e.what() );
+		//GPU_Log( "There is no current state: ERROR %s", e.what() );
 		return nullptr;
 	}
 }
@@ -71,7 +81,7 @@ void StateMachine::setDefaultState(std::string stateID)
 	}
 	else
 	{
-		GPU_Log("No such state exist");
+		//GPU_Log("No such state exist");
 	}
 }
 
@@ -106,13 +116,13 @@ void StateMachine::Push(std::string stateID)
 	}
 	else
 	{
-		GPU_Log("No such state exist");
+		//GPU_Log("No such state exist");
 	}
 }
 
 void StateMachine::Pop()
 {
-	if (stateQuery->size() != 1)
+	if (stateQuery->size() > 1 )
 	{
 		stateQuery->pop_front();
 	}

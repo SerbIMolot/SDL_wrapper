@@ -1,10 +1,15 @@
 #pragma once
+#include "dynBody.h"
+
+struct b2Vec2;
+class Texture;
+
 class Entity : public dynBody
 {
 
 	float maxSpeed;
 
-	b2Vec2 moveBounds;
+	b2Vec2* moveBounds;
 
 public:
 	Entity();

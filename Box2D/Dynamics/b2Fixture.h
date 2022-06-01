@@ -1,5 +1,6 @@
 /*
 * Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
+* Copyright (c) 2015 Justin Hoffman https://github.com/jhoffman0x/Box2D-MT
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -64,6 +65,7 @@ struct b2FixtureDef
 		restitution = 0.0f;
 		density = 0.0f;
 		isSensor = false;
+		thickShape = false;
 	}
 
 	/// The shape, this must be set. The shape will be cloned, so you
@@ -85,6 +87,10 @@ struct b2FixtureDef
 	/// A sensor shape collects contact information but never generates a collision
 	/// response.
 	bool isSensor;
+
+	/// A thick shape is not prone to tunneling so it only generates TOI events for
+	/// contacts with bullet bodies. Use this to reduce the performance cost of TOI.
+	bool thickShape;
 
 	/// Contact filtering data.
 	b2Filter filter;
@@ -192,6 +198,14 @@ public:
 	/// the body transform.
 	const b2AABB& GetAABB(int32 childIndex) const;
 
+	/// Set whether this fixture is treated like a thick shape for continuous collision detection.
+	/// Note: thick shapes only get TOI events for contacts with bullet bodies.
+	/// @warning This function is locked during multithreaded callbacks.
+	void SetThickShape(bool flag);
+
+	/// Is this fixture treated like a thick shape for continuous collision detection?
+	bool IsThickShape() const;
+
 	/// Dump this fixture to the log file.
 	void Dump(int32 bodyIndex);
 
@@ -201,6 +215,8 @@ protected:
 	friend class b2World;
 	friend class b2Contact;
 	friend class b2ContactManager;
+
+	friend bool b2ContactPointerLessThan(const b2Contact* l, const b2Contact* r);
 
 	b2Fixture();
 
@@ -231,6 +247,7 @@ protected:
 	b2Filter m_filter;
 
 	bool m_isSensor;
+	bool m_isThickShape;
 
 	void* m_userData;
 };
@@ -340,6 +357,11 @@ inline const b2AABB& b2Fixture::GetAABB(int32 childIndex) const
 {
 	b2Assert(0 <= childIndex && childIndex < m_proxyCount);
 	return m_proxies[childIndex].aabb;
+}
+
+inline bool b2Fixture::IsThickShape() const
+{
+	return m_isThickShape;
 }
 
 #endif

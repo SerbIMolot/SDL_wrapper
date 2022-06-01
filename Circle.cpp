@@ -1,5 +1,5 @@
 
-#include "stdafx.h"
+#include "Circle.h"
 
 engCircle::engCircle(std::shared_ptr<Vector2d> vec, std::shared_ptr<Texture> textr )
 	: Shape( vec, sCircle )

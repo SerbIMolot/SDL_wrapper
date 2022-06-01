@@ -1,5 +1,7 @@
-#include "stdafx.h"
+
 #include "Entity.h"
+#include "Box2D\Common\b2Math.h"
+#include "Box2D\Dynamics\b2Body.h"
 
 
 Entity::Entity()
@@ -23,6 +25,7 @@ Entity::Entity( BodyType btype, float x, float y, std::shared_ptr<Texture> textr
 
 Entity::~Entity()
 {
+	delete moveBounds;
 }
 
 void Entity::moveTo( b2Vec2 pos )
@@ -46,18 +49,18 @@ void Entity::moveTo( b2Vec2 pos )
 
 void Entity::setMoveBounds(b2Vec2 bounds)
 {
-	this->moveBounds = bounds;
+	*this->moveBounds = bounds;
 }
 
 void Entity::setMoveBounds(float x, float y)
 {
-	this->moveBounds = b2Vec2( x, y );
+	this->moveBounds = new b2Vec2( x, y );
 }
 
 
 b2Vec2 Entity::getMoveBounds()
 {
-	return moveBounds;
+	return *moveBounds;
 }
 
 float Entity::getMaxSpeed()

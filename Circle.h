@@ -1,5 +1,6 @@
 #pragma once
 #include "Shape.h"
+#include "Texture.h"
 
 class engCircle : public Shape
 {

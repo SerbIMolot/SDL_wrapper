@@ -1,5 +1,6 @@
 /*
 * Copyright (c) 2006-2011 Erin Catto http://www.box2d.org
+* Copyright (c) 2015 Justin Hoffman https://github.com/jhoffman0x/Box2D-MT
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -21,10 +22,12 @@
 
 #include "Box2D/Common/b2Math.h"
 #include "Box2D/Common/b2BlockAllocator.h"
+#include "Box2D/Common/b2GrowableArray.h"
 #include "Box2D/Common/b2StackAllocator.h"
 #include "Box2D/Dynamics/b2ContactManager.h"
 #include "Box2D/Dynamics/b2WorldCallbacks.h"
 #include "Box2D/Dynamics/b2TimeStep.h"
+#include "Box2D/MT/b2MtUtil.h"
 
 struct b2AABB;
 struct b2BodyDef;
@@ -34,6 +37,8 @@ class b2Body;
 class b2Draw;
 class b2Fixture;
 class b2Joint;
+class b2TaskExecutor;
+class b2Island;
 
 /// The world class manages all physics entities, dynamic simulation,
 /// and asynchronous queries. The world also contains efficient memory
@@ -48,13 +53,18 @@ public:
 	/// Destruct the world. All physics entities are destroyed and all heap memory is released.
 	~b2World();
 
+#ifdef b2_dynamicTreeOfTrees
+	/// Set the width and height of broad-phase sub-trees.
+	void SetSubTreeSize(float32 subTreeWidth, float32 subTreeHeight);
+#endif
+
 	/// Register a destruction listener. The listener is owned by you and must
 	/// remain in scope.
 	void SetDestructionListener(b2DestructionListener* listener);
 
 	/// Register a contact filter to provide specific control over collision.
 	/// Otherwise the default filter is used (b2_defaultFilter). The listener is
-	/// owned by you and must remain in scope. 
+	/// owned by you and must remain in scope.
 	void SetContactFilter(b2ContactFilter* filter);
 
 	/// Register a contact event listener. The listener is owned by you and must
@@ -91,9 +101,11 @@ public:
 	/// @param timeStep the amount of time to simulate, this should not vary.
 	/// @param velocityIterations for the velocity constraint solver.
 	/// @param positionIterations for the position constraint solver.
+	/// @param executor executes the step tasks.
 	void Step(	float32 timeStep,
 				int32 velocityIterations,
-				int32 positionIterations);
+				int32 positionIterations,
+				b2TaskExecutor& executor);
 
 	/// Manually clear the force buffer on all bodies. By default, forces are cleared automatically
 	/// after each call to Step. The default behavior is modified by calling SetAutoClearForces.
@@ -111,7 +123,7 @@ public:
 	/// provided AABB.
 	/// @param callback a user implemented callback class.
 	/// @param aabb the query box.
-	void QueryAABB(b2QueryCallback* callback, const b2AABB& aabb) const;
+	void QueryAABB(b2QueryCallback* callback, const b2AABB& aabb);
 
 	/// Ray-cast the world for all fixtures in the path of the ray. Your callback
 	/// controls whether you get the closest point, any point, or n-points.
@@ -119,7 +131,7 @@ public:
 	/// @param callback a user implemented callback class.
 	/// @param point1 the ray starting point
 	/// @param point2 the ray ending point
-	void RayCast(b2RayCastCallback* callback, const b2Vec2& point1, const b2Vec2& point2) const;
+	void RayCast(b2RayCastCallback* callback, const b2Vec2& point1, const b2Vec2& point2);
 
 	/// Get the world body list. With the returned body, use b2Body::GetNext to get
 	/// the next body in the world list. A nullptr body indicates the end of the list.
@@ -140,6 +152,20 @@ public:
 	/// Use b2ContactListener to avoid missing contacts.
 	b2Contact* GetContactList();
 	const b2Contact* GetContactList() const;
+
+	/// Get/set the body, contact, and joint contributions to the estimated island solving cost.
+	/// islandCost = bodyCost * bodyCount + contactCost * contactCount + jointCost * jointCount
+	uint32 GetBodyCostScale() const { return m_bodyCost; }
+	uint32 GetContactCostScale() const { return m_contactCost; }
+	uint32 GetJointCostScale() const { return m_jointCost; }
+	void SetBodyCostScale(uint32 bodyCost) { m_bodyCost = bodyCost; }
+	void SetContactCostScale(uint32 contactCost) { m_contactCost = contactCost; }
+	void SetJointCostScale(uint32 jointCost) { m_jointCost = jointCost; }
+
+	/// Get/set the solve task cost threshold. Islands will be added to the same solve task until
+	/// this cost threshold is reached.
+	void SetSolveTaskCostThreshold(uint32 cost) { m_solveTaskCostThreshold = cost; }
+	uint32 GetSolveTaskCostThreshold() const { return m_solveTaskCostThreshold; }
 
 	/// Enable/disable sleep.
 	void SetAllowSleeping(bool flag);
@@ -181,12 +207,20 @@ public:
 
 	/// Change the global gravity vector.
 	void SetGravity(const b2Vec2& gravity);
-	
+
 	/// Get the global gravity vector.
 	b2Vec2 GetGravity() const;
 
 	/// Is the world locked (in the middle of a time step).
 	bool IsLocked() const;
+
+	/// Is the world multithreaded-locked (in the middle of a multithreaded portion of the time step).
+	/// Note: if an assert fails based on this, it means you're doing something that's probably not
+	/// thread safe in a multithreaded callback. You should move that work to a deferred callback.
+	bool IsMtLocked() const;
+
+	/// Is multi-threaded stepping enabled?
+	bool IsMultithreadedStepEnabled() const;
 
 	/// Set flag to control automatic clearing of forces after each time step.
 	void SetAutoClearForces(bool flag);
@@ -205,6 +239,10 @@ public:
 	/// Get the current profile.
 	const b2Profile& GetProfile() const;
 
+	/// Set the amount of time (milliseconds) an executor spent locking during the last step.
+	/// This is used in the testbed but custom executors aren't required to call this.
+	void SetLockingTime(float32 ms);
+
 	/// Dump the world into the log file.
 	/// @warning this should be called outside of a time step.
 	void Dump();
@@ -214,21 +252,60 @@ private:
 	// m_flags
 	enum
 	{
-		e_newFixture	= 0x0001,
-		e_locked		= 0x0002,
-		e_clearForces	= 0x0004
+		e_newFixture			= 0x0001,
+		e_locked				= 0x0002,
+		e_clearForces			= 0x0004,
+		e_mtLocked				= 0x0008,
+		e_mtCollisionLocked		= 0x0010,
+		e_mtSolveLocked			= 0x0020,
 	};
 
 	friend class b2Body;
 	friend class b2Fixture;
 	friend class b2ContactManager;
 	friend class b2Controller;
+	friend class b2FindMinToiContactTask;
+	friend class b2SolveTask;
 
-	void Solve(const b2TimeStep& step);
-	void SolveTOI(const b2TimeStep& step);
+	void StepSolveTOI(const b2TimeStep& step, b2Island& island, b2Contact* minContact, float32 minaAlpha);
+
+	void BaselineSolveTOI(b2TaskExecutor& executor, b2TaskGroup* taskGroup, const b2TimeStep& step);
+	void SolveTOI(b2TaskExecutor& executor, b2TaskGroup* taskGroup, const b2TimeStep& step);
+	void SynchronizeFixtures(b2TaskExecutor& executor, b2TaskGroup* taskGroup);
+	void FindNewContacts(b2TaskExecutor& executor, b2TaskGroup* taskGroup);
+	void Collide(b2TaskExecutor& executor, b2TaskGroup* taskGroup);
+	void Solve(b2TaskExecutor& executor, b2TaskGroup* taskGroup, const b2TimeStep& step);
+	void ClearPostSolve(b2TaskExecutor& executor, b2TaskGroup* taskGroup);
+	void ClearPostSolveTOI(b2TaskExecutor& executor, b2TaskGroup* taskGroup);
+	void ClearForces(b2TaskExecutor& executor, b2TaskGroup* taskGroup);
+	void FindMinToiContact(b2TaskExecutor& executor, b2TaskGroup* taskGroup, b2Contact** contactOut, float* alphaOut);
+	void FindMinToiContact(b2Contact** contactOut, float* alphaOut);
+
+	void RecalculateToiCandidacy(b2Body* b);
+	void RecalculateToiCandidacy(b2Fixture* f);
+
+	void RecalculateSleeping(b2Body* b);
 
 	void DrawJoint(b2Joint* joint);
 	void DrawShape(b2Fixture* shape, const b2Transform& xf, const b2Color& color);
+
+	void SetMtLock(int32 lockFlags);
+	bool IsMtCollisionLocked() const;
+	bool IsMtSolveLocked() const;
+
+	void FindMinContactSanityCheck(b2Contact* minContact, float32 minAlpha);
+
+	static float32 ComputeToi(b2Contact* contact);
+	static float32 ComputeToi(b2Contact* contact, float32 alpha0);
+
+	struct PerThreadData
+	{
+		b2GrowableArray<b2Contact*> m_outOfSyncSweeps;
+
+		uint8 _padding[b2_cacheLineSize];
+	};
+
+	PerThreadData m_perThreadData[b2_maxThreads];
 
 	b2BlockAllocator m_blockAllocator;
 	b2StackAllocator m_stackAllocator;
@@ -243,7 +320,16 @@ private:
 	int32 m_bodyCount;
 	int32 m_jointCount;
 
+	b2GrowableArray<b2Body*> m_nonStaticBodies;
+	b2GrowableArray<b2Body*> m_staticBodies;
+
 	b2Vec2 m_gravity;
+
+	uint32 m_bodyCost;
+	uint32 m_contactCost;
+	uint32 m_jointCost;
+	uint32 m_solveTaskCostThreshold;
+
 	bool m_allowSleep;
 
 	b2DestructionListener* m_destructionListener;
@@ -305,7 +391,7 @@ inline int32 b2World::GetJointCount() const
 
 inline int32 b2World::GetContactCount() const
 {
-	return m_contactManager.m_contactCount;
+	return m_contactManager.m_contacts.size();
 }
 
 inline void b2World::SetGravity(const b2Vec2& gravity)
@@ -321,6 +407,11 @@ inline b2Vec2 b2World::GetGravity() const
 inline bool b2World::IsLocked() const
 {
 	return (m_flags & e_locked) == e_locked;
+}
+
+inline bool b2World::IsMtLocked() const
+{
+	return (m_flags & e_mtLocked) == e_mtLocked;
 }
 
 inline void b2World::SetAutoClearForces(bool flag)
@@ -349,6 +440,30 @@ inline const b2ContactManager& b2World::GetContactManager() const
 inline const b2Profile& b2World::GetProfile() const
 {
 	return m_profile;
+}
+
+inline void b2World::SetLockingTime(float32 ms)
+{
+	m_profile.locking = ms;
+}
+
+inline void b2World::SetMtLock(int32 lockFlags)
+{
+	constexpr int32 mask = (e_mtLocked | e_mtCollisionLocked | e_mtSolveLocked);
+	b2Assert((lockFlags & mask) == lockFlags);
+
+	m_flags &= ~mask;
+	m_flags |= lockFlags & mask;
+}
+
+inline bool b2World::IsMtCollisionLocked() const
+{
+	return (m_flags & e_mtCollisionLocked) == e_mtCollisionLocked;
+}
+
+inline bool b2World::IsMtSolveLocked() const
+{
+	return (m_flags & e_mtSolveLocked) == e_mtSolveLocked;
 }
 
 #endif

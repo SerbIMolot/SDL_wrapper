@@ -31,7 +31,7 @@
 	symbols in library are missing the OES suffix,
 	even though the headers seem to be named right.
 */
-#ifdef SDL_GPU_USE_BROADCOM_RASPBERRYPI_WORKAROUND
+#ifdef ADD_MISSING_OES_FUNCTIONS
 	extern void glBlendEquation(GLenum mode);
 	extern void glBlendEquationSeparate(GLenum modeRGB, GLenum modeAlpha);
 	extern void glBlendFuncSeparate(GLenum srcRGB, GLenum dstRGB, GLenum srcAlpha, GLenum dstAlpha);
@@ -59,16 +59,19 @@
 typedef struct ContextData_GLES_1
 {
 	SDL_Color last_color;
-	Uint8 last_use_texturing;
+	GPU_bool last_use_texturing;
 	unsigned int last_shape;
-	Uint8 last_use_blending;
+	GPU_bool last_use_blending;
 	GPU_BlendMode last_blend_mode;
 	GPU_Rect last_viewport;
 	GPU_Camera last_camera;
-	Uint8 last_camera_inverted;
+	GPU_bool last_camera_inverted;
+	
+	GPU_bool last_depth_test;
+	GPU_bool last_depth_write;
+	GPU_ComparisonEnum last_depth_function;
 	
 	GPU_Image* last_image;
-	GPU_Target* last_target;
 	float* blit_buffer;  // Holds sets of 4 vertices and 4 tex coords interleaved (e.g. [x0, y0, z0, s0, t0, ...]).
 	unsigned short blit_buffer_num_vertices;
 	unsigned short blit_buffer_max_num_vertices;
@@ -80,7 +83,7 @@ typedef struct ContextData_GLES_1
 typedef struct ImageData_GLES_1
 {
     int refcount;
-    Uint8 owns_handle;
+    GPU_bool owns_handle;
 	Uint32 handle;
 	Uint32 format;
 } ImageData_GLES_1;

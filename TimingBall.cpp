@@ -15,7 +15,7 @@ TimingBall::~TimingBall()
 void TimingBall::Update()
 {
 	angle += velOfRotation;
-	GPU_Log("angle %f", angle);
+	//GPU_Log("angle %f", angle);
 	setPos( ( (float) (getParent()->getPos().x + std::cos(angle / RADIUS) * RADIUS) ) ,
 			( (float) (getParent()->getPos().y + std::sin(angle / RADIUS ) * RADIUS ) ) );
 
@@ -26,6 +26,6 @@ void TimingBall::Draw()
 	Body::Draw();
 }
 
-void TimingBall::collisionDetected(std::shared_ptr<Object> obj)
+void TimingBall::collisionDetected(std::shared_ptr<Body> obj)
 {
 }

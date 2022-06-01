@@ -1,9 +1,11 @@
-#include "stdafx.h"
+
 #include "ContactListener.h"
+#include "Trigger.h"
 
 std::shared_ptr< ContactListener > ContactListener::conInstance = nullptr;
 
-
+class Trigger;
+class Gun;
 
 ContactListener::ContactListener()
 {
@@ -42,12 +44,6 @@ void ContactListener::BeginContact(b2Contact * contact)
 		}
 	}
 	
-
-	
-	
-	//std::cout << a->getType()  << "\n";
-	//std::cout << b->getType() << "\n";
-	// contact->GetFixtureB();
 }
 
 void ContactListener::EndContact(b2Contact * contact)
@@ -58,7 +54,7 @@ void ContactListener::EndContact(b2Contact * contact)
 	{
 		if (a->getType() == btTrigger)
 		{
-			dynamic_cast<Trigger*>(a)->reset();
+			static_cast<Trigger*>(a)->reset();
 		}
 		if (b->getType() == btTrigger)
 		{
@@ -79,12 +75,10 @@ void ContactListener::PreSolve(b2Contact * contact, const b2Manifold * oldManifo
 		if (a->getType() == btPlayer && b->getType() == btGun
 			|| b->getType() == btPlayer && a->getType() == btGun)
 		{
-			SDL_Log("Collision of Gun and player disabled");
 			contact->SetEnabled( false );
 		}
 		if ( a->getType() == btGun || b->getType() == btGun )
 		{
-			SDL_Log("Collision of Gun and Gun disabled");
 			contact->SetEnabled( false );
 		}
 	}	
@@ -100,24 +94,37 @@ void ContactListener::PostSolve(b2Contact * contact, const b2ContactImpulse * im
 
 	}
 }
-bool ContactListener::ShouldCollide(b2Fixture * fixtureA, b2Fixture * fixtureB)
+bool ContactListener::BeginContactImmediate(b2Contact* contact, uint32 threadId)
 {
-		const b2Filter& filterA = fixtureA->GetFilterData();
-		const b2Filter& filterB = fixtureB->GetFilterData();
-		Body* a = static_cast<Body*>( fixtureA->GetUserData() );
-		Body* b = static_cast<Body*>( fixtureB->GetUserData() );
+	return true;
+}
+bool ContactListener::EndContactImmediate(b2Contact* contact, uint32 threadId)
+{
+	return true;
+}
+bool ContactListener::PreSolveImmediate(b2Contact* contact, const b2Manifold* oldManifold, uint32 threadId)
+{
+	return true;
+}
+bool ContactListener::PostSolveImmediate(b2Contact* contact, const b2ContactImpulse* impulse, uint32 threadId)
+{
+	return true;
+}
+bool ContactListener::ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB, uint32 threadId)
+{
+	const b2Filter& filterA = fixtureA->GetFilterData();
+	const b2Filter& filterB = fixtureB->GetFilterData();
+	Body* a = static_cast<Body*>(fixtureA->GetUserData());
+	Body* b = static_cast<Body*>(fixtureB->GetUserData());
 
-		if (a->getType() == btPlayer && b->getType() == btGun
-			|| b->getType() == btPlayer && a->getType() == btGun )
-		{
-			SDL_Log("Collision of parent and child disabled");
-			return false;
-		}
-		if (filterA.groupIndex == filterB.groupIndex && filterA.groupIndex != 0)
-		{
-			return filterA.groupIndex > 0;
-		}
-		bool collide = (filterA.maskBits & filterB.categoryBits) != 0 &&
-			(filterA.categoryBits & filterB.maskBits) != 0;
-		return collide;
+	if (b->ShouldCollide(a) || a->ShouldCollide(b)) {
+		return true;
+	}
+	if (filterA.groupIndex == filterB.groupIndex && filterA.groupIndex != 0)
+	{
+		return filterA.groupIndex > 0;
+	}
+	bool collide = (filterA.maskBits & filterB.categoryBits) != 0 &&
+		(filterA.categoryBits & filterB.maskBits) != 0;
+	return collide;
 }

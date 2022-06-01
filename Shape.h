@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Vector2d.h"
 enum cShape
 {
 	sUndefined,

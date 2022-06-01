@@ -677,7 +677,7 @@ FC_Rect FC_DefaultRenderCallback(FC_Image* src, FC_Rect* srcrect, FC_Target* des
     // FIXME: Why does the scaled offset look so wrong?
     #ifdef FC_USE_SDL_GPU
     {
-        GPU_Rect r = *srcrect;
+        SDL_Rect r = *srcrect;
         GPU_BlitScale(src, &r, dest, x + xscale*r.w/2.0f, y + r.h/2.0f, xscale, yscale);
     }
     #else

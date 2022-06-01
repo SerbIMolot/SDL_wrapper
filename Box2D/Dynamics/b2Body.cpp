@@ -1,5 +1,6 @@
 /*
 * Copyright (c) 2006-2007 Erin Catto http://www.box2d.org
+* Copyright (c) 2015 Justin Hoffman https://github.com/jhoffman0x/Box2D-MT
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -85,7 +86,7 @@ b2Body::b2Body(const b2BodyDef* bd, b2World* world)
 
 	m_type = bd->type;
 
-	if (m_type == b2_dynamicBody)
+	if (GetType() == b2_dynamicBody)
 	{
 		m_mass = 1.0f;
 		m_invMass = 1.0f;
@@ -103,6 +104,10 @@ b2Body::b2Body(const b2BodyDef* bd, b2World* world)
 
 	m_fixtureList = nullptr;
 	m_fixtureCount = 0;
+
+	memset(m_islandIndex, 0, sizeof(m_islandIndex));
+
+	m_worldIndex = -1;
 }
 
 b2Body::~b2Body()
@@ -118,22 +123,41 @@ void b2Body::SetType(b2BodyType type)
 		return;
 	}
 
-	if (m_type == type)
+	if (GetType() == type)
 	{
 		return;
 	}
 
-	m_type = type;
+	if (GetType() == b2_staticBody)
+	{
+		// Remove from static bodies.
+		m_world->m_staticBodies.back()->m_worldIndex = m_worldIndex;
+		b2RemoveAndSwapBack(m_world->m_staticBodies, m_worldIndex);
+
+		// Add to non static bodies.
+		m_worldIndex = m_world->m_nonStaticBodies.size();
+		m_world->m_nonStaticBodies.push_back(this);
+	}
+
+	m_type = (uint16)type;
 
 	ResetMassData();
 
-	if (m_type == b2_staticBody)
+	if (GetType() == b2_staticBody)
 	{
 		m_linearVelocity.SetZero();
 		m_angularVelocity = 0.0f;
 		m_sweep.a0 = m_sweep.a;
 		m_sweep.c0 = m_sweep.c;
 		SynchronizeFixtures();
+
+		// Remove from non static bodies.
+		m_world->m_nonStaticBodies.back()->m_worldIndex = m_worldIndex;
+		b2RemoveAndSwapBack(m_world->m_nonStaticBodies, m_worldIndex);
+
+		// Add to static bodies.
+		m_worldIndex = m_world->m_staticBodies.size();
+		m_world->m_staticBodies.push_back(this);
 	}
 
 	SetAwake(true);
@@ -213,7 +237,7 @@ b2Fixture* b2Body::CreateFixture(const b2Shape* shape, float32 density)
 
 void b2Body::DestroyFixture(b2Fixture* fixture)
 {
-	if (fixture == NULL)
+	if (fixture == nullptr)
 	{
 		return;
 	}
@@ -285,6 +309,11 @@ void b2Body::DestroyFixture(b2Fixture* fixture)
 
 void b2Body::ResetMassData()
 {
+	if (VerifyMtUnlocked() == false)
+	{
+		return;
+	}
+
 	// Compute mass data from shapes. Each shape has its own density.
 	m_mass = 0.0f;
 	m_invMass = 0.0f;
@@ -293,7 +322,7 @@ void b2Body::ResetMassData()
 	m_sweep.localCenter.SetZero();
 
 	// Static and kinematic bodies have zero mass.
-	if (m_type == b2_staticBody || m_type == b2_kinematicBody)
+	if (GetType() == b2_staticBody || GetType() == b2_kinematicBody)
 	{
 		m_sweep.c0 = m_xf.p;
 		m_sweep.c = m_xf.p;
@@ -301,7 +330,7 @@ void b2Body::ResetMassData()
 		return;
 	}
 
-	b2Assert(m_type == b2_dynamicBody);
+	b2Assert(GetType() == b2_dynamicBody);
 
 	// Accumulate mass over all fixtures.
 	b2Vec2 localCenter = b2Vec2_zero;
@@ -363,7 +392,7 @@ void b2Body::SetMassData(const b2MassData* massData)
 		return;
 	}
 
-	if (m_type != b2_dynamicBody)
+	if (GetType() != b2_dynamicBody)
 	{
 		return;
 	}
@@ -399,7 +428,7 @@ void b2Body::SetMassData(const b2MassData* massData)
 bool b2Body::ShouldCollide(const b2Body* other) const
 {
 	// At least one body should be dynamic.
-	if (m_type != b2_dynamicBody && other->m_type != b2_dynamicBody)
+	if (GetType() != b2_dynamicBody && other->GetType() != b2_dynamicBody)
 	{
 		return false;
 	}
@@ -445,6 +474,9 @@ void b2Body::SetTransform(const b2Vec2& position, float32 angle)
 
 void b2Body::SynchronizeFixtures()
 {
+	// This can only be called internally so we don't expect this to be possible.
+	b2Assert(m_world->IsMtLocked() == false);
+
 	b2Transform xf1;
 	xf1.q.Set(m_sweep.a0);
 	xf1.p = m_sweep.c0 - b2Mul(xf1.q, m_sweep.localCenter);
@@ -456,11 +488,21 @@ void b2Body::SynchronizeFixtures()
 	}
 }
 
+void b2Body::RecalculateSleeping()
+{
+	m_world->RecalculateSleeping(this);
+}
+
 void b2Body::SetActive(bool flag)
 {
 	b2Assert(m_world->IsLocked() == false);
 
 	if (flag == IsActive())
+	{
+		return;
+	}
+
+	if (m_world->IsLocked() == true)
 	{
 		return;
 	}
@@ -509,6 +551,13 @@ void b2Body::SetFixedRotation(bool flag)
 		return;
 	}
 
+	// This isn't safe to call from a multithreaded callback.
+	b2Assert(m_world->IsMtLocked() == false);
+	if (m_world->IsMtLocked())
+	{
+		return;
+	}
+
 	if (flag)
 	{
 		m_flags |= e_fixedRotationFlag;
@@ -523,9 +572,66 @@ void b2Body::SetFixedRotation(bool flag)
 	ResetMassData();
 }
 
+void b2Body::SetBullet(bool flag)
+{
+	b2Assert (m_world->IsMtLocked() == false);
+
+	bool status = (m_flags & e_bulletFlag) == e_bulletFlag;
+	if (status == flag)
+	{
+		return;
+	}
+
+	// This isn't safe to call from a multithreaded callback.
+	b2Assert(m_world->IsMtLocked() == false);
+	if (m_world->IsMtLocked())
+	{
+		return;
+	}
+
+	if (flag)
+	{
+		m_flags |= e_bulletFlag;
+	}
+	else
+	{
+		m_flags &= ~e_bulletFlag;
+	}
+
+	m_world->RecalculateToiCandidacy(this);
+}
+
+bool b2Body::VerifyMtUnlocked()
+{
+	if (GetType() != b2_staticBody)
+	{
+		// Non-static bodies can't be modified while multithread is locked for collision.
+		// They're safe to modify while locked for solve, assuming they're within the same
+		// island as the PostSolve contact.
+		return VerifyMtCollisionUnlocked();
+	}
+	// Static bodies can't be modified while multithread is locked.
+	b2Assert(m_world->IsMtLocked() == false);
+	if (m_world->IsMtLocked())
+	{
+		return false;
+	}
+	return true;
+}
+
+bool b2Body::VerifyMtCollisionUnlocked()
+{
+	b2Assert(m_world->IsMtCollisionLocked() == false);
+	if (m_world->IsMtCollisionLocked())
+	{
+		return false;
+	}
+	return true;
+}
+
 void b2Body::Dump()
 {
-	int32 bodyIndex = m_islandIndex;
+	int32 bodyIndex = GetIslandIndex(0);
 
 	b2Log("{\n");
 	b2Log("  b2BodyDef bd;\n");

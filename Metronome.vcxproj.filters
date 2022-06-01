@@ -79,6 +79,27 @@
     <Filter Include="SDL engine\MainFiles\Headers">
       <UniqueIdentifier>{d98f4c94-b568-40a4-931a-a847af8f89ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SDL engine\AddLibs\gkew">
+      <UniqueIdentifier>{3839f73c-1aa7-4ac1-b21c-f0c4404b09aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\AddLibs\NewFilter1">
+      <UniqueIdentifier>{d6b66cf5-b3ab-45f2-8671-1f7bf603aeb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\Objects\ButtonStates">
+      <UniqueIdentifier>{cda111e6-b2ff-4e92-a733-314b7d6802fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\Objects\ButtonStates\States">
+      <UniqueIdentifier>{43ee77fb-7332-456b-aea9-03965633b1b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\Entity">
+      <UniqueIdentifier>{016c7eb0-0f54-4268-8809-09b9b1c456ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL engine\Helpers\Event">
+      <UniqueIdentifier>{f9b0483a-d846-4135-8a55-b36caf7cc7b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Levels">
+      <UniqueIdentifier>{9b1cf7dd-0b90-401a-9f1d-9bc8f0de2b91}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -90,20 +111,11 @@
     <ClInclude Include="ButtonManager.h">
       <Filter>SDL engine\Managers\header</Filter>
     </ClInclude>
-    <ClInclude Include="EventHandle.h">
-      <Filter>SDL engine\Managers\header</Filter>
-    </ClInclude>
     <ClInclude Include="ObjectManager.h">
       <Filter>SDL engine\Managers\header</Filter>
     </ClInclude>
     <ClInclude Include="SoundManager.h">
       <Filter>SDL engine\Managers\header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Git clones\sdl-gpu\src\externals\stb_image\stb_image.h">
-      <Filter>SDL engine\AddLibs\stb</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Git clones\sdl-gpu\src\externals\stb_image_write\stb_image_write.h">
-      <Filter>SDL engine\AddLibs\stb</Filter>
     </ClInclude>
     <ClInclude Include="sdl\include\SDL_FontCache.h">
       <Filter>SDL engine\AddLibs</Filter>
@@ -117,9 +129,6 @@
     <ClInclude Include="State.h">
       <Filter>SDL engine\Helpers\headers</Filter>
     </ClInclude>
-    <ClInclude Include="TextureManager.h">
-      <Filter>SDL engine\Helpers\headers</Filter>
-    </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>SDL engine\Helpers\headers</Filter>
     </ClInclude>
@@ -128,21 +137,6 @@
     </ClInclude>
     <ClInclude Include="Trigger.h">
       <Filter>SDL engine\Helpers\headers</Filter>
-    </ClInclude>
-    <ClInclude Include="TriggersManager.h">
-      <Filter>SDL engine\Helpers\headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Collision.h">
-      <Filter>SDL engine\Math\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionShape.h">
-      <Filter>SDL engine\Math\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionStat.h">
-      <Filter>SDL engine\Math\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Circle.h">
-      <Filter>SDL engine\Math\src\headers</Filter>
     </ClInclude>
     <ClInclude Include="Line.h">
       <Filter>SDL engine\Math\src\headers</Filter>
@@ -165,32 +159,257 @@
     <ClInclude Include="Texture.h">
       <Filter>SDL engine\rendering\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Board.h">
-      <Filter>SDL engine\Objects\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>SDL engine\Objects\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Mouse.h">
       <Filter>SDL engine\Objects\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Wall.h">
-      <Filter>SDL engine\Objects\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>SDL engine\Objects\src\headers</Filter>
-    </ClInclude>
     <ClInclude Include="SDL_wrapper.h">
-      <Filter>SDL engine\MainFiles\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
-      <Filter>SDL engine\MainFiles\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="GPU_setup.h">
       <Filter>SDL engine\MainFiles\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Metronome.h">
       <Filter>SDL engine\MainFiles\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="TimingBall.h">
+      <Filter>SDL engine\Objects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>SDL engine</Filter>
+    </ClInclude>
+    <ClInclude Include="ContactListener.h">
+      <Filter>SDL engine</Filter>
+    </ClInclude>
+    <ClInclude Include="TriggersManager.h">
+      <Filter>SDL engine\Managers\header</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>SDL engine\Managers\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Gun.h">
+      <Filter>SDL engine</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>SDL engine\Helpers\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonStateMachine.h">
+      <Filter>SDL engine\Objects\ButtonStates</Filter>
+    </ClInclude>
+    <ClInclude Include="ReleasedState.h">
+      <Filter>SDL engine\Objects\ButtonStates\States</Filter>
+    </ClInclude>
+    <ClInclude Include="PressedState.h">
+      <Filter>SDL engine\Objects\ButtonStates\States</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonState.h">
+      <Filter>SDL engine\Objects\ButtonStates\States</Filter>
+    </ClInclude>
+    <ClInclude Include="EventManager.h">
+      <Filter>SDL engine\Managers\header</Filter>
+    </ClInclude>
+    <ClInclude Include="EventData.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
+      <Filter>SDL engine\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HoverState.h">
+      <Filter>SDL engine\Objects\ButtonStates\States</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleState.h">
+      <Filter>SDL engine\Objects\ButtonStates\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Body.h">
+      <Filter>SDL engine\Objects\src\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="dynBody.h">
+      <Filter>SDL engine\Objects\src\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>SDL engine\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>SDL engine\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="BodyManager.h">
+      <Filter>SDL engine\Managers\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandle.h">
+      <Filter>SDL engine\Helpers\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Collision\Shapes\b2ChainShape.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Collision\Shapes\b2CircleShape.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Collision\Shapes\b2EdgeShape.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Collision\Shapes\b2PolygonShape.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Collision\Shapes\b2Shape.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Collision\b2BroadPhase.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Collision\b2Collision.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Collision\b2Distance.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Collision\b2DynamicTree.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Collision\b2TimeOfImpact.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Common\b2BlockAllocator.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Common\b2Draw.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Common\b2GrowableArray.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Common\b2GrowableStack.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Common\b2Math.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Common\b2Settings.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Common\b2StackAllocator.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Common\b2Timer.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\Contacts\b2ChainAndCircleContact.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\Contacts\b2ChainAndPolygonContact.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\Contacts\b2CircleContact.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\Contacts\b2Contact.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\Contacts\b2ContactSolver.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\Contacts\b2EdgeAndCircleContact.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\Contacts\b2EdgeAndPolygonContact.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\Contacts\b2PolygonAndCircleContact.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\Contacts\b2PolygonContact.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\Joints\b2DistanceJoint.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\Joints\b2FrictionJoint.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\Joints\b2GearJoint.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\Joints\b2Joint.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\Joints\b2MotorJoint.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\Joints\b2MouseJoint.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\Joints\b2PrismaticJoint.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\Joints\b2PulleyJoint.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\Joints\b2RevoluteJoint.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\Joints\b2RopeJoint.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\Joints\b2WeldJoint.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\Joints\b2WheelJoint.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\b2Body.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\b2ContactManager.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\b2Fixture.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\b2Island.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\b2TimeStep.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\b2World.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Dynamics\b2WorldCallbacks.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\MT\b2DynamicTreeOfTrees.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\MT\b2MtUtil.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\MT\b2Task.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\MT\b2TaskExecutor.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\MT\b2ThreadDataSorter.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\MT\b2ThreadPool.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Rope\b2Rope.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2D\Box2D.h">
+      <Filter>SDL engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Baigine.h">
+      <Filter>SDL engine\MainFiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -209,12 +428,6 @@
     <ClCompile Include="TriggersManager.cpp">
       <Filter>SDL engine\Managers\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Git clones\sdl-gpu\src\externals\stb_image\stb_image.c">
-      <Filter>SDL engine\AddLibs\stb</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Git clones\sdl-gpu\src\externals\stb_image_write\stb_image_write.c">
-      <Filter>SDL engine\AddLibs\stb</Filter>
-    </ClCompile>
     <ClCompile Include="sdl\include\NFont.cpp">
       <Filter>SDL engine\AddLibs</Filter>
     </ClCompile>
@@ -227,26 +440,14 @@
     <ClCompile Include="Metronome.cpp">
       <Filter>SDL engine\MainFiles</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>SDL engine\Objects\src</Filter>
-    </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>SDL engine\rendering</Filter>
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>SDL engine\rendering</Filter>
     </ClCompile>
-    <ClCompile Include="Board.cpp">
-      <Filter>SDL engine\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>SDL engine\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Wall.cpp">
-      <Filter>SDL engine\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Circle.cpp">
-      <Filter>SDL engine\Math\src</Filter>
     </ClCompile>
     <ClCompile Include="Line.cpp">
       <Filter>SDL engine\Math\src</Filter>
@@ -260,15 +461,6 @@
     <ClCompile Include="Vector2d.cpp">
       <Filter>SDL engine\Math\src</Filter>
     </ClCompile>
-    <ClCompile Include="Collision.cpp">
-      <Filter>SDL engine\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionShape.cpp">
-      <Filter>SDL engine\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionStat.cpp">
-      <Filter>SDL engine\Math</Filter>
-    </ClCompile>
     <ClCompile Include="Trigger.cpp">
       <Filter>SDL engine\Helpers</Filter>
     </ClCompile>
@@ -278,20 +470,80 @@
     <ClCompile Include="Timer.cpp">
       <Filter>SDL engine\Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="State.cpp">
-      <Filter>SDL engine\Helpers</Filter>
-    </ClCompile>
     <ClCompile Include="Mouse.cpp">
       <Filter>SDL engine\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="EventHandle.cpp">
-      <Filter>SDL engine\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="SoundEfx.cpp">
       <Filter>SDL engine\Sound</Filter>
     </ClCompile>
-    <ClCompile Include="GPU_setup.cpp">
-      <Filter>SDL engine\MainFiles</Filter>
+    <ClCompile Include="TimingBall.cpp">
+      <Filter>SDL engine\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>SDL engine</Filter>
+    </ClCompile>
+    <ClCompile Include="ContactListener.cpp">
+      <Filter>SDL engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Gun.cpp">
+      <Filter>SDL engine</Filter>
+    </ClCompile>
+    <ClCompile Include="StateMachine.cpp">
+      <Filter>SDL engine\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonStateMachine.cpp">
+      <Filter>SDL engine\Objects\ButtonStates</Filter>
+    </ClCompile>
+    <ClCompile Include="ReleasedState.cpp">
+      <Filter>SDL engine\Objects\ButtonStates\States</Filter>
+    </ClCompile>
+    <ClCompile Include="PressedState.cpp">
+      <Filter>SDL engine\Objects\ButtonStates\States</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonState.cpp">
+      <Filter>SDL engine\Objects\ButtonStates\States</Filter>
+    </ClCompile>
+    <ClCompile Include="EventManager.cpp">
+      <Filter>SDL engine\Managers\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Constants.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HoverState.cpp">
+      <Filter>SDL engine\Objects\ButtonStates\States</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleState.cpp">
+      <Filter>SDL engine\Objects\ButtonStates\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Body.cpp">
+      <Filter>SDL engine\Objects\src</Filter>
+    </ClCompile>
+    <ClCompile Include="dynBody.cpp">
+      <Filter>SDL engine\Objects\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>SDL engine\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>SDL engine\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="BodyManager.cpp">
+      <Filter>SDL engine\Managers\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EventHandle.cpp">
+      <Filter>SDL engine\Helpers\Event</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

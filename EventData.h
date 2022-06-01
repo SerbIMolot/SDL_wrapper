@@ -1,7 +1,8 @@
 #pragma once
 #include <string>
-#include "Box2D.h"
-#include "SDL.h"
+#include <vector>
+#include "Box2D\Box2D.h"
+#include "sdl\include\SDL.h"
 enum class ButtonEvent
 {
 	BUTTON_UNKNOWN,
@@ -61,12 +62,16 @@ struct Event
 	std::string nameOfEvent;
 	int buttonID;
 	ButtonEvent buttonState;
+	b2Vec2* pos = nullptr;
 };
-class GameEvent
+struct GameEvent
 {
 public:
 	GameEventType type = GameEventType::UNKNOWN;
 	ButtonEvent button = ButtonEvent::BUTTON_UNKNOWN;
-	b2Vec2* pos = nullptr;
+	std::vector<ButtonEvent> States = std::vector<ButtonEvent>();
+	std::string command = "null";
+	std::shared_ptr<b2Vec2> pos = std::shared_ptr<b2Vec2>(nullptr);;// = nullptr;
 	int buttonID = 0;
+	SDL_EventType eventType = SDL_FIRSTEVENT;
 };

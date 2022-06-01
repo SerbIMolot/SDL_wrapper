@@ -1,5 +1,9 @@
-#include "stdafx.h"
+
 #include "Player.h"
+#include "TextureManager.h"
+#include "Constants.h"
+#include "Box2d.h"
+#include "EventManager.h"
 
 
 Player::Player()
@@ -8,7 +12,8 @@ Player::Player()
 	SDL_Log("PLAYER CON");
 	maxSpeed = 10.0f;
 	groundBody->SetFixedRotation( true );
-
+	//EventManager::Instance()->registerGameEvent("Jump", SDL_SCANCODE_SPACE, ButtonEvent::BUTTON_PRESSED, GameEventType::BUTTON );
+	//EventManager::Instance()->registerGameEvent("Jump", SDL_SCANCODE_SPACE, ButtonEvent::BUTTON_PRESSED, GameEventType::BUTTON );
 	//gun
 	/*
 	BodyManager::Instance()->createBody( getPos(), TextureManager::getTexture("Scope.png"), "gun", btGun );
@@ -30,6 +35,12 @@ Player::Player( b2Vec2 vec )
 
 Player::Player( float x, float y )
 	: Entity( btPlayer, x, y, TextureManager::getTexture("plStand.png"), 0.20f, 0.30f)
+{
+	maxSpeed = 2.0f;
+	groundBody->SetFixedRotation(true);
+}
+Player::Player( float x, float y, std::shared_ptr<Texture> texture)
+	: Entity( btPlayer, x, y, texture, 0.20f, 0.30f)
 {
 	maxSpeed = 2.0f;
 	groundBody->SetFixedRotation(true);

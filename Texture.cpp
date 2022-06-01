@@ -1,11 +1,13 @@
-#include "stdafx.h"
-
-
+//
+#include "Texture.h"
+#include "Vector2d.h"
+#include "Box2d.h"
+#include "SDL_image.h"
+#include "TextureManager.h"
 
 Texture::Texture()
 {
-	mTexture = nullptr;
-	mWidth = 0;
+	sTexture = nullptr;
 	mHeight = 0;
 }
 
@@ -21,25 +23,24 @@ bool Texture::loadFromFile( std::string path )
 	//Delete pre existing texture
 	free();
 
-	GPU_Image* newTexture = nullptr;
+	SDL_Texture* newTexture = nullptr;
 
 	//Load image at path
 	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
+
 	if (loadedSurface == nullptr)
 	{
-		GPU_Log("Unable to load image %s! SDL_Image error: %s\n", path.c_str(), IMG_GetError());
-			GPU_PushErrorCode( "loadFromFile { IMG_Load() }", GPU_ERROR_DATA_ERROR, "Unable to create surface from % s!SDL Error;", path.c_str() );
+			SDL_Log( "loadFromFile { IMG_Load() } Unable to create surface from % s!SDL Error;", path.c_str() );
 	}
 	else
 	{
 
-		newTexture = GPU_CopyImageFromSurface( loadedSurface );
-
+		//newTexture = GPU_CopyImageFromSurface( loadedSurface );
+		newTexture = SDL_CreateTextureFromSurface(TextureManager::sRenderer, loadedSurface);
 
 		if (newTexture == nullptr)
 		{
-			GPU_LogInfo("Unable to create texture from %s! GPU Error;\n", path.c_str() );
-			GPU_PushErrorCode( "loadFromFile { GPU_CopyImageFromSurface() }", GPU_ERROR_DATA_ERROR, "Unable to create texture from % s!GPU Error;", path.c_str() );
+			SDL_Log("Unable to create texture from %s! SDL Error;\n", path.c_str());
 
 		}
 		else
@@ -54,19 +55,16 @@ bool Texture::loadFromFile( std::string path )
 	}
 
 
-	mTexture = newTexture;
+	sTexture = newTexture;
 
-	return mTexture != nullptr;
+	return sTexture != nullptr;
 }
 
 bool Texture::loadFromFile( std::string path, SDL_Color colorKey )
 {
-	//Delete pre existing texture
 	free();
-
-	GPU_Image* newTexture = nullptr;
-
-	//Load image at path
+	
+	SDL_Texture* newTexture = nullptr;
 	SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
 	if (loadedSurface == nullptr)
 	{
@@ -80,7 +78,7 @@ bool Texture::loadFromFile( std::string path, SDL_Color colorKey )
 			printf("Unable to ser colorKey for %s! SDL Error error: %s\n", path.c_str(), SDL_GetError());
 		}
 
-		newTexture = GPU_CopyImageFromSurface( loadedSurface );
+		newTexture = SDL_CreateTextureFromSurface( TextureManager::sRenderer, loadedSurface );
 
 
 		if ( newTexture == nullptr)
@@ -99,17 +97,17 @@ bool Texture::loadFromFile( std::string path, SDL_Color colorKey )
 
 	}
 
-	mTexture = newTexture;
-
-	return mTexture != nullptr;
+	sTexture = newTexture;
+	
+	return sTexture != nullptr;
 }
 
 void Texture::free()
 {
-	if ( mTexture != nullptr ) 
+	if ( sTexture != nullptr ) 
 	{
-		GPU_FreeImage( mTexture );
-		mTexture = nullptr;
+		SDL_DestroyTexture( sTexture );
+		sTexture = nullptr;
 		mWidth = 0;
 		mHeight = 0;
 	}
@@ -117,92 +115,102 @@ void Texture::free()
 }
 
 
-void Texture::render( int x, int y, GPU_Rect * clip, float angle, float pivotX, float pivotY, GPU_FlipEnum flip )
+void Texture::render( int x, int y, SDL_Rect * clip, float angle, float pivotX, float pivotY, Uint32 flip )
 {
 	//Set rendering space and render to screen
-	GPU_Rect renderQuad = { static_cast< float >( x ), static_cast< float >( y ), mWidth, mHeight };
+	SDL_Rect renderQuad = { static_cast< float >( x ), static_cast< float >( y ), mWidth, mHeight };
 
 	if (clip != nullptr)
 	{
-		GPU_BlitRectX( mTexture, clip, SDL_wrapper::gRenderer, &renderQuad, angle, pivotX, pivotY, flip );
-	}
-	else
-	{
-		GPU_BlitRectX( mTexture, nullptr, SDL_wrapper::gRenderer, &renderQuad, angle, pivotX, pivotY, flip );
+		SDL_RenderCopy(TextureManager::sRenderer, sTexture, NULL, NULL);
 	}
 
 }
 
-void Texture::render( float x, float y, GPU_Rect * clip, float angle, float pivotX, float pivotY, GPU_FlipEnum flip )
+void Texture::render( float x, float y, SDL_Rect * clip, float angle, float pivotX, float pivotY, Uint32 flip )
 {
-	//Set rendering space and render to screen
-	GPU_Rect renderQuad = { x, y, mWidth, mHeight };
+	SDL_Rect renderQuad = { x, y, mWidth, mHeight };
 
+	SDL_Rect* clio = NULL;
 	//Set clip rendering dimensions
-	if (clip != nullptr)
+	if (clip != NULL)
 	{
-		GPU_BlitRectX( mTexture, clip, SDL_wrapper::gRenderer, &renderQuad, angle, pivotX, pivotY, flip );
+		renderQuad.w = clip->w;
+		renderQuad.h = clip->h;
+		clio = new SDL_Rect();
+		clio->x = clip->x;
+		clio->y = clip->y;
+		clio->w = clip->w;
+		clio->h = clip->h;
 	}
-	else
+	SDL_Point center = { pivotX, pivotY };
+
+
+	if (SDL_RenderCopyEx(TextureManager::sRenderer, sTexture, clio, &renderQuad, angle, NULL, SDL_FLIP_NONE))
 	{
-		GPU_BlitRectX( mTexture, nullptr, SDL_wrapper::gRenderer, &renderQuad, angle, pivotX, pivotY, flip );
+		printf("Error rendering texture! SDL Error %s\n", SDL_GetError());
 	}
-//	SDL_RenderCopyEx(SDL_wrapper::gRenderer, mTexture, clip, &renderQuad, angle, center, flip);
+	delete clio;
 
 }
 
-void Texture::render(std::shared_ptr< Vector2d > vec, GPU_Rect* clip, float angle, float pivotX, float pivotY, GPU_FlipEnum flip )
+void Texture::render(std::shared_ptr< Vector2d > vec, SDL_Rect* clip, float angle, float pivotX, float pivotY, Uint32 flip )
 {
 	//Set rendering space and render to screen
-	GPU_Rect renderQuad = { vec->getX(), vec->getY(), mWidth, mHeight };
+	SDL_Rect renderQuad = { vec->getX(), vec->getY(), mWidth, mHeight };
 
-	//Set clip rendering dimensions
-	if (clip != nullptr)
-	{
-		GPU_BlitRectX( mTexture, clip, SDL_wrapper::gRenderer, &renderQuad, angle, pivotX, pivotY, flip );
-	}
-	else
-	{
-		GPU_BlitRectX( mTexture, nullptr, SDL_wrapper::gRenderer, &renderQuad, angle, pivotX, pivotY, flip );
-	}
+
+	SDL_RenderCopy(TextureManager::sRenderer, sTexture, NULL, NULL);
+
+
+}
+void Texture::render( std::shared_ptr< b2Vec2 > vec, SDL_Rect* clip, float angle, float pivotX, float pivotY, Uint32 flip )
+{
+	SDL_Rect renderQuad = { vec->x, vec->y, mWidth, mHeight };
+
+	SDL_RenderCopy(TextureManager::sRenderer, sTexture, NULL, NULL);
 
 }
 
-void Texture::render( Vector2d& vec, GPU_Rect* clip, float angle, float pivotX, float pivotY, GPU_FlipEnum flip )
+void Texture::render( Vector2d& vec, SDL_Rect* clip, float angle, float pivotX, float pivotY, Uint32 flip )
 {
 	//Set rendering space and render to screen
-	GPU_Rect renderQuad = {  vec.getX(),  vec.getY(), mWidth, mHeight };
+	SDL_Rect renderQuad = {  vec.getX(),  vec.getY(), mWidth, mHeight };
 
-	if (clip != nullptr)
-	{
-		GPU_BlitRectX(mTexture, clip, SDL_wrapper::gRenderer, &renderQuad, angle, pivotX, pivotY, flip);
-	}
-	else
-	{
-		GPU_BlitRectX(mTexture, nullptr, SDL_wrapper::gRenderer, &renderQuad, angle, pivotX, pivotY, flip);
-	}
+	SDL_RenderCopy(TextureManager::sRenderer, sTexture, NULL, NULL);
+
+
+}
+void Texture::render( b2Vec2* vec, SDL_Rect* clip, float angle, float pivotX, float pivotY, SDL_RendererFlip flip )
+{
+	//Set rendering space and render to screen
+	SDL_Rect renderQuad = {  vec->x,  vec->y, mWidth, mHeight };
+
+	SDL_RenderCopy(TextureManager::sRenderer, sTexture, NULL, NULL);
 
 }
 
 void Texture::setRGBA( Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha )
 {
-	GPU_SetRGBA( mTexture, red, green, blue, alpha );
-	//Modulate texture
-	//SDL_SetTextureColorMod( mTexture, red, green, blue );
+	SDL_SetTextureColorMod( sTexture, red, green, blue );
 
 }
 
-void Texture::setBlendMode( GPU_BlendPresetEnum mode )
+void Texture::scale( float newH, float newW )
 {
-	GPU_SetBlendMode( mTexture, mode );
-	//SDL_SetTextureBlendMode( mTexture, blending );
+	mWidth = newH;
+	mHeight = newW;
 }
-/*
+
+void Texture::setBlendMode(SDL_BlendMode mode )
+{
+	SDL_SetTextureBlendMode( sTexture, mode);
+}
+
 void Texture::setAlpha(Uint8 alpha)
 {
-	SDL_SetTextureAlphaMod( mTexture, alpha );
+	SDL_SetTextureAlphaMod( sTexture, alpha );
 }
-*/
 float Texture::getWidth()
 {
 	return mWidth;

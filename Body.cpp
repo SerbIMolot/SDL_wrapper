@@ -1,8 +1,12 @@
 #include "Body.h"
-#include "SDL_wrapper.h"
 #include "Texture.h"
+#include "Box2D.h"
+
+#include "Constants.h"
+#include "EventData.h"
 
 
+class SDL_wrapper;
 
 Body::Body()
 {
@@ -13,25 +17,28 @@ Body::Body()
 Body::Body( BodyType btype, b2Vec2 vec, std::shared_ptr<Texture> textr )
 {
 	debug = true;
-	SDL_Log("BODY con");
-	this->btype = btype;
 
-	groundBodyDef.type = b2_staticBody;
-	groundBodyDef.position.Set( vec.x , vec.y );
-	groundBody = SDL_wrapper::world->CreateBody( &groundBodyDef );
-	
+	this->btype = btype;
+	groundBodyDef = new b2BodyDef();
+
+	groundBox = std::make_shared<b2PolygonShape>();
+	groundBodyDef->type = b2_staticBody;
+	groundBodyDef->position.Set(PixelToMeter(vec.x) , PixelToMeter(vec.y) );
+	groundBody = getWBox2DWorld()->CreateBody( groundBodyDef );
+
+	delete groundBodyDef;
 	if (textr)
 	{
 		texture = std::move(textr);
-		groundBox.SetAsBox(PixelToMeter(texture->getWidth() / 2), PixelToMeter(texture->getHeight() / 2));
+		groundBox->SetAsBox(PixelToMeter(texture->getWidth() / 2), PixelToMeter(texture->getHeight() / 2));
 	}
 	else
 	{
 		texture = nullptr;
-		groundBox.SetAsBox( PixelToMeter(10), PixelToMeter(10) );
+		groundBox->SetAsBox( PixelToMeter(10), PixelToMeter(10) );
 	}
 	
-	groundBody->CreateFixture( &groundBox, 0.0f );
+	groundBody->CreateFixture( groundBox.get(), 0.0f);
 	
 	groundBody->SetUserData( ( void* ) this );
 
@@ -43,53 +50,49 @@ Body::Body( BodyType btype, b2Vec2 vec, std::shared_ptr<Texture> textr )
 Body::Body( BodyType btype, float x, float y, std::shared_ptr<Texture> textr )
 {
 	debug = false;
-	SDL_Log("BODY con");
-	this->btype = btype;
-	groundBodyDef.type = b2_staticBody;
-	groundBodyDef.position.Set( x , y );
 
-	groundBody = SDL_wrapper::world->CreateBody( &groundBodyDef );
+	this->btype = btype;
+	groundBodyDef = new b2BodyDef();
+	groundBox = std::make_shared<b2PolygonShape>();
+
+	groundBodyDef->type = b2_staticBody;
+	groundBodyDef->position.Set(PixelToMeter(x), PixelToMeter(y));
+
+	groundBody = getWBox2DWorld()->CreateBody( groundBodyDef );
+	
+	delete groundBodyDef;
 
 	if (textr)
 	{
 		texture = std::move(textr);
-		groundBox.SetAsBox(PixelToMeter(texture->getWidth() / 2), PixelToMeter(texture->getHeight() / 2));
+		groundBox->SetAsBox(PixelToMeter(texture->getWidth() / 2), PixelToMeter(texture->getHeight() / 2));
 	}
 	else
 	{
 		texture = nullptr;
-		groundBox.SetAsBox(PixelToMeter(10), PixelToMeter(10));
+		groundBox->SetAsBox(PixelToMeter(10), PixelToMeter(10));
 	}
 
-	groundBody->CreateFixture( &groundBox, 0.0f )->SetUserData( ( void* ) this );
+	groundBody->CreateFixture( groundBox.get(), 0.0f)->SetUserData((void*)this);
 
 	parent = nullptr;
 	jointWithParent = nullptr;
 
 	textureFlip = SDL_FLIP_NONE;
-//	groundBody->GetFixtureList()->SetUserData( ( void* ) this );
-	//fixture->;
 }
 
 
 Body::~Body()
 {
-	//delete groundBody;
 }
 
 void Body::Draw()
 {
-		//printf( "Pos = %f : %f\n", ( groundBody->GetPosition().x) * MtPratio, (groundBody->GetPosition().y ) * MtPratio );
-
-		//printf("Rotation = %f \n", groundBody->GetAngle() * ( 180.0f / 3.141592653589793238463f) );
-	//printf( "Pos = %f : %f\n", ( groundBody->GetPosition().x - ( ( texture->getWidth() / 2 ) * PtMratio ) ) * MtPratio, (groundBody->GetPosition().y - ( texture->getHeight() / 2) * PtMratio ) * MtPratio );
-	//printf( "POS = %f, %f\n", getPos().x, getPos().y );
-	//printf( "POS Pix = %f, %f\n", MeterToPixel( getPos().x ), MeterToPixel( getPos().y ) );
-	
-	//texture->render( ( groundBody->GetPosition().x  ) * MtPratio, ( groundBody->GetPosition().y ) * MtPratio );
 	if ( texture )
 	{ 
-		texture->render( MeterToPixel( groundBody->GetPosition().x ) - texture->getWidth() / 2  , MeterToPixel( groundBody->GetPosition().y ) - texture->getHeight() / 2 , nullptr, groundBody->GetAngle() * RtDratio, 0.0f, 0.0f, textureFlip );
+		float angle = groundBody->GetAngle() * RtDratio;
+		texture->render( MeterToPixel( groundBody->GetPosition().x ) - texture->getWidth() / 2  , MeterToPixel( groundBody->GetPosition().y ) - texture->getHeight() / 2 , nullptr, angle, 0, 0, textureFlip );
+		
 	}
 }
 
@@ -114,12 +117,6 @@ void Body::setParent( std::shared_ptr<Body> par, bool collide )
 
 	colisionWithParent = collide;
 	setRelativePos( parent->getPos() - getPos() );
-
-
-	//data.center = parent->getPos();
-
-	//groundBody->SetMassData( &data );
-	//groundBody->SetTransform( parent->getPos() - relativePosition, groundBody->GetAngle() - relativeAngle );
 }
 
 void Body::setCollisionWithParent( bool col )
@@ -132,7 +129,7 @@ void Body::setSkin( std::shared_ptr< Texture > texture )
 	if ( texture )
 	{
 		this->texture = std::move( texture );
-		groundBox.SetAsBox( PixelToMeter(this->texture->getWidth() / 2), PixelToMeter(this->texture->getHeight() / 2) );
+		groundBox->SetAsBox( PixelToMeter(this->texture->getWidth() / 2), PixelToMeter(this->texture->getHeight() / 2) );
 	}
 }
 std::shared_ptr<Texture> Body::getSkin()
@@ -155,7 +152,6 @@ void Body::Debug()
 {
 	if ( debug == false )
 	{
-		GPU_Log("ON\n");
 		texture->setRGBA( 255, 0, 0 );
 
 		debug = true;
@@ -163,15 +159,13 @@ void Body::Debug()
 	}
 	else if ( debug == true )
 	{
-		
-		GPU_Log("OFF\n");
 		texture->setRGBA( 255, 255, 255 );
 
 		debug = false;
 	}
 }
 
-b2Body * const Body::getBody() const
+b2Body* const Body::getBody() const
 {
 	return groundBody;
 }
@@ -206,12 +200,18 @@ void Body::handleInput( std::shared_ptr< Event > newEvent )
 
 bool Body::operator==(const Body& rhs)
 {
-	if ( *shared_from_this() == rhs )
+	if ( nameID  == rhs.nameID )
+	{
+		return true;
+	}
 	return false;
 }
 bool Body::operator==(const Body* rhs)
 {
-	if ( *shared_from_this() == rhs )
+	if ( nameID  == rhs->nameID )
+	{
+		return true;
+	}
 	return false;
 }
 
@@ -221,11 +221,11 @@ b2Vec2 Body::getPos()
 	return groundBody->GetPosition();
 }
 
-b2Vec2* Body::getRelativePos()
+std::shared_ptr< b2Vec2 > Body::getRelativePos()
 {
 	if ( parent != nullptr )
 	{ 
-		return &relativePosition;
+		return relativePosition;
 	}
 	else
 	{
@@ -233,12 +233,12 @@ b2Vec2* Body::getRelativePos()
 	}
 }
 
-GPU_FlipEnum Body::getTextureFlip()
+SDL_RendererFlip Body::getTextureFlip()
 {
 	return textureFlip;
 }
 
-void Body::setTextureFlip( GPU_FlipEnum flip )
+void Body::setTextureFlip( SDL_RendererFlip flip )
 {
 	textureFlip = flip;
 }
@@ -261,14 +261,12 @@ void Body::setRelativePos( b2Vec2 pos )
 
 		if ( jointWithParent != nullptr )
 		{ 
-			SDL_wrapper::world->DestroyJoint( jointWithParent );
+			getWBox2DWorld()->DestroyJoint( jointWithParent );
 		}
 
 		b2RevoluteJointDef* wJoint = new b2RevoluteJointDef();
 
-		relativePosition = pos;
-	
-		//groundBody->SetTransform( parent->getPos() + relativePosition, groundBody->GetAngle() + relativeAngle );
+		relativePosition = std::make_shared< b2Vec2 >(pos);
 
 		setPos( parent->getPos() );
 
@@ -280,7 +278,7 @@ void Body::setRelativePos( b2Vec2 pos )
 
 		wJoint->collideConnected = false;
 
-		jointWithParent = ( b2RevoluteJoint* )SDL_wrapper::world->CreateJoint( wJoint );
+		jointWithParent = ( b2RevoluteJoint* )getWBox2DWorld()->CreateJoint( wJoint ) ;
 
 		delete wJoint;
 
@@ -292,18 +290,18 @@ void Body::setRelativePos( float32 x, float32 y )
 	if ( parent != nullptr )
 	{
 
-		if ( jointWithParent != nullptr )
-		{ 
-			SDL_wrapper::world->DestroyJoint( jointWithParent );
-		}
-
 		b2RevoluteJointDef* wJoint = new b2RevoluteJointDef();
 
-		relativePosition = b2Vec2( x, y );
+		if ( jointWithParent != nullptr )
+		{ 
+			wJoint->collideConnected = jointWithParent->GetCollideConnected();
+			getWBox2DWorld()->DestroyJoint( jointWithParent );
+		}
 
-		SDL_wrapper::world->DestroyJoint( jointWithParent );
+
+		relativePosition = std::make_shared< b2Vec2 >( x, y );
 	
-		groundBody->SetTransform( parent->getPos() + relativePosition, groundBody->GetAngle() + relativeAngle );
+		groundBody->SetTransform( parent->getPos() + *relativePosition, groundBody->GetAngle() + relativeAngle );
 
 		wJoint->bodyA = parent->getBody();
 		wJoint->bodyB = getBody();
@@ -311,9 +309,9 @@ void Body::setRelativePos( float32 x, float32 y )
 		wJoint->localAnchorA = b2Vec2( 0, 0 );
 		wJoint->localAnchorB = b2Vec2( 0, 0 );
 
-		wJoint->collideConnected = jointWithParent->GetCollideConnected();
+		
 
-		jointWithParent = ( b2RevoluteJoint* )SDL_wrapper::world->CreateJoint( wJoint );
+		jointWithParent = ( b2RevoluteJoint* )getWBox2DWorld()->CreateJoint( wJoint ) ;
 
 		delete wJoint;
 
@@ -322,10 +320,10 @@ void Body::setRelativePos( float32 x, float32 y )
 
 void Body::setLowerBound( b2Vec2 lwB )
 {
-	groundBox.SetAsBox( lwB.x, lwB.y );
+	groundBox->SetAsBox( lwB.x, lwB.y );
 
-	currentFixture.shape = &groundBox;
-	groundBody->CreateFixture( &currentFixture);
+	currentFixture->shape = groundBox.get();
+	groundBody->CreateFixture( currentFixture.get() );
 }
 
 void Body::isSensor( bool newSensor )

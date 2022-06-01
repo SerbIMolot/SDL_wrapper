@@ -1,5 +1,6 @@
 /*
 * Copyright (c) 2006-2011 Erin Catto http://www.box2d.org
+* Copyright (c) 2015 Justin Hoffman https://github.com/jhoffman0x/Box2D-MT
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -126,13 +127,13 @@ stored in a single array since multiple arrays lead to multiple misses.
 2D Rotation
 
 R = [cos(theta) -sin(theta)]
-    [sin(theta) cos(theta) ]
+[sin(theta) cos(theta) ]
 
 thetaDot = omega
 
 Let q1 = cos(theta), q2 = sin(theta).
 R = [q1 -q2]
-    [q2  q1]
+[q2  q1]
 
 q1Dot = -thetaDot * q2
 q2Dot = thetaDot * q1
@@ -145,42 +146,43 @@ This might be faster than computing sin+cos.
 However, we can compute sin+cos of the same angle fast.
 */
 
-b2Island::b2Island(
-	int32 bodyCapacity,
-	int32 contactCapacity,
-	int32 jointCapacity,
-	b2StackAllocator* allocator,
-	b2ContactListener* listener)
+b2Island::b2Island()
 {
-	m_bodyCapacity = bodyCapacity;
-	m_contactCapacity = contactCapacity;
-	m_jointCapacity	 = jointCapacity;
+
+}
+
+b2Island::b2Island(b2Body** bodies, b2Contact** contacts,
+		b2Velocity* velocities, b2Position* positions)
+{
 	m_bodyCount = 0;
 	m_contactCount = 0;
 	m_jointCount = 0;
 
-	m_allocator = allocator;
-	m_listener = listener;
+	m_bodies = bodies;
+	m_contacts = contacts;
 
-	m_bodies = (b2Body**)m_allocator->Allocate(bodyCapacity * sizeof(b2Body*));
-	m_contacts = (b2Contact**)m_allocator->Allocate(contactCapacity	 * sizeof(b2Contact*));
-	m_joints = (b2Joint**)m_allocator->Allocate(jointCapacity * sizeof(b2Joint*));
-
-	m_velocities = (b2Velocity*)m_allocator->Allocate(m_bodyCapacity * sizeof(b2Velocity));
-	m_positions = (b2Position*)m_allocator->Allocate(m_bodyCapacity * sizeof(b2Position));
+	m_velocities = velocities;
+	m_positions = positions;
 }
 
-b2Island::~b2Island()
+b2Island::b2Island(int32 bodyCount, int32 contactCount, int32 jointCount,
+	b2Body** bodies, b2Contact** contacts, b2Joint** joints,
+	b2Velocity* velocities, b2Position* positions)
 {
-	// Warning: the order should reverse the constructor order.
-	m_allocator->Free(m_positions);
-	m_allocator->Free(m_velocities);
-	m_allocator->Free(m_joints);
-	m_allocator->Free(m_contacts);
-	m_allocator->Free(m_bodies);
+	m_bodyCount = bodyCount;
+	m_contactCount = contactCount;
+	m_jointCount = jointCount;
+
+	m_bodies = bodies;
+	m_contacts = contacts;
+	m_joints = joints;
+
+	m_velocities = velocities;
+	m_positions = positions;
 }
 
-void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& gravity, bool allowSleep)
+void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& gravity, b2StackAllocator* allocator,
+		b2ContactListener* listener, uint32 threadId, bool allowSleep, b2GrowableArray<b2DeferredPostSolve>& postSolves)
 {
 	b2Timer timer;
 
@@ -190,6 +192,7 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 	for (int32 i = 0; i < m_bodyCount; ++i)
 	{
 		b2Body* b = m_bodies[i];
+		b->SetIslandIndex(i, threadId);
 
 		b2Vec2 c = b->m_sweep.c;
 		float32 a = b->m_sweep.a;
@@ -197,10 +200,13 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 		float32 w = b->m_angularVelocity;
 
 		// Store positions for continuous collision.
-		b->m_sweep.c0 = b->m_sweep.c;
-		b->m_sweep.a0 = b->m_sweep.a;
+		if (b->GetType() != b2_staticBody)
+		{
+			b->m_sweep.c0 = b->m_sweep.c;
+			b->m_sweep.a0 = b->m_sweep.a;
+		}
 
-		if (b->m_type == b2_dynamicBody)
+		if (b->GetType() == b2_dynamicBody)
 		{
 			// Integrate velocities.
 			v += h * (b->m_gravityScale * gravity + b->m_invMass * b->m_force);
@@ -230,15 +236,17 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 	solverData.step = step;
 	solverData.positions = m_positions;
 	solverData.velocities = m_velocities;
+	solverData.threadId = threadId;
 
 	// Initialize velocity constraints.
 	b2ContactSolverDef contactSolverDef;
 	contactSolverDef.step = step;
 	contactSolverDef.contacts = m_contacts;
 	contactSolverDef.count = m_contactCount;
+	contactSolverDef.threadId = threadId;
 	contactSolverDef.positions = m_positions;
 	contactSolverDef.velocities = m_velocities;
-	contactSolverDef.allocator = m_allocator;
+	contactSolverDef.allocator = allocator;
 
 	b2ContactSolver contactSolver(&contactSolverDef);
 	contactSolver.InitializeVelocityConstraints();
@@ -247,13 +255,13 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 	{
 		contactSolver.WarmStart();
 	}
-	
+
 	for (int32 i = 0; i < m_jointCount; ++i)
 	{
 		m_joints[i]->InitVelocityConstraints(solverData);
 	}
 
-	profile->solveInit = timer.GetMilliseconds();
+	profile->solveInit += timer.GetMilliseconds();
 
 	// Solve velocity constraints
 	timer.Reset();
@@ -269,7 +277,7 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 
 	// Store impulses for warm starting
 	contactSolver.StoreImpulses();
-	profile->solveVelocity = timer.GetMilliseconds();
+	profile->solveVelocity += timer.GetMilliseconds();
 
 	// Integrate positions
 	for (int32 i = 0; i < m_bodyCount; ++i)
@@ -330,16 +338,19 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 	for (int32 i = 0; i < m_bodyCount; ++i)
 	{
 		b2Body* body = m_bodies[i];
-		body->m_sweep.c = m_positions[i].c;
-		body->m_sweep.a = m_positions[i].a;
-		body->m_linearVelocity = m_velocities[i].v;
-		body->m_angularVelocity = m_velocities[i].w;
-		body->SynchronizeTransform();
+		if (body->GetType() != b2_staticBody)
+		{
+			body->m_sweep.c = m_positions[i].c;
+			body->m_sweep.a = m_positions[i].a;
+			body->m_linearVelocity = m_velocities[i].v;
+			body->m_angularVelocity = m_velocities[i].w;
+			body->SynchronizeTransform();
+		}
 	}
 
-	profile->solvePosition = timer.GetMilliseconds();
+	profile->solvePosition += timer.GetMilliseconds();
 
-	Report(contactSolver.m_velocityConstraints);
+	Report<false>(contactSolver.m_velocityConstraints, listener, threadId, &postSolves);
 
 	if (allowSleep)
 	{
@@ -375,13 +386,17 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 			for (int32 i = 0; i < m_bodyCount; ++i)
 			{
 				b2Body* b = m_bodies[i];
-				b->SetAwake(false);
+				if (b->GetType() != b2_staticBody)
+				{
+					b->SetAwake(false);
+				}
 			}
 		}
 	}
 }
 
-void b2Island::SolveTOI(const b2TimeStep& subStep, int32 toiIndexA, int32 toiIndexB)
+void b2Island::SolveTOI(const b2TimeStep& subStep, int32 toiIndexA, int32 toiIndexB, b2StackAllocator* allocator,
+		b2ContactListener* listener)
 {
 	b2Assert(toiIndexA < m_bodyCount);
 	b2Assert(toiIndexB < m_bodyCount);
@@ -399,7 +414,8 @@ void b2Island::SolveTOI(const b2TimeStep& subStep, int32 toiIndexA, int32 toiInd
 	b2ContactSolverDef contactSolverDef;
 	contactSolverDef.contacts = m_contacts;
 	contactSolverDef.count = m_contactCount;
-	contactSolverDef.allocator = m_allocator;
+	contactSolverDef.threadId = 0;
+	contactSolverDef.allocator = allocator;
 	contactSolverDef.step = subStep;
 	contactSolverDef.positions = m_positions;
 	contactSolverDef.velocities = m_velocities;
@@ -510,12 +526,14 @@ void b2Island::SolveTOI(const b2TimeStep& subStep, int32 toiIndexA, int32 toiInd
 		body->SynchronizeTransform();
 	}
 
-	Report(contactSolver.m_velocityConstraints);
+	Report<true>(contactSolver.m_velocityConstraints, listener, 0, nullptr);
 }
 
-void b2Island::Report(const b2ContactVelocityConstraint* constraints)
+template<bool isSingleThread>
+void b2Island::Report(const b2ContactVelocityConstraint* constraints, b2ContactListener* listener, uint32 threadId,
+	b2GrowableArray<b2DeferredPostSolve>* postSolves)
 {
-	if (m_listener == nullptr)
+	if (listener == nullptr)
 	{
 		return;
 	}
@@ -525,7 +543,7 @@ void b2Island::Report(const b2ContactVelocityConstraint* constraints)
 		b2Contact* c = m_contacts[i];
 
 		const b2ContactVelocityConstraint* vc = constraints + i;
-		
+
 		b2ContactImpulse impulse;
 		impulse.count = vc->pointCount;
 		for (int32 j = 0; j < vc->pointCount; ++j)
@@ -534,6 +552,19 @@ void b2Island::Report(const b2ContactVelocityConstraint* constraints)
 			impulse.tangentImpulses[j] = vc->points[j].tangentImpulse;
 		}
 
-		m_listener->PostSolve(c, &impulse);
+		if (listener->PostSolveImmediate(c, &impulse, threadId))
+		{
+			if (isSingleThread)
+			{
+				listener->PostSolve(c, &impulse);
+			}
+			else
+			{
+				b2DeferredPostSolve postSolve;
+				postSolve.contact = c;
+				postSolve.impulse = impulse;
+				postSolves->push_back(postSolve);
+			}
+		}
 	}
 }

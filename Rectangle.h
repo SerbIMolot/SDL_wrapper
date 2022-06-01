@@ -1,5 +1,7 @@
 #pragma once
 #include "Texture.h"
+#include "Shape.h"
+#include "NFont.h"
 class engRectangle : public Shape
 {
 public:
@@ -28,7 +30,9 @@ public:
 	float RightSide();
 
 
-	GPU_Rect convertToGPURect();
+	SDL_Rect convertToGPURect();
+
+	SDL_Rect* convertToSDLRect();
 
 	NFont::Rectf convertToNFontRect();
 

@@ -96,16 +96,19 @@ void main(void)\n\
 typedef struct ContextData_OpenGL_4
 {
 	SDL_Color last_color;
-	Uint8 last_use_texturing;
+	GPU_bool last_use_texturing;
 	unsigned int last_shape;
-	Uint8 last_use_blending;
+	GPU_bool last_use_blending;
 	GPU_BlendMode last_blend_mode;
 	GPU_Rect last_viewport;
 	GPU_Camera last_camera;
-	Uint8 last_camera_inverted;
+	GPU_bool last_camera_inverted;
+	
+	GPU_bool last_depth_test;
+	GPU_bool last_depth_write;
+	GPU_ComparisonEnum last_depth_function;
 	
 	GPU_Image* last_image;
-	GPU_Target* last_target;
 	float* blit_buffer;  // Holds sets of 4 vertices, each with interleaved position, tex coords, and colors (e.g. [x0, y0, z0, s0, t0, r0, g0, b0, a0, ...]).
 	unsigned short blit_buffer_num_vertices;
 	unsigned short blit_buffer_max_num_vertices;
@@ -117,9 +120,7 @@ typedef struct ContextData_OpenGL_4
     unsigned int blit_VAO;
     unsigned int blit_VBO[2];  // For double-buffering
     unsigned int blit_IBO;
-    Uint8 blit_VBO_flop;
-    GPU_ShaderBlock shader_block[2];
-    GPU_ShaderBlock current_shader_block;
+    GPU_bool blit_VBO_flop;
     
 	GPU_AttributeSource shader_attributes[16];
 	unsigned int attribute_VBO[16];
@@ -128,7 +129,7 @@ typedef struct ContextData_OpenGL_4
 typedef struct ImageData_OpenGL_4
 {
     int refcount;
-    Uint8 owns_handle;
+    GPU_bool owns_handle;
 	Uint32 handle;
 	Uint32 format;
 } ImageData_OpenGL_4;

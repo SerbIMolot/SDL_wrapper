@@ -1,5 +1,7 @@
-#include "stdafx.h"
+
 #include "Camera.h"
+#include "Box2D\Collision\b2Collision.h"
+#include "Constants.h"
 
 
 
@@ -32,7 +34,7 @@ void Camera::Init() {
 
 void Camera::setScene() {
 	if (mapX == 0 && mapY == 0) {
-		std::cout << "Sets MAP SIZE CAM" << std::endl;
+		//GPU_Log( "Sets MAP SIZE CAM\n" );
 		//mapX = Map::getMapSize().getX();
 		//mapY = Map::getMapSize().getY();
 	}
@@ -54,7 +56,7 @@ void Camera::Release()
 void Camera::setPlayer(Body* pivot)
 {
 	//if (player == nullptr) {
-	std::cout << "Sets Player" << std::endl;
+	//GPU_Log( "Sets Player\n" );
 	
 	this->pivot = pivot;
 	*pos = pivot->getPos() - b2Vec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);

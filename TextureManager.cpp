@@ -1,27 +1,11 @@
-#include "stdafx.h"
+#include "TextureManager.h"
+#include "Texture.h"
+#include "SDL.h"
 
-
-
-
-TextureManager* TextureManager::tmInstance = nullptr;
 std::map<std::string, std::shared_ptr<Texture>> TextureManager::Textures;
-
-
-void TextureManager::loadTextures() {
-	addTexture("Data/Rocket.png");
-	addTexture("Data/Scope.png");
-	addTexture("Data/Puck.png");
-	addTexture("Data/wall.png");
-	addTexture("Data/plWall.png");
-	addTexture("Data/enWall.png");
-	addTexture("Data/enGate.png");
-	addTexture("Data/plGate.png");
-	addTexture("Data/Circle.png");
-	addTexture("Data/ButtonReleased.png");
-	addTexture("Data/ButtonPressed.png");
-	// width 160
-	// height 150, 160?
-}
+SDL_Window* TextureManager::sWindow = nullptr;
+SDL_Renderer* TextureManager::sRenderer = nullptr;
+SDL_Surface* TextureManager::sWindowSurf = nullptr;
 
 
 TextureManager::TextureManager() {
@@ -31,7 +15,6 @@ TextureManager::TextureManager() {
 
 TextureManager::~TextureManager() {
 	Close("all");
-	//delete tmInstance;
 }
 
 void TextureManager::addTexture(const char * path) {
@@ -52,26 +35,28 @@ void TextureManager::addTexture(const char * path) {
 		if (k.first == fileName)
 		{
 			i++;
+			if (i > 0) {
+				break;
+			}
 		}
 	}
 	if (i != 0) {
-		fileName += std::to_string(i);
+		return;
+		//fileName += std::to_string(i);
 	}
+	fflush( stdout );
+	fflush( stderr );
 	
-	printf( "Texture : %s\n", fileName.c_str() );
+	SDL_Log( "Texture : %s\n", fileName.c_str() );
 	Textures[fileName] = std::make_shared<Texture>();
  	Textures[fileName]->loadFromFile(path);
 }
 
 
 
-TextureManager* TextureManager::Initialize() {
-	if (tmInstance == nullptr) {
+TextureManager* TextureManager::Instance() {
+	static TextureManager* tmInstance;
 
-		tmInstance = new TextureManager();
-		tmInstance->loadTextures();
-
-	}
 	return tmInstance;
 }
 
@@ -94,13 +79,14 @@ void TextureManager::Close(std::string fileName) {
 
 }
 
-std::shared_ptr<Texture> TextureManager::getTexture(const char * fileName) {
-	if (Textures.find(fileName) == Textures.end()) {
-		std::cout << "Could not find texture" << fileName << std::endl;
-		return nullptr;
+std::shared_ptr<Texture> TextureManager::getTexture(const char* fileName) {
+	try
+	{
+		return Textures.at(fileName);
 	}
-	else {
-		return Textures[fileName];
+	catch (std::out_of_range& e)
+	{
+		return nullptr;
 	}
 }
 

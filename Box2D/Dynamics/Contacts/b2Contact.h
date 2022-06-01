@@ -1,5 +1,6 @@
 /*
 * Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
+* Copyright (c) 2015 Justin Hoffman https://github.com/jhoffman0x/Box2D-MT
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -22,6 +23,7 @@
 #include "Box2D/Common/b2Math.h"
 #include "Box2D/Collision/b2Collision.h"
 #include "Box2D/Collision/Shapes/b2Shape.h"
+#include "Box2D/Collision/b2BroadPhase.h"
 #include "Box2D/Dynamics/b2Fixture.h"
 
 class b2Body;
@@ -31,6 +33,7 @@ class b2World;
 class b2BlockAllocator;
 class b2StackAllocator;
 class b2ContactListener;
+struct b2ContactManagerPerThreadData;
 
 /// Friction mixing law. The idea is to allow either fixture to drive the friction to zero.
 /// For example, anything slides on ice.
@@ -56,6 +59,21 @@ struct b2ContactRegister
 	b2ContactCreateFcn* createFcn;
 	b2ContactDestroyFcn* destroyFcn;
 	bool primary;
+};
+
+/// Stores the proxy ids of a contact's fixtures in a consistent order.
+struct b2ContactProxyIds
+{
+	b2ContactProxyIds()
+		: low(b2BroadPhase::e_nullProxy)
+		, high(b2BroadPhase::e_nullProxy)
+	{}
+	b2ContactProxyIds(int32 proxyIdA, int32 proxyIdB)
+		: low(proxyIdA < proxyIdB ? proxyIdA : proxyIdB)
+		, high(proxyIdA < proxyIdB ? proxyIdB : proxyIdA)
+	{}
+	int32 low;
+	int32 high;
 };
 
 /// A contact edge is used to connect bodies and contacts together
@@ -150,6 +168,11 @@ protected:
 	friend class b2ContactSolver;
 	friend class b2Body;
 	friend class b2Fixture;
+	friend class b2ClearContactSolveFlags;
+	friend class b2ClearContactSolveTOIFlags;
+	friend class b2FindMinToiContactTask;
+	friend bool b2ContactPointerLessThan(const b2Contact*, const b2Contact*);
+	friend bool b2ToiContactPointerLessThan(const b2Contact*, const b2Contact*);
 
 	// Flags stored in m_flags
 	enum
@@ -170,11 +193,14 @@ protected:
 		e_bulletHitFlag		= 0x0010,
 
 		// This contact has a valid TOI in m_toi
-		e_toiFlag			= 0x0020
-	};
+		e_toiFlag			= 0x0020,
 
-	/// Flag this contact for filtering. Filtering will occur the next time step.
-	void FlagForFiltering();
+		// This contact must be checked for TOI events.
+		e_toiCandidateFlag	= 0x0040,
+
+		// Neither body is awake and non-static.
+		e_inactiveFlag		= 0x0080
+	};
 
 	static void AddType(b2ContactCreateFcn* createFcn, b2ContactDestroyFcn* destroyFcn,
 						b2Shape::Type typeA, b2Shape::Type typeB);
@@ -187,16 +213,24 @@ protected:
 	b2Contact(b2Fixture* fixtureA, int32 indexA, b2Fixture* fixtureB, int32 indexB);
 	virtual ~b2Contact() {}
 
+	void Update(b2ContactManagerPerThreadData& td, b2ContactListener* listener, uint32 threadId);
 	void Update(b2ContactListener* listener);
+
+	template <bool isSingleThread>
+	void UpdateImpl(b2ContactManagerPerThreadData* td, b2ContactListener* listener, uint32 threadId);
+
+	bool IsMinToiCandidate() const;
+	void ClearToi();
+
+	static bool IsToiCandidate(b2Fixture* fA, b2Fixture* fB);
+	static bool ToiLessThan(float32 alpha0, const b2Contact* contact0, float32 alpha1, const b2Contact* contact1);
 
 	static b2ContactRegister s_registers[b2Shape::e_typeCount][b2Shape::e_typeCount];
 	static bool s_initialized;
 
 	uint32 m_flags;
 
-	// World pool and list pointers.
-	b2Contact* m_prev;
-	b2Contact* m_next;
+	int32 m_managerIndex;
 
 	// Nodes for connecting bodies.
 	b2ContactEdge m_nodeA;
@@ -208,6 +242,8 @@ protected:
 	int32 m_indexA;
 	int32 m_indexB;
 
+	b2ContactProxyIds m_proxyIds;
+
 	b2Manifold m_manifold;
 
 	int32 m_toiCount;
@@ -217,7 +253,31 @@ protected:
 	float32 m_restitution;
 
 	float32 m_tangentSpeed;
+
+	// World pool and list pointers.
+	b2Contact* m_prev;
+	b2Contact* m_next;
 };
+
+inline bool operator==(const b2ContactProxyIds& lhs, const b2ContactProxyIds& rhs)
+{
+	return lhs.low == rhs.low && lhs.high == rhs.high;
+}
+
+inline bool operator<(const b2ContactProxyIds& lhs, const b2ContactProxyIds& rhs)
+{
+	if (lhs.low < rhs.low)
+	{
+		return true;
+	}
+
+	if (lhs.low == rhs.low)
+	{
+		return lhs.high < rhs.high;
+	}
+
+	return false;
+}
 
 inline b2Manifold* b2Contact::GetManifold()
 {
@@ -301,11 +361,6 @@ inline int32 b2Contact::GetChildIndexB() const
 	return m_indexB;
 }
 
-inline void b2Contact::FlagForFiltering()
-{
-	m_flags |= e_filterFlag;
-}
-
 inline void b2Contact::SetFriction(float32 friction)
 {
 	m_friction = friction;
@@ -344,6 +399,30 @@ inline void b2Contact::SetTangentSpeed(float32 speed)
 inline float32 b2Contact::GetTangentSpeed() const
 {
 	return m_tangentSpeed;
+}
+
+inline bool b2Contact::IsMinToiCandidate() const
+{
+	// Is this contact disabled?
+	if (IsEnabled() == false)
+	{
+		return false;
+	}
+
+	// Prevent excessive sub-stepping.
+	if (m_toiCount > b2_maxSubSteps)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+inline void b2Contact::ClearToi()
+{
+	m_flags &= ~(b2Contact::e_toiFlag | b2Contact::e_islandFlag);
+	m_toiCount = 0;
+	m_toi = 1.0f;
 }
 
 #endif

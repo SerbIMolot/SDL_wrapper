@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "SoundManager.h"
 
 SoundManager* SoundManager::tmInstance = nullptr;
@@ -79,7 +79,6 @@ void SoundManager::Close(std::string fileName)
 std::shared_ptr< SoundEfx > SoundManager::getSound(const char * fileName)
 {
 	if ( Sounds.find(fileName) == Sounds.end() ) {
-		std::cout << "Could not find sound: " << fileName << std::endl;
 		return nullptr;
 	}
 	else {
@@ -87,10 +86,3 @@ std::shared_ptr< SoundEfx > SoundManager::getSound(const char * fileName)
 	}
 }
 
-void SoundManager::loadSounds()
-{
-	addSound("Data/puck_hit.wav");
-	addSound("Data/goal.wav");
-	addSound("Data/StrongBeat.flac");
-	addSound("Data/WeakBeat.flac");
-}

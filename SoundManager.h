@@ -1,4 +1,11 @@
 #pragma once
+
+#include <map>
+#include <string>
+#include <memory>
+#include "SoundEfx.h"
+
+
 class SoundManager
 {
 	static SoundManager* tmInstance;
@@ -18,8 +25,6 @@ public:
 	static void Close(std::string fileName);
 
 	static std::shared_ptr< SoundEfx > getSound(const char * fileName);
-	
-	void loadSounds();
 };
 
 

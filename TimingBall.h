@@ -1,5 +1,8 @@
 #pragma once
-#include "stdafx.h"
+#include <cmath>
+#include "Body.h"
+#include "TextureManager.h"
+
 class TimingBall :
 	public Body
 {
@@ -14,6 +17,6 @@ public:
 
 	void Draw() override;
 
-	void collisionDetected(std::shared_ptr< Object > obj);
+	void collisionDetected(std::shared_ptr< Body > obj);
 };
 

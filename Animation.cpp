@@ -1,12 +1,13 @@
-#include "stdafx.h"
+#include "Animation.h"
+
 
 
 Animation::Animation()
 {
 
 	frames = 0;
-
-	spriteSheet = nullptr;
+	ended = false;
+	spriteSheet = std::make_shared< Texture > ();
 
 	frameSize = Vector2d( 0.0f, 0.0f );
 }
@@ -89,7 +90,7 @@ void Animation::drawFrame( int x, int y, bool isLooped )
 		spriteSheet->render( x, y, &spriteClips[ currentFrame / static_cast<int>( ceil( frameDevider ) ) ] );
 		currentFrame++;
 
-		if ( currentFrame / frameDevider >= frames )
+		if (  currentFrame / static_cast<int>(ceil(frameDevider) ) >= frames )
 		{
 			ended = true;
 		}
@@ -148,9 +149,9 @@ void Animation::setSpriteSheet( int frames, std::shared_ptr< Texture > spriteShe
 
 	for ( int i = 0; i < frames; i++ )
 	{
-		GPU_Log(" size of clip:\n x = %d, y = %d \n w = %d, h = %d.", static_cast< int >( leftBound.getX() ), static_cast< int >( leftBound.getY() ), 
-																	static_cast< int >( frameDimentions.getX() ), static_cast< int >( frameDimentions.getY() ) );
-		spriteClips.push_back( GPU_Rect{ leftBound.getX(), leftBound.getY() , frameDimentions.getX(), frameDimentions.getY() } );
+		////GPU_Log(" size of clip:\n x = %d, y = %d \n w = %d, h = %d.", static_cast< int >( leftBound.getX() ), static_cast< int >( leftBound.getY() ), 
+									//static_cast< int >( frameDimentions.getX() ), static_cast< int >( frameDimentions.getY() ) );
+		spriteClips.push_back(SDL_Rect{ (int)leftBound.getX(), (int)leftBound.getY() , (int)frameDimentions.getX(), (int)frameDimentions.getY() });
 
 		if ( leftBound.getX() + frameDimentions.getX() > this->spriteSheet->getWidth() - frameDimentions.getX() )
 		{

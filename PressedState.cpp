@@ -1,10 +1,12 @@
 #include "PressedState.h"
+
 #include "Button.h"
+#include "TextureManager.h"
 
 PressedState::PressedState( std::string name )
 	:	ButtonState( name, PRESSED_NEIGHBORS )
 {
-	buttonFont = std::make_unique< NFont >( "Data/FreeSans.ttf", 60, NFont::Color( 0, 0, 0, 255) );
+	//buttonFont = std::make_unique< NFont >(TextureManager::sRenderer, "Data/FreeSans.ttf", 60, NFont::Color( 0, 0, 0, 255) );
 	setText( "Pressed" );
 }
 
@@ -19,21 +21,35 @@ void PressedState::atStart(std::shared_ptr<Body> body)
 
 void PressedState::update( Body* body )
 {
-	buttonFont->draw( TextureManager::gRenderer, body->getPos().x, body->getPos().y, text.c_str() );
+	//buttonFont->draw( TextureManager::sRenderer, body->getPos().x, body->getPos().y, text.c_str() );
 }
 
 void PressedState::update(std::shared_ptr<Body> body)
 {
-	buttonFont->draw( TextureManager::gRenderer, body->getPos().x, body->getPos().y, text.c_str() );
+	//buttonFont->draw( TextureManager::sRenderer, body->getPos().x, body->getPos().y, text.c_str() );
 }
+bool PressedState::handleInput( std::shared_ptr< Body > body, std::shared_ptr< GameEvent > newEvent )
+{
+	bool handled = false;
+	
+	std::shared_ptr< Button > button = std::static_pointer_cast< Button >( body );
+	
+	if( newEvent->command == "MouseLMB" )
+	{ 
+		button->Press();
+		getMachine()->changeState("ReleasedState");
+		handled = true;
+	}
 
+	return handled;
+}
 bool PressedState::handleInput( std::shared_ptr< Body > body, std::shared_ptr< Event > newEvent )
 {
 	bool handled = false;
 	
 	std::shared_ptr< Button > button = std::static_pointer_cast< Button >( body );
 	
-	if( newEvent->nameOfEvent == "Press" )
+	if( newEvent->nameOfEvent == "MouseLMB" )
 	{ 
 		button->Press();
 		getMachine()->changeState("ReleasedState");

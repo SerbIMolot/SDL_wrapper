@@ -1,8 +1,8 @@
-#include "stdafx.h"
+
 #include "TriggersManager.h"
 
 
-TriggersManager* TriggersManager::trmInstance = nullptr;
+//std::unique_ptr< TriggersManager > TriggersManager::trmInstance = nullptr;
 
 TriggersManager::TriggersManager()
 {
@@ -19,12 +19,8 @@ TriggersManager::~TriggersManager()
 
 TriggersManager* TriggersManager::Instance()
 {
-	if( trmInstance == nullptr )
-	{
-		trmInstance = new TriggersManager();
+	static TriggersManager* trmInstance;
 
-		trmInstance->Init();
-	}
 	return trmInstance;
 }
 
@@ -37,11 +33,11 @@ void TriggersManager::addTrigger(int x, int y, int w, int h, std::string name)
 
 	trigers.push_back( tr );
 
-
+	//GPU_Log( "Trigger: %s\n", name.c_str() );
 
 }
 
-void TriggersManager::addTrigger(std::shared_ptr<Vector2d> vec, int w, int h, std::string name)
+void TriggersManager::addTrigger(std::shared_ptr< b2Vec2 > vec, int w, int h, std::string name)
 {
 	std::shared_ptr< Trigger > tr = std::make_shared< Trigger >( vec, w, h );
 
@@ -52,44 +48,26 @@ void TriggersManager::addTrigger(std::shared_ptr<Vector2d> vec, int w, int h, st
 
 void TriggersManager::Init()
 {
-	addTrigger( 0 , 169, 20, 138, "AiGoal");
-	addTrigger( SCREEN_WIDTH - 20 , 169, 20, 138, "PlGoal" );
+	
 }
 
-void TriggersManager::collisionDetected( std::shared_ptr< Object > obj )
+void TriggersManager::collisionDetected( std::shared_ptr< Body > obj )
 {
 
 	for ( auto tr : trigers )
 	{
 
-		if( strcmp( tr->getName().c_str() , "AiGoal" ) && tr->isTrigered() == true 
-			&& obj->getType() == tPuck )
+		if( strcmp( tr->getName().c_str() , "AiGoal" ) && tr->Trigered() == true 
+			&& obj->getType() == btUnknown )
 		{
 
-			SoundManager::getSound("goal.wav")->play();
-
-			Board::aiPoints += 1;
-
-			tr->reset();
-
-			Metronome::Instance()->GameReset();
-		
-			break;
 		}
 
-		if ( strcmp(tr->getName().c_str(), "PlGoal") && tr->isTrigered() == true 
-			&& obj->getType() == tPuck )
+		if ( strcmp(tr->getName().c_str(), "PlGoal") && tr->Trigered() == true 
+			&& obj->getType() == btUnknown)
 		{
 
-			SoundManager::getSound("goal.wav")->play();
 
-			Board::playerPoints += 1;
-
-			tr->reset();
-
-			Metronome::Instance()->GameReset();
-
-			break;
 		}
 
 

@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "SoundEfx.h"
 
 
@@ -8,7 +7,7 @@ SoundEfx::SoundEfx( std::string path )
 
 	if ( sound  == nullptr )
 	{
-		printf( "Failed to load sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
+		SDL_Log( "Failed to load sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
 	}
 }
 

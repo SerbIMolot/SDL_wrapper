@@ -1,8 +1,10 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
-#include "stdafx.h"
-#include <math.h>
+
+#include <algorithm>
+#include <memory>
+#include <iostream>
 
 #define PI 3.14159265
 #define DEG_TO_RAD PI / 180.0f

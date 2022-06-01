@@ -1,0 +1,1474 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Camera" Collapsed="true">
+    <Position X="14.5" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCAAAAFAAAAAACQAAAQoAACQCBBKAAQAACBDAAAAA=</HashCode>
+      <FileName>Camera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ContactListener" Collapsed="true">
+    <Position X="14.75" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAgAABAAAQgAAAAAEAAIAEUAAAIICAAAA=</HashCode>
+      <FileName>ContactListener.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gun" Collapsed="true">
+    <Position X="16.75" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AESAAAAACACAAAAAAAAAgAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Gun.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NFont" Collapsed="true">
+    <Position X="43.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>wAIIAgBBAIAAAAAIgAAIBUAABAAAQCIABBBgAACCAAA=</HashCode>
+      <FileName>sdl\include\NFont.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2BroadPhase" Collapsed="true">
+    <Position X="46.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACCAAAhFAAAQhAAAKAChEACAigQgAgAAAQABII=</HashCode>
+      <FileName>Box2D\Collision\b2BroadPhase.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2DynamicTree" Collapsed="true">
+    <Position X="55.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQBAAQCABCggABAApgAAIhARgAEAAgCAAABAAgQAII=</HashCode>
+      <FileName>Box2D\Collision\b2DynamicTree.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2ChainShape" Collapsed="true">
+    <Position X="2" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gCIAAAAgpAAAAAAgGAAAAAAAAAAEAAAAQABACAVAABI=</HashCode>
+      <FileName>Box2D\Collision\Shapes\b2ChainShape.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2CircleShape" Collapsed="true">
+    <Position X="4.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAACAAQAAAAQAAEAAAAAAAACAAAABI=</HashCode>
+      <FileName>Box2D\Collision\Shapes\b2CircleShape.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2EdgeShape" Collapsed="true">
+    <Position X="6.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAgAAAABAAACAACAQAAAAAEAAAAAAAACAAAABI=</HashCode>
+      <FileName>Box2D\Collision\Shapes\b2EdgeShape.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2PolygonShape" Collapsed="true">
+    <Position X="8.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgBACABAAACAAAAAAAAAAEAABAAAAACESAgBI=</HashCode>
+      <FileName>Box2D\Collision\Shapes\b2PolygonShape.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2Shape" Collapsed="true">
+    <Position X="5.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAgAAAIAAAACAAAAAAAAAAEAAEAAAQACAAAABI=</HashCode>
+      <FileName>Box2D\Collision\Shapes\b2Shape.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2BlockAllocator" Collapsed="true">
+    <Position X="43.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAACAEAAAAAAAAAAAAAAAAAAAIASAAQAAAAABCgAI=</HashCode>
+      <FileName>Box2D\Common\b2BlockAllocator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2Draw" Collapsed="true">
+    <Position X="53.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>RBAAAAAAAgAAAAIAAAQAAAgAAEAAABAIABABAEBAAAA=</HashCode>
+      <FileName>Box2D\Common\b2Draw.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2GrowableArray&lt;T&gt;" Collapsed="true">
+    <Position X="45" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAACUCABAkAAAAAIEAAAAQAAEAAAIAAAEwAAIIAAA=</HashCode>
+      <FileName>Box2D\Common\b2GrowableArray.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2GrowableStack&lt;T, N&gt;" Collapsed="true">
+    <Position X="46.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAQAAEAEAQAAAAAAAAAAAACAAAAAAAAAAAQICAA=</HashCode>
+      <FileName>Box2D\Common\b2GrowableStack.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2StackAllocator" Collapsed="true">
+    <Position X="55.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABEEAJAAAAgQIAAAAQAAAAAAAIAAAAAAAAAAAI=</HashCode>
+      <FileName>Box2D\Common\b2StackAllocator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2Timer" Collapsed="true">
+    <Position X="46.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAIAAABAAAAAAAACAAAAABAAAABAAAAAAAAQA=</HashCode>
+      <FileName>Box2D\Common\b2Timer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2Body" Collapsed="true">
+    <Position X="45" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YSCCMY4YAuSADgDBFxJVgcAWcgIBAVsQEg0BApRwMIM=</HashCode>
+      <FileName>Box2D\Dynamics\b2Body.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2ContactManager" Collapsed="true">
+    <Position X="48.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAkBAYAAAEBACQBAAAACIQQgEAFgAgCEgAAAMAMEBAw=</HashCode>
+      <FileName>Box2D\Dynamics\b2ContactManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2Fixture" Collapsed="true">
+    <Position X="43.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQABQAAgEAEwAAUgQQwQAQAGBEFEMwJCABAAAhhAI=</HashCode>
+      <FileName>Box2D\Dynamics\b2Fixture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2Island" Collapsed="true">
+    <Position X="48.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAMAIAAAAAAAAAAAEAIAEAgIAAAAAAgAAAAAAgBgBAA=</HashCode>
+      <FileName>Box2D\Dynamics\b2Island.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2World" Collapsed="true">
+    <Position X="48.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QSDBDYCMwEAdMGJSYwbA2NwqAqkqU0AApBYCASg5BLM=</HashCode>
+      <FileName>Box2D\Dynamics\b2World.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2DestructionListener" Collapsed="true">
+    <Position X="52" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\b2WorldCallbacks.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2ContactFilter" Collapsed="true">
+    <Position X="21.75" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\b2WorldCallbacks.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2ContactListener" Collapsed="true">
+    <Position X="14.75" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAgAABAAAAgAAAgAAAAAAEEAAAIIAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\b2WorldCallbacks.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2QueryCallback" Collapsed="true">
+    <Position X="50.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\b2WorldCallbacks.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2RayCastCallback" Collapsed="true">
+    <Position X="52" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\b2WorldCallbacks.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2ChainAndCircleContact" Collapsed="true">
+    <Position X="30" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAABAAEIAAAAAAAgAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Contacts\b2ChainAndCircleContact.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2ChainAndPolygonContact" Collapsed="true">
+    <Position X="34.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAgAAAAJAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Contacts\b2ChainAndPolygonContact.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2CircleContact" Collapsed="true">
+    <Position X="39" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAABAIEAAAAAAAAAAEAA=</HashCode>
+      <FileName>Box2D\Dynamics\Contacts\b2CircleContact.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2Contact" Collapsed="true">
+    <Position X="19.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCAmUIAEVAUjAIUAUBBmRBAEJAAVoQEAgBGAAACIA=</HashCode>
+      <FileName>Box2D\Dynamics\Contacts\b2Contact.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2ContactSolver" Collapsed="true">
+    <Position X="50.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAACAAgAAAAAEAIAAAABAAAQAoBAAAIAAAYQAAI=</HashCode>
+      <FileName>Box2D\Dynamics\Contacts\b2ContactSolver.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2EdgeAndCircleContact" Collapsed="true">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAABAAgAAAABAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Contacts\b2EdgeAndCircleContact.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2EdgeAndPolygonContact" Collapsed="true">
+    <Position X="27.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAARAgEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Contacts\b2EdgeAndPolygonContact.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2PolygonAndCircleContact" Collapsed="true">
+    <Position X="32.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAABAAEAAAAAAAAQAACA=</HashCode>
+      <FileName>Box2D\Dynamics\Contacts\b2PolygonAndCircleContact.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2PolygonContact" Collapsed="true">
+    <Position X="36.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAgAAAABAAEAAACAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Contacts\b2PolygonContact.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2DistanceJoint" Collapsed="true">
+    <Position X="14" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ISAAAABAgAAgQAYADAQQgCAFQA8QAgEAAAAwYAGAgoA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2DistanceJoint.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2FrictionJoint" Collapsed="true">
+    <Position X="18.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ASQADABAgAAggAaAAAQQgBABAAMAAggIIAgwcAEAAoA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2FrictionJoint.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2GearJoint" Collapsed="true">
+    <Position X="23" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIBAgkgiIAYCgRURkAANAIYAAgAODEA8BwAGGiA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2GearJoint.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2Joint" Collapsed="true">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAIABIkAAgAgaAEgAAgRARBABAAkMBAAgAGAYgAIA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2Joint.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2MotorJoint" Collapsed="true">
+    <Position X="9.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ASQADABAgAAwgCaDAiQAgBABAAIAAggMAFgycAEQAIA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2MotorJoint.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2MouseJoint" Collapsed="true">
+    <Position X="11.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ISAAAABAgAAgQAaADAQYgCAFQAYQAwkAAAgQAAGAAII=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2MouseJoint.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2PrismaticJoint" Collapsed="true">
+    <Position X="16.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>kXYgEUBEgABgAA4ANIwQkAAByIcAAoAAAIEAYCUgAoE=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2PrismaticJoint.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2PulleyJoint" Collapsed="true">
+    <Position X="20.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ASAAAARAgAAqAAYAABQRgAkFAA4AArAAAAAwYAEAAoA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2PulleyJoint.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2RevoluteJoint" Collapsed="true">
+    <Position X="25.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ETYAEUBEgABgAA4ABAQQwgAFkQcAAoQAAMAwYEUAAoE=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2RevoluteJoint.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2RopeJoint" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ASAAAQBAgAAhAAYAABQQgAQFQA8AAgAAAAAwYAEQAoA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2RopeJoint.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2WeldJoint" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ISAAAABAgAAgQAYADAQQgGAFAAcQAgEAAIAwYAGAAoA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2WeldJoint.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2WheelJoint" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ITYAAQBAgABgQAYAATQQwiAFmIcIYpAAAAEA8U0AAoM=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2WheelJoint.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2DynamicTreeOfTrees" Collapsed="true">
+    <Position X="41.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQBAAQCABDgBAFAIpkAAIpBRgAAAgoCAAABgAgAAII=</HashCode>
+      <FileName>Box2D\MT\b2DynamicTreeOfTrees.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2TaskGroup" Collapsed="true">
+    <Position X="7.75" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\MT\b2Task.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2Task" Collapsed="true">
+    <Position X="4.25" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAgAQAAEAAAAAAAABAAAFCAAAACAAQAAA=</HashCode>
+      <FileName>Box2D\MT\b2Task.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2RangeTask" Collapsed="true">
+    <Position X="4.25" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAQAAAAAAAAABAAAAIAAAAgAAAAAAAA=</HashCode>
+      <FileName>Box2D\MT\b2Task.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2TaskExecutor" Collapsed="true">
+    <Position X="4.75" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAQAAABAAAAAAEAAAQgAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\MT\b2TaskExecutor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2SortTask&lt;InputIt, Compare&gt;" Collapsed="true">
+    <Position X="6.5" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAQAAAAAAQAAAAAAAAAAAAAAAEQAAgAAAAAAAA=</HashCode>
+      <FileName>Box2D\MT\b2ThreadDataSorter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2MergeTask&lt;InputIt, OutputIt, Compare&gt;" Collapsed="true">
+    <Position X="2" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAgAQAAAAAQAAAAAAABEEQAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\MT\b2ThreadDataSorter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2ThreadDataSorter&lt;T, ThreadData, Member, Compare, ThreadDataCount&gt;" Collapsed="true">
+    <Position X="43.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>zAQAAgQABAAgAJAAAAAAABAAAIAgACRAQAEAAAAAAAA=</HashCode>
+      <FileName>Box2D\MT\b2ThreadDataSorter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2StackAllocThreadDataSorter&lt;T, ThreadData, Member, Compare, ThreadDataCount&gt;" Collapsed="true">
+    <Position X="41.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAgACABAAAAAAAIAAABAQAAAAEAgAAAAgAAIAAAA=</HashCode>
+      <FileName>Box2D\MT\b2ThreadDataSorter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2ThreadPoolTaskGroup" Collapsed="true">
+    <Position X="7.75" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAgAAAAAAAAQAAAAAAAAAAI=</HashCode>
+      <FileName>Box2D\MT\b2ThreadPool.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2ThreadPool" Collapsed="true">
+    <Position X="45" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EQAAAiAAAIKQAAABAAAIASAAAAQAAAAAoACAAAoIAAA=</HashCode>
+      <FileName>Box2D\MT\b2ThreadPool.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2ThreadPoolTaskExecutor" Collapsed="true">
+    <Position X="4.75" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAgAAAQAAABAEAAAAkAAAQgAAAAIAAAAAAACAA=</HashCode>
+      <FileName>Box2D\MT\b2ThreadPool.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b2Rope" Collapsed="true">
+    <Position X="53.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAEAAAgIAwAAGAAgAABAAAAIAABgJBAQAAQAAAA=</HashCode>
+      <FileName>Box2D\Rope\b2Rope.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Log" Collapsed="true">
+    <Position X="41.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAQAAAAAgAAAAAAACAAAEAAAAAAAAACIAAAUAA=</HashCode>
+      <FileName>Log.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Scene" Collapsed="true">
+    <Position X="45" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIIAAAAAAIAAAAAAgAIEABAAQQAAAAIAAAAAAAEEAAA=</HashCode>
+      <FileName>Scene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SceneManager" Collapsed="true">
+    <Position X="46.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEgAAAIAAAAAAAAAAAIAQAAiAACEAAQ=</HashCode>
+      <FileName>SceneManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Metronome" Collapsed="true">
+    <Position X="1.75" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAGgAJAAIAAAAAQACiAEACAAgggAAAmSAABgAgYAQA=</HashCode>
+      <FileName>Metronome.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UpdateManager" Collapsed="true">
+    <Position X="45" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAABAAAAAAgAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Metronome.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SDL_wrapper" Collapsed="true">
+    <Position X="1.75" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEEAKCAIIAEDEBgACAAEAAEEBQAAIAQIlBAIAZCgI=</HashCode>
+      <FileName>SDL_wrapper.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BodyManager" Collapsed="true">
+    <Position X="50.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IIQAAAAQAAoQAyApIICACAAIAAEkQAABQAAICAAAAIA=</HashCode>
+      <FileName>BodyManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ButtonManager" Collapsed="true">
+    <Position X="52" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>ButtonManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventManager" Collapsed="true">
+    <Position X="55.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAChIAAAAAIRAIAAIAAIAAAAEAAAAKQAAAQAgAAAI=</HashCode>
+      <FileName>EventManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoundManager" Collapsed="true">
+    <Position X="50.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAIAAQAAAAAAAAAAAAAAARAAgABCAAAA=</HashCode>
+      <FileName>SoundManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TextureManager" Collapsed="true">
+    <Position X="53.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAEAAAAgBABAAAAAgABAAAAAAAQAAgAACEAAA=</HashCode>
+      <FileName>TextureManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TriggersManager" Collapsed="true">
+    <Position X="43.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAgAAAAAAgAAAAAAAACAAAABAAAQABCAAAQAAA=</HashCode>
+      <FileName>TriggersManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="State" Collapsed="true">
+    <Position X="5.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAQQAAAAACCAAACAAAAAAAEAAAkAAAAAAAEBBCEAAE=</HashCode>
+      <FileName>State.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateMachine" Collapsed="true">
+    <Position X="16.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIIQAoAAAAAAEAAAAAQABEAAAACAAAAGAAAAAAhECAA=</HashCode>
+      <FileName>StateMachine.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Timer" Collapsed="true">
+    <Position X="55.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAwAAAAAEAAAAAgAhAAAAQAgEAEoAA=</HashCode>
+      <FileName>Timer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimerIns" Collapsed="true">
+    <Position X="41.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAIAAAkABCABgBAAAAAYAAAAAAAAQCABADAAAAA=</HashCode>
+      <FileName>TimerIns.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trigger" Collapsed="true">
+    <Position X="12.25" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAEEiAAABAAAAAIIIAAAAgEAABABAgEAAAAAgA=</HashCode>
+      <FileName>Trigger.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventHandle" Collapsed="true">
+    <Position X="53.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAAAQAAAAAgAAAAAAIAAAAAAAEKAAAAAAAAAAA=</HashCode>
+      <FileName>EventHandle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="engLine" Collapsed="true">
+    <Position X="9.75" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAEAAAAAAAEAAAAAgAAAAAAAACIABAAIAAAA=</HashCode>
+      <FileName>Line.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="engRectangle" Collapsed="true">
+    <Position X="12" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAIAAAYAEAAAAACQAAAAACACAACAAQAhgAgAAAAA=</HashCode>
+      <FileName>Rectangle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shape" Collapsed="true">
+    <Position X="11" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQEAAAAAAAAAAAAAAAAAIABAQCBAAAAAAAAAGAAAAA=</HashCode>
+      <FileName>Shape.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vector2d" Collapsed="true">
+    <Position X="46.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAYAAAAAAAGAAAAAAQGAQAAAAAABAAAAQBgAGICAAI=</HashCode>
+      <FileName>Vector2d.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoundEfx" Collapsed="true">
+    <Position X="48.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAACEEACAAAAAAAAAAAA=</HashCode>
+      <FileName>SoundEfx.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Animation" Collapsed="true">
+    <Position X="41.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAEAEgVAECAAAgAAAAIEAGkAgQAAAAAAAIQAAAAE=</HashCode>
+      <FileName>Animation.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Texture" Collapsed="true">
+    <Position X="52" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAgAAAAARhQAAAAACAAACAAAAQAAAAAIUAAAQAAI=</HashCode>
+      <FileName>Texture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Body" Collapsed="true">
+    <Position X="19" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BpQgAACAAAUQAqDBAIWRQQABEQAIFoAwIEACEgBADAQ=</HashCode>
+      <FileName>Body.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="dynBody" Collapsed="true">
+    <Position X="16.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAgAAAAAAAAAQAQAAAAoAAAgEAABCAAAAAAA=</HashCode>
+      <FileName>dynBody.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Button" Collapsed="true">
+    <Position X="21.25" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QMQCAAAABAAAAiAAAFAAJICAARCAIgAEQAACCJFEAkA=</HashCode>
+      <FileName>Button.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Mouse" Collapsed="true">
+    <Position X="23.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAQAAAEQAAAwhAQAAgAAAAAAAAAAAgAAACAAAAAAA=</HashCode>
+      <FileName>Mouse.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimingBall" Collapsed="true">
+    <Position X="25.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAgAgkAAAAAAAAAAAAACAAAAAAAAABAAAA=</HashCode>
+      <FileName>TimingBall.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ButtonStateMachine" Collapsed="true">
+    <Position X="16.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAAAAAAAAAgAAAAAQABABAAAAACAAAEAAA=</HashCode>
+      <FileName>ButtonStateMachine.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ButtonState" Collapsed="true">
+    <Position X="5.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIASAAAAAAAAAAAEAAAAABCAAAAAAAAIAAAAAAAEAAA=</HashCode>
+      <FileName>ButtonState.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HoverState" Collapsed="true">
+    <Position X="2" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAQAAAAAAIAAAAAAAAAAAAAAAAABAAAAAAAAAAEAAA=</HashCode>
+      <FileName>HoverState.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IdleState" Collapsed="true">
+    <Position X="4.25" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAAEAAA=</HashCode>
+      <FileName>IdleState.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PressedState" Collapsed="true">
+    <Position X="6.5" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gIAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEAAA=</HashCode>
+      <FileName>PressedState.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReleasedState" Collapsed="true">
+    <Position X="8.75" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAQAAAAAAQAAAAAAAAAAAAAAIAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>ReleasedState.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entity" Collapsed="true">
+    <Position X="19" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAiAAAAAAAAQAAAAAAAAEACAAAIAACAAAAAAAAEA=</HashCode>
+      <FileName>Entity.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player" Collapsed="true">
+    <Position X="19" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAACAAAAAAAAAAAAAAAAAAAACAQAAABA=</HashCode>
+      <FileName>Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="FC_MapNode" Collapsed="true">
+    <Position X="41.5" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAACAAAAAAAAIAAAA=</HashCode>
+      <FileName>sdl\include\SDL_FontCache.c</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="FC_Map" Collapsed="true">
+    <Position X="55.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>sdl\include\SDL_FontCache.c</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="FC_Font" Collapsed="true">
+    <Position X="52" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAKAAARAQAAAAAEABAAiAAAkAAAIAAEAgEgAA=</HashCode>
+      <FileName>sdl\include\SDL_FontCache.c</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="FC_StringList" Collapsed="true">
+    <Position X="45" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAIAAAA=</HashCode>
+      <FileName>sdl\include\SDL_FontCache.c</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="FC_Scale" Collapsed="true">
+    <Position X="43.25" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <FileName>sdl\include\SDL_FontCache.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="FC_Effect" Collapsed="true">
+    <Position X="50.25" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAiAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>sdl\include\SDL_FontCache.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="FC_GlyphData" Collapsed="true">
+    <Position X="53.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>sdl\include\SDL_FontCache.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2Pair" Collapsed="true">
+    <Position X="46.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Collision\b2BroadPhase.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2BroadPhasePerThreadData" Collapsed="true">
+    <Position X="45" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAgAAQBAAAAA=</HashCode>
+      <FileName>Box2D\Collision\b2BroadPhase.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2ContactFeature" Collapsed="true">
+    <Position X="52" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Box2D\Collision\b2Collision.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2ManifoldPoint" Collapsed="true">
+    <Position X="55.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Box2D\Collision\b2Collision.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2Manifold" Collapsed="true">
+    <Position X="53.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAASAAEAAAAAAAAAAAAACAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Collision\b2Collision.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2WorldManifold" Collapsed="true">
+    <Position X="46.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAACAAAAAAQAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Collision\b2Collision.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2ClipVertex" Collapsed="true">
+    <Position X="46.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAgA=</HashCode>
+      <FileName>Box2D\Collision\b2Collision.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2RayCastInput" Collapsed="true">
+    <Position X="55.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAEAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Collision\b2Collision.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2RayCastOutput" Collapsed="true">
+    <Position X="41.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Collision\b2Collision.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2AABB" Collapsed="true">
+    <Position X="41.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAgAAAIAIAAAAAEBAAABAAAQAAI=</HashCode>
+      <FileName>Box2D\Collision\b2Collision.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2DistanceProxy" Collapsed="true">
+    <Position X="43.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAUABAAIBAAAAAAAAAACAAAAAgAAABAAAAQAAAA=</HashCode>
+      <FileName>Box2D\Collision\b2Distance.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2SimplexCache" Collapsed="true">
+    <Position X="50.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAIAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Box2D\Collision\b2Distance.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2DistanceInput" Collapsed="true">
+    <Position X="55.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAiAAAAAAAAAAIABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Collision\b2Distance.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2DistanceOutput" Collapsed="true">
+    <Position X="41.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAgAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Collision\b2Distance.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2ShapeCastInput" Collapsed="true">
+    <Position X="46.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAgAAAAAAAAAAIABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Collision\b2Distance.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2ShapeCastOutput" Collapsed="true">
+    <Position X="48.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACIAAAAAAAAAgAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Collision\b2Distance.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2TreeNode" Collapsed="true">
+    <Position X="52" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAQAAACAFAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Collision\b2DynamicTree.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2TOIInput" Collapsed="true">
+    <Position X="46.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAgACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Collision\b2TimeOfImpact.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2TOIOutput" Collapsed="true">
+    <Position X="48.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQAAAAAAAA=</HashCode>
+      <FileName>Box2D\Collision\b2TimeOfImpact.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2MassData" Collapsed="true">
+    <Position X="41.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Box2D\Collision\Shapes\b2Shape.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2Color" Collapsed="true">
+    <Position X="48.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAgAAAAAAAAAAAAAoAQABAAAAAAA=</HashCode>
+      <FileName>Box2D\Common\b2Draw.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2Vec2" Collapsed="true">
+    <Position X="53.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAABAAEEAgAAQBAAAAAAAAAAABgAAAAAAI=</HashCode>
+      <FileName>Box2D\Common\b2Math.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2Vec3" Collapsed="true">
+    <Position X="55.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAABAAEAAAAAQAAAAAAAAAAAABgAQAAAAA=</HashCode>
+      <FileName>Box2D\Common\b2Math.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2Mat22" Collapsed="true">
+    <Position X="43.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAMABAAAAABAAAAAAQAAAIAAAAAAAAAAAAAAACAgA=</HashCode>
+      <FileName>Box2D\Common\b2Math.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2Mat33" Collapsed="true">
+    <Position X="45" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAQAAAAAAAAAAJoAAAAAAAAAgQ=</HashCode>
+      <FileName>Box2D\Common\b2Math.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2Rot" Collapsed="true">
+    <Position X="45" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAIAAABAAAAABAAAAAAAAAAQAAAAIACAAIAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Common\b2Math.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2Transform" Collapsed="true">
+    <Position X="50.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACABAAAAABAAAAAAAAAAAAAAAAAAAAGAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Common\b2Math.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2Sweep" Collapsed="true">
+    <Position X="55.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIQAAAAAAAEABAAACgAAAAAACgAAAQAAAAAAA=</HashCode>
+      <FileName>Box2D\Common\b2Math.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2Version" Collapsed="true">
+    <Position X="45" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAIAA=</HashCode>
+      <FileName>Box2D\Common\b2Settings.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2StackEntry" Collapsed="true">
+    <Position X="53.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAABAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Box2D\Common\b2StackAllocator.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2BodyDef" Collapsed="true">
+    <Position X="43.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAgAAAAAAAwAgAAAAAEAMAAAAAARAQAAABAAYABAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\b2Body.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2DeferredContactCreate" Collapsed="true">
+    <Position X="48.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAQAAAABAAI=</HashCode>
+      <FileName>Box2D\Dynamics\b2ContactManager.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2DeferredMoveProxy" Collapsed="true">
+    <Position X="50.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAQAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\b2ContactManager.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2DeferredPreSolve" Collapsed="true">
+    <Position X="53.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>Box2D\Dynamics\b2ContactManager.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2DeferredPostSolve" Collapsed="true">
+    <Position X="52" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Box2D\Dynamics\b2ContactManager.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2ContactManagerPerThreadData" Collapsed="true">
+    <Position X="55.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAEAACAAAAAAAEAAAEAAQAAASAAQA=</HashCode>
+      <FileName>Box2D\Dynamics\b2ContactManager.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2Filter" Collapsed="true">
+    <Position X="45" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAEAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Box2D\Dynamics\b2Fixture.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2FixtureDef" Collapsed="true">
+    <Position X="46.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAACAAAAAAAAAAEAUAAAAQEAAQAAAAAAAAAABAA=</HashCode>
+      <FileName>Box2D\Dynamics\b2Fixture.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2FixtureProxy" Collapsed="true">
+    <Position X="48.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAIAAAAgAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\b2Fixture.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2Profile" Collapsed="true">
+    <Position X="52" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAGAAAAAAEAAAAAAQAAAABAAkCAAAAAICAAQgAAA=</HashCode>
+      <FileName>Box2D\Dynamics\b2TimeStep.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2TimeStep" Collapsed="true">
+    <Position X="45" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAABAAAAEAAAAAAAAAAAAABAQEAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\b2TimeStep.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2Position" Collapsed="true">
+    <Position X="50.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\b2TimeStep.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2Velocity" Collapsed="true">
+    <Position X="41.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\b2TimeStep.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2SolverData" Collapsed="true">
+    <Position X="52" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAIAAAAAAgAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\b2TimeStep.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2ContactImpulse" Collapsed="true">
+    <Position X="53.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAJAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\b2WorldCallbacks.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2ContactRegister" Collapsed="true">
+    <Position X="43.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAABAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Contacts\b2Contact.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2ContactProxyIds" Collapsed="true">
+    <Position X="41.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAACAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Contacts\b2Contact.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2ContactEdge" Collapsed="true">
+    <Position X="50.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAABAAAYAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Contacts\b2Contact.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2VelocityConstraintPoint" Collapsed="true">
+    <Position X="43.25" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAIAAAABAAAAAAAIAAAAAAAAAAAAAAAQAEAgA=</HashCode>
+      <FileName>Box2D\Dynamics\Contacts\b2ContactSolver.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2ContactVelocityConstraint" Collapsed="true">
+    <Position X="46.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACCAARgAAAAAAIEAAgCAQEAAAAAAAAAAIAFAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Contacts\b2ContactSolver.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2ContactSolverDef" Collapsed="true">
+    <Position X="45" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAgABAAAIAAAAAAgAAAAAAAAACABAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Contacts\b2ContactSolver.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2DistanceJointDef" Collapsed="true">
+    <Position X="14" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAQAQAEABAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2DistanceJoint.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2FrictionJointDef" Collapsed="true">
+    <Position X="18.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAQAQAAAAAAAAAAAIAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2FrictionJoint.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2GearJointDef" Collapsed="true">
+    <Position X="23" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAACAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2GearJoint.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2Jacobian" Collapsed="true">
+    <Position X="50.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAIAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2Joint.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2JointEdge" Collapsed="true">
+    <Position X="52" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAABAAAYAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2Joint.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2JointDef" Collapsed="true">
+    <Position X="14" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAABAABAAAAAAAAgAAAAAAABAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2Joint.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2MotorJointDef" Collapsed="true">
+    <Position X="9.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAQAAAgEAAAAAAAAIAAAgAAQAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2MotorJoint.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2MouseJointDef" Collapsed="true">
+    <Position X="11.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAgAAAIAABAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2MouseJoint.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2PrismaticJointDef" Collapsed="true">
+    <Position X="16.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAIBAAAAAAAQAQCAAAgAAAAAAAAAAABCCAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2PrismaticJoint.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2PulleyJointDef" Collapsed="true">
+    <Position X="20.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEyAQAAAAAAAAAAAAAAAAAAAgAAAgAQA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2PulleyJoint.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2RevoluteJointDef">
+    <Position X="25.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAABAAAAAAAQAQAAAAAAQAQAAAAAAABKCAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2RevoluteJoint.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2RopeJointDef" Collapsed="true">
+    <Position X="2.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAAgAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2RopeJoint.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2WeldJointDef" Collapsed="true">
+    <Position X="5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAQAgABAAAAAAAAAAAAICAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2WeldJoint.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2WheelJointDef" Collapsed="true">
+    <Position X="7.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAQAQAAAJAAAAQAAAAAAAJAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2WheelJoint.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2ThreadContext" Collapsed="true">
+    <Position X="41.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAACAAAAA=</HashCode>
+      <FileName>Box2D\MT\b2Task.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2RangeTaskRange" Collapsed="true">
+    <Position X="53.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAACAAAAAAAAAAAAABAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\MT\b2Task.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2PartitionedRange" Collapsed="true">
+    <Position X="48.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAABAAAAAAAAAEAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\MT\b2Task.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2ThreadPoolOptions" Collapsed="true">
+    <Position X="43.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAIAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Box2D\MT\b2ThreadPool.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="b2RopeDef" Collapsed="true">
+    <Position X="43.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgEAAABAAAABAIAAAAAAIAQAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Box2D\Rope\b2Rope.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Event" Collapsed="true">
+    <Position X="48.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAQAAAAAAAAAAIAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>EventData.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="GameEvent" Collapsed="true">
+    <Position X="46.75" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAQAAIAAAAQBAAAAAAAABAIAAAA=</HashCode>
+      <FileName>EventData.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="TTF_Font" Collapsed="true">
+    <Position X="53.75" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>sdl\include\NFont.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="FC_AlignEnum" Collapsed="true">
+    <Position X="15.75" Y="19.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>sdl\include\SDL_FontCache.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="FC_FilterEnum" Collapsed="true">
+    <Position X="11.75" Y="19.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>sdl\include\SDL_FontCache.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="int8" Collapsed="true">
+    <Position X="52" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Common\b2Settings.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="int16" Collapsed="true">
+    <Position X="46.75" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Common\b2Settings.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="int32" Collapsed="true">
+    <Position X="48.5" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Common\b2Settings.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="int64" Collapsed="true">
+    <Position X="50.25" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Common\b2Settings.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="uint8" Collapsed="true">
+    <Position X="46.75" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Common\b2Settings.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="uint16" Collapsed="true">
+    <Position X="55.5" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Common\b2Settings.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="uint32" Collapsed="true">
+    <Position X="41.5" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Common\b2Settings.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="uint64" Collapsed="true">
+    <Position X="45" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Common\b2Settings.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="float32" Collapsed="true">
+    <Position X="43.25" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Common\b2Settings.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="float64" Collapsed="true">
+    <Position X="45" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Common\b2Settings.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="b2ContactCreateFcn" Collapsed="true">
+    <Position X="19.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Contacts\b2Contact.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="b2ContactDestroyFcn" Collapsed="true">
+    <Position X="41.5" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Contacts\b2Contact.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Uint32" Collapsed="true">
+    <Position X="43.25" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SDL_wrapper.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Uint8" Collapsed="true">
+    <Position X="48.5" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Texture.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Enum Name="__unnamed_enum_0441_1" Collapsed="true">
+    <Position X="15.75" Y="17.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAQAAAQ=</HashCode>
+      <FileName>sdl\include\SDL_FontCache.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_enum_0441_2" Collapsed="true">
+    <Position X="11.75" Y="17.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>sdl\include\SDL_FontCache.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="b2PointState" Collapsed="true">
+    <Position X="46.75" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAIAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Box2D\Collision\b2Collision.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="b2BodyType" Collapsed="true">
+    <Position X="41.5" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Box2D\Dynamics\b2Body.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="b2JointType" Collapsed="true">
+    <Position X="43.25" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>RAAAAAAAAAAAAAAAAAAAAGAAAAAAANAAAAQIgAEAAAA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2Joint.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="b2LimitState" Collapsed="true">
+    <Position X="45" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAIAAAAAAAAAAACAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Box2D\Dynamics\Joints\b2Joint.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ButtonEvent" Collapsed="true">
+    <Position X="52" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAQAAAAAAAAAAhAAAAAAAAA=</HashCode>
+      <FileName>EventData.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="GameEventType" Collapsed="true">
+    <Position X="55.5" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAUAAEAABAAQAAAAACAAAAAgAACAAAAAAAAAQAAAAQ=</HashCode>
+      <FileName>EventData.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MouseButton" Collapsed="true">
+    <Position X="46.75" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAIAAAAAAAAAAAAAAAAAAEAAAAAAAAAAgAAAAQAIAA=</HashCode>
+      <FileName>EventData.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="GamepadButton" Collapsed="true">
+    <Position X="41.5" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAACCAAAGAYYCABAAAAAAAAAABAAAAAACgABAI=</HashCode>
+      <FileName>EventData.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="JointType" Collapsed="true">
+    <Position X="43.25" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAADoAAAQBACBAAAAAAAEAAAgAAAAAAAAAgAAA=</HashCode>
+      <FileName>BodyManager.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MouseB" Collapsed="true">
+    <Position X="45" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AwQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EventHandle.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="cShape" Collapsed="true">
+    <Position X="53.75" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAABAAAAAABAAAAAAAAAAAAAAQAAAAACAAAA=</HashCode>
+      <FileName>Shape.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BodyType" Collapsed="true">
+    <Position X="50.25" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAIAAIAAAAAAAAIAAABAAAAAJAIAgAAAAgAAAA=</HashCode>
+      <FileName>Body.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BodyState" Collapsed="true">
+    <Position X="48.5" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQBACAAAAAAAAAAAAAAAAAAgIAAAQ=</HashCode>
+      <FileName>dynBody.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,7 +1,10 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-#include "stdafx.h"
+#include <memory>
+#include <chrono>
+
+
 
 class TimerIns {
 	
@@ -13,9 +16,6 @@ class TimerIns {
 	
 	unsigned int deltaTime;
 	float timeScale;
-
-
-
 
 public:
 

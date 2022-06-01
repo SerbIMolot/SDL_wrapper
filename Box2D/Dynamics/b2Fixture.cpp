@@ -36,6 +36,8 @@ b2Fixture::b2Fixture()
 	m_proxyCount = 0;
 	m_shape = nullptr;
 	m_density = 0.0f;
+	m_isSensor = false;
+	m_isThickShape = false;
 }
 
 void b2Fixture::Create(b2BlockAllocator* allocator, b2Body* body, const b2FixtureDef* def)
@@ -50,6 +52,8 @@ void b2Fixture::Create(b2BlockAllocator* allocator, b2Body* body, const b2Fixtur
 	m_filter = def->filter;
 
 	m_isSensor = def->isSensor;
+
+	m_isThickShape = def->thickShape;
 
 	m_shape = def->shape->Clone(allocator);
 
@@ -152,7 +156,7 @@ void b2Fixture::DestroyProxies(b2BroadPhase* broadPhase)
 void b2Fixture::Synchronize(b2BroadPhase* broadPhase, const b2Transform& transform1, const b2Transform& transform2)
 {
 	if (m_proxyCount == 0)
-	{	
+	{
 		return;
 	}
 
@@ -164,7 +168,7 @@ void b2Fixture::Synchronize(b2BroadPhase* broadPhase, const b2Transform& transfo
 		b2AABB aabb1, aabb2;
 		m_shape->ComputeAABB(&aabb1, transform1, proxy->childIndex);
 		m_shape->ComputeAABB(&aabb2, transform2, proxy->childIndex);
-	
+
 		proxy->aabb.Combine(aabb1, aabb2);
 
 		b2Vec2 displacement = transform2.p - transform1.p;
@@ -187,6 +191,9 @@ void b2Fixture::Refilter()
 		return;
 	}
 
+	b2World* world = m_body->GetWorld();
+	b2Assert(world);
+
 	// Flag associated contacts for filtering.
 	b2ContactEdge* edge = m_body->GetContactList();
 	while (edge)
@@ -196,18 +203,13 @@ void b2Fixture::Refilter()
 		b2Fixture* fixtureB = contact->GetFixtureB();
 		if (fixtureA == this || fixtureB == this)
 		{
-			contact->FlagForFiltering();
+			contact->m_flags |= b2Contact::e_filterFlag;
 		}
 
 		edge = edge->next;
 	}
 
-	b2World* world = m_body->GetWorld();
-
-	if (world == nullptr)
-	{
-		return;
-	}
+	b2Assert(world->IsMtLocked() == false);
 
 	// Touch each proxy so that new pairs may be created
 	b2BroadPhase* broadPhase = &world->m_contactManager.m_broadPhase;
@@ -219,10 +221,38 @@ void b2Fixture::Refilter()
 
 void b2Fixture::SetSensor(bool sensor)
 {
+	b2World* world = m_body->GetWorld();
+
+	b2Assert(world->IsMtLocked() == false);
+	if (world->IsMtLocked())
+	{
+		return;
+	}
+
 	if (sensor != m_isSensor)
 	{
 		m_body->SetAwake(true);
 		m_isSensor = sensor;
+
+		world->RecalculateToiCandidacy(this);
+	}
+}
+
+void b2Fixture::SetThickShape(bool thickWall)
+{
+	b2World* world = m_body->GetWorld();
+
+	b2Assert(world->IsMtLocked() == false);
+	if (world->IsMtLocked())
+	{
+		return;
+	}
+
+	if (thickWall != m_isThickShape)
+	{
+		m_isThickShape = thickWall;
+
+		world->RecalculateToiCandidacy(this);
 	}
 }
 

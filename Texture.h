@@ -1,6 +1,16 @@
 #pragma once
 
-#include "stdafx.h"
+#include "sdl\include\SDL.h"
+#include <string>
+#include <memory>
+
+struct SDL_Rect;
+struct GPU_Image;
+class Vector2d;
+struct b2Vec2;
+typedef uint32_t Uint32;
+typedef uint8_t Uint8;
+
 
 class Texture
 {
@@ -14,39 +24,33 @@ public:
 
 	void free();
 
-	void render( int x, int y, GPU_Rect* clip = nullptr, float angle = 0.0f, float pivotX = 0.0f, float pivotY = 0.0f, GPU_FlipEnum flip = GPU_FLIP_NONE );
+	void render( int x, int y, SDL_Rect* clip = nullptr, float angle = 0.0f, float pivotX = 0.0f, float pivotY = 0.0f, Uint32 flip = 0x0);
 				 
-	void render( float x, float y, GPU_Rect* clip = nullptr, float angle = 0.0f, float pivotX = 0.0f, float pivotY = 0.0f, GPU_FlipEnum flip = GPU_FLIP_NONE );
+	void render( float x, float y, SDL_Rect* clip = nullptr, float angle = 0.0f, float pivotX = 0.0f, float pivotY = 0.0f, Uint32 flip = 0x0);
 				 
-	void render( std::shared_ptr<Vector2d> vec, GPU_Rect* clip = nullptr, float angle = 0.0f, float pivotX = 0.0f, float pivotY = 0.0f, GPU_FlipEnum flip = GPU_FLIP_NONE );
+	void render( std::shared_ptr<Vector2d> vec, SDL_Rect* clip = nullptr, float angle = 0.0f, float pivotX = 0.0f, float pivotY = 0.0f, Uint32 flip = 0x0);
+	void render( std::shared_ptr< b2Vec2 > vec, SDL_Rect* clip = nullptr, float angle = 0.0f, float pivotX = 0.0f, float pivotY = 0.0f, Uint32 flip = 0x0);
 				 
-	void render( Vector2d& vec, GPU_Rect* clip = nullptr, float angle = 0.0f, float pivotX = 0.0f, float pivotY = 0.0f, GPU_FlipEnum flip = GPU_FLIP_NONE);
+	void render( Vector2d& vec, SDL_Rect* clip = nullptr, float angle = 0.0f, float pivotX = 0.0f, float pivotY = 0.0f, Uint32 flip = 0x0);
+	void render( b2Vec2* vec, SDL_Rect* clip = nullptr, float angle = 0.0f, float pivotX = 0.0f, float pivotY = 0.0f, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
 	void setRGBA( Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha = 255 );
+	void scale( float newH, float newW );
 
-	void setBlendMode( GPU_BlendPresetEnum mode );
+	void setBlendMode( SDL_BlendMode mode );
 
-	//void render( int x, int y, SDL_Rect* clip = nullptr, double angle = 0.0, SDL_Point* center = nullptr, SDL_RendererFlip flip = SDL_FLIP_NONE );
-	//void render( float x, float y, SDL_Rect* clip = nullptr, double angle = 0.0, SDL_Point* center = nullptr, SDL_RendererFlip flip = SDL_FLIP_NONE );
-	//void render( std::shared_ptr< Vector2d > vec, SDL_Rect* clip = nullptr, double angle = 0.0, SDL_Point* center = nullptr, SDL_RendererFlip flip = SDL_FLIP_NONE );
-	//void render( Vector2d& vec, SDL_Rect* clip = nullptr, double angle = 0.0, SDL_Point* center = nullptr, SDL_RendererFlip flip = SDL_FLIP_NONE );
-	////Color modulation
-	//void setColor( Uint8 red, Uint8 green, Uint8 blue );
-
-	//Blending
-	//void setBlendMode( SDL_BlendMode blending );
-
-	//Alpha modulation
-	//void setAlpha( Uint8 alpha );
+	void setAlpha(Uint8 alpha);
 
 	float getWidth();
 	float getHeight();
 
 private:
 
-	GPU_Image* mTexture;
+	SDL_Texture* sTexture;
 
 	float mWidth;
 	float mHeight;
+	float scaleFactorW = 0.0f;
+	float scaleFactorH = 0.0f;
 };
 

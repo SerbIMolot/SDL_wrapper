@@ -1,11 +1,12 @@
 #pragma once
-#include "stdafx.h"
+#include "dynBody.h"
 
+struct b2Vec2;
 
 class Gun : public dynBody
 {
 
-	b2Vec2 offset;
+	b2Vec2* offset;
 
 	float previousAngle;
 

@@ -1,4 +1,5 @@
 #pragma once
+#include "Shape.h"
 class engLine : public Shape
 {
 	std::shared_ptr< Vector2d > startPoint;

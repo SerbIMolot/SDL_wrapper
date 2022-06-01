@@ -19,5 +19,6 @@ public:
 
 	void handleInput(Body* body, SDL_Scancode key);
 	bool handleInput(std::shared_ptr< Body > body, std::shared_ptr< Event > event) ;
+	bool handleInput(std::shared_ptr< Body > body, std::shared_ptr< GameEvent > event) ;
 
 };

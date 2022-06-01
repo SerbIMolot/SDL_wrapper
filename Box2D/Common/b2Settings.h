@@ -1,5 +1,6 @@
 /*
 * Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
+* Copyright (c) 2015 Justin Hoffman https://github.com/jhoffman0x/Box2D-MT
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -19,28 +20,32 @@
 #ifndef B2_SETTINGS_H
 #define B2_SETTINGS_H
 
-#include <stddef.h>
-#include <assert.h>
-#include <float.h>
+#include <cstddef>
+#include <cassert>
+#include <cstdint>
+#include <limits>
 
 #if !defined(NDEBUG)
 	#define b2DEBUG
 #endif
 
 #define B2_NOT_USED(x) ((void)(x))
+
 #define b2Assert(A) assert(A)
 
-typedef signed char	int8;
-typedef signed short int16;
-typedef signed int int32;
-typedef unsigned char uint8;
-typedef unsigned short uint16;
-typedef unsigned int uint32;
-typedef float float32;
-typedef double float64;
+typedef std::int8_t		int8;
+typedef std::int16_t	int16;
+typedef std::int32_t	int32;
+typedef std::int64_t	int64;
+typedef std::uint8_t	uint8;
+typedef std::uint16_t	uint16;
+typedef std::uint32_t	uint32;
+typedef std::uint64_t	uint64;
+typedef float			float32;
+typedef double			float64;
 
-#define	b2_maxFloat		FLT_MAX
-#define	b2_epsilon		FLT_EPSILON
+#define	b2_maxFloat		std::numeric_limits<float32>::max()
+#define	b2_epsilon		std::numeric_limits<float32>::epsilon()
 #define b2_pi			3.14159265359f
 
 /// @file
@@ -129,6 +134,49 @@ typedef double float64;
 /// A body cannot sleep if its angular velocity is above this tolerance.
 #define b2_angularSleepTolerance	(2.0f / 180.0f * b2_pi)
 
+
+// MT Defines
+
+/// Force inline of larger functions that tend to not be inlined by default.
+#ifdef _MSC_VER
+    #define b2_forceInline __forceinline
+#elif defined(__GNUC__)
+    #define b2_forceInline inline __attribute__((__always_inline__))
+#elif defined(__CLANG__)
+    #if __has_attribute(__always_inline__)
+        #define b2_forceInline inline __attribute__((__always_inline__))
+    #else
+        #define b2_forceInline inline
+    #endif
+#else
+    #define b2_forceInline inline
+#endif
+
+/// Some global variables are used to gather stats on runtime behavior, but they are
+/// disabled by default due to the data races they cause with multithreading.
+/// Set this to true if you need to use those variables.
+/// Note: behavior is undefined if multithreading is used while this is true.
+#define b2_enableGlobalStats					false
+
+/// The size of a cache line.
+#define b2_cacheLineSize						64
+
+/// The maximum number of threads. Must be greater than 1 and even.
+#define b2_maxThreads							8
+
+/// The maximum number of subtasks that a range task can be split into.
+#define b2_maxRangeSubTasks						b2_maxThreads
+
+/// The maximum number of islands per solve task.
+#define b2_maxIslandsPerSolveTask				16
+
+/// The number of task groups used by a world's step. Do not change this value.
+#define b2_maxWorldStepTaskGroups				1
+
+/// Defining this enables a modified broad-phase that tends to perform better with
+/// many fixtures.
+//#define b2_dynamicTreeOfTrees
+
 // Memory Allocation
 
 /// Implement this function to use your own memory allocator.
@@ -149,7 +197,10 @@ struct b2Version
 	int32 revision;		///< bug fixes
 };
 
-/// Current version.
+/// Box2D-MT version.
+extern b2Version b2_mtVersion;
+
+/// Box2D version.
 extern b2Version b2_version;
 
 #endif

@@ -1,8 +1,12 @@
 #pragma once
-class Mouse : public Object
+
+#include "Body.h"
+#include "TextureManager.h"
+
+class Mouse : public Body
 {
 
-	std::shared_ptr< Object > grabbedObj;
+	std::shared_ptr< Body > grabbedObj;
 
 	bool LMBHold;
 	bool RMBHold;
@@ -10,8 +14,9 @@ class Mouse : public Object
 public:
 	Mouse();
 	~Mouse();
+	void Init();
 
-	void grabObj( std::shared_ptr< Object > obj );
+	void grabObj( std::shared_ptr< Body > obj );
 	void releaseObj();
 
 	void UpdateStats( int x, int y, bool isReleased, int button );
@@ -20,7 +25,7 @@ public:
 
 	void Draw();
 
-	void collisionDetected( std::shared_ptr < Object > obj );
+	void collisionDetected( std::shared_ptr < Body > obj );
 
 	bool isLMBHold();
 
